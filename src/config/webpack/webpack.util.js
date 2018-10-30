@@ -1,61 +1,61 @@
-const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
-const path = require('path');
-const nextCSS = require('postcss-cssnext');
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
+const path = require('path')
+const nextCSS = require('postcss-cssnext')
 
-const { appRootPath, packageRootPath } = require('../../paths');
+const { appRootPath, packageRootPath } = require('../../paths')
 
 const PATHS = {
   client: {
-    app: path.resolve(appRootPath, 'src/client'),
+    app  : path.resolve(appRootPath, 'src/client'),
     build: path.resolve(appRootPath, 'build/client')
   },
-  shared: path.resolve(appRootPath, 'src/shared'),
-  assets: path.resolve(appRootPath, 'assets'),
-  root: appRootPath,
+  shared    : path.resolve(appRootPath, 'src/shared'),
+  assets    : path.resolve(appRootPath, 'assets'),
+  root      : appRootPath,
   crassaRoot: path.join(__dirname, '../../../')
-};
+}
 
 function loadCSS({ use = [] }) {
   return {
-    test: /\.css$/,
-    include: [PATHS.client.app, PATHS.shared],
-    use: [
+    test   : /\.css$/,
+    include: [ PATHS.client.app, PATHS.shared ],
+    use    : [
       ...use,
       {
-        loader: 'css-loader',
+        loader : 'css-loader',
         options: {
           modules: true
         }
       },
       {
-        loader: 'postcss-loader',
+        loader : 'postcss-loader',
         options: {
-          plugins: () => [nextCSS()],
-        },
+          plugins: () => [ nextCSS() ]
+        }
       }
     ]
-  };
+  }
 }
 
 function createAnalyzer(dev = true) {
   return new BundleAnalyzerPlugin({
-    analyzerMode: dev ? 'server' : 'static',
-    openAnalyzer: !dev,
+    analyzerMode  : dev ? 'server' : 'static',
+    openAnalyzer  : !dev,
     reportFilename: path.join(appRootPath, 'build/reports/bundle-analysis.html')
-  });
+  })
 }
 
 function createLinter(dev = true) {
   return {
-    test: [/\.js$/, /\.jsx$/],
+    test   : [ /\.js$/, /\.jsx$/ ],
     enforce: 'pre',
-    loader: 'eslint-loader',
+    loader : 'eslint-loader',
     options: {
-      fix: !dev,
+      fix       : !dev,
       configFile: path.join(packageRootPath, '.eslintrc')
     },
-    include: [PATHS.client.app, PATHS.shared]
-  };
+    include: [ PATHS.client.app, PATHS.shared ]
+  }
 }
 
 module.exports = {
@@ -63,4 +63,4 @@ module.exports = {
   loadCSS,
   createAnalyzer,
   createLinter
-};
+}

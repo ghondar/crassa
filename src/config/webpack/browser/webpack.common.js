@@ -1,71 +1,71 @@
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const StyleLintPlugin = require('stylelint-webpack-plugin');
-const path = require('path');
-const { PATHS } = require('../webpack.util.js');
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const StyleLintPlugin = require('stylelint-webpack-plugin')
+const path = require('path')
+const { PATHS } = require('../webpack.util.js')
 
 /* eslint-disable-next-line import/no-dynamic-require */
-const packageJSON = require(path.join(PATHS.root, 'package.json'));
+const packageJSON = require(path.join(PATHS.root, 'package.json'))
 /* eslint-disable-next-line import/no-dynamic-require */
-const babelrc = require(path.join(PATHS.crassaRoot, 'babel.config.json'));
+const babelrc = require(path.join(PATHS.crassaRoot, 'babel.config.json'))
 
-const { aliases, displayName } = packageJSON.crassa;
+const { aliases, displayName } = packageJSON.crassa
 
-const aliasObj = {};
-Object.keys(aliases).forEach((alias) => {
-  aliasObj[alias] = path.join(PATHS.root, aliases[alias]);
-});
+const aliasObj = {}
+Object.keys(aliases).forEach(alias => {
+  aliasObj[alias] = path.join(PATHS.root, aliases[alias])
+})
 
 module.exports = function create() {
   return {
-    entry: ['babel-polyfill', path.join(PATHS.client.app, 'index.jsx')],
+    entry  : [ 'babel-polyfill', path.join(PATHS.client.app, 'index.jsx') ],
     resolve: {
-      extensions: ['.web.js', '.mjs', '.js', '.json', '.web.jsx', '.jsx'],
-      alias: aliasObj
+      extensions: [ '.web.js', '.mjs', '.js', '.json', '.web.jsx', '.jsx' ],
+      alias     : aliasObj
     },
     output: {
-      publicPath: '/',
-      filename: '[name].[hash:4].js',
-      path: PATHS.client.build,
+      publicPath   : '/',
+      filename     : '[name].[hash:4].js',
+      path         : PATHS.client.build,
       chunkFilename: '[name].[chunkhash:4].js'
     },
     plugins: [
       new HtmlWebpackPlugin({
-        title: displayName,
+        title   : displayName,
         template: path.join(PATHS.assets, 'index.html')
       }),
       new StyleLintPlugin({
         configFile: path.join(PATHS.crassaRoot, '.stylelintrc'),
-        context: PATHS.client.app,
-        files: '**/*.css',
-        fix: true
+        context   : PATHS.client.app,
+        files     : '**/*.css',
+        fix       : true
       })
     ],
     module: {
       rules: [
         {
-          test: [/\.js$/, /\.jsx$/],
-          use: {
-            loader: 'babel-loader',
+          test: [ /\.js$/, /\.jsx$/ ],
+          use : {
+            loader : 'babel-loader',
             options: babelrc
           },
-          include: [PATHS.client.app, PATHS.shared]
+          include: [ PATHS.client.app, PATHS.shared ]
         },
         {
           test: /\.(jpg|png|svg|gif)$/,
-          use: {
-            loader: 'url-loader',
+          use : {
+            loader : 'url-loader',
             options: {
-              limit: 15000,
+              limit: 15000
             }
           }
         },
         {
           test: /\.(ttf|eot|woff|woff2)$/,
-          use: {
-            loader: 'file-loader',
+          use : {
+            loader : 'file-loader',
             options: {
-              name: 'fonts/[name].[hash:4].[ext]',
-            },
+              name: 'fonts/[name].[hash:4].[ext]'
+            }
           }
         }
       ]
@@ -74,11 +74,11 @@ module.exports = function create() {
       hints: process.env.NODE_ENV === 'production' ? 'warning' : false
     },
     node: {
-      fs: 'empty',
-      dns: 'empty',
-      net: 'empty',
-      tls: 'empty',
+      fs    : 'empty',
+      dns   : 'empty',
+      net   : 'empty',
+      tls   : 'empty',
       module: 'empty'
     }
-  };
-};
+  }
+}

@@ -3,9 +3,9 @@ const {
   disableEsLint,
   addWebpackAlias,
   addBundleVisualizer
-} = require("customize-cra");
-const { appRootPath } = require("./src/paths");
-const { _moduleAliases } = require(appRootPath + "/package.json");
+} = require('customize-cra')
+const { appRootPath } = require('./src/paths')
+const { _moduleAliases } = require(appRootPath + '/package.json')
 
 // const rewireVendorSplitting = require('react-app-rewire-vendor-splitting')
 // const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
@@ -14,14 +14,14 @@ const { _moduleAliases } = require(appRootPath + "/package.json");
 // const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 // const path = require('path')
 
-const aliases = {};
+const aliases = {}
 
 Object.keys(_moduleAliases).forEach(key => {
-  aliases[key] = _moduleAliases[key].replace(".", appRootPath);
-});
+  aliases[key] = _moduleAliases[key].replace('.', appRootPath)
+})
 
 module.exports = override(
   disableEsLint(),
   process.env.BUNDLE_VISUALIZE == 1 && addBundleVisualizer(),
-  addWebpackAlias({ ...aliases, "lodash-es": "lodash" })
-);
+  addWebpackAlias({ ...aliases, 'lodash-es': 'lodash' })
+)

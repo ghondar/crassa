@@ -1,34 +1,34 @@
 #!/usr/bin/env node
-const program = require("commander");
+const program = require('commander')
 
-const createProject = require("./src/create");
-const { commands, preHook } = require("./src/scripts");
-const { log, colorize } = require("./src/util");
+const createProject = require('./src/create')
+const { commands, preHook } = require('./src/scripts')
+const { log, colorize } = require('./src/util')
 
-const { version } = require("./package.json");
+const { version } = require('./package.json')
 
 program
   .version(version)
   .description(
-    "Create client + server apps with one CLI command. Easy. Unobstrusive. Powerful."
-  );
+    'Create client + server apps with one CLI command. Easy. Unobstrusive. Powerful.'
+  )
 
 program
-  .command("init <projectName> [projectFolderName]")
-  .description("Initialize a project.")
+  .command('init <projectName> [projectFolderName]')
+  .description('Initialize a project.')
   .action((projectName, projectFolderName) => {
-    createProject({ projectName, projectFolderName });
-  });
+    createProject({ projectName, projectFolderName })
+  })
 
-commands.forEach(({ name, fn, description = "" }) => {
+commands.forEach(({ name, fn, description = '' }) => {
   program
     .command(name)
     .description(description)
     .action(async () => {
-      const { error } = await preHook();
-      if (!error) fn();
-      else log({ text: colorize(error).FgRed(), type: "error" });
-    });
-});
+      const { error } = await preHook()
+      if(!error) fn()
+      else log({ text: colorize(error).FgRed(), type: 'error' })
+    })
+})
 
-program.parse(process.argv);
+program.parse(process.argv)

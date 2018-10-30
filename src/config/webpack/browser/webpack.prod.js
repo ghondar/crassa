@@ -1,30 +1,25 @@
-const webpack = require('webpack');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const UglifyWebpackPlugin = require('uglifyjs-webpack-plugin');
-const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
-const DuplicatePackageCheckerPlugin = require('duplicate-package-checker-webpack-plugin');
-const cssnano = require('cssnano');
+const webpack = require('webpack')
+const CleanWebpackPlugin = require('clean-webpack-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const UglifyWebpackPlugin = require('uglifyjs-webpack-plugin')
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
+const DuplicatePackageCheckerPlugin = require('duplicate-package-checker-webpack-plugin')
+const cssnano = require('cssnano')
 
-const {
-  PATHS, loadCSS, createAnalyzer, createLinter
-} = require('../webpack.util.js');
+const { PATHS, loadCSS, createAnalyzer, createLinter } = require('../webpack.util.js')
 
 const PROD_CONFIG = {
-  mode: 'production',
+  mode  : 'production',
   module: {
-    rules: [
-      createLinter(false),
-      loadCSS({ use: [MiniCssExtractPlugin.loader] })
-    ],
+    rules: [ createLinter(false), loadCSS({ use: [ MiniCssExtractPlugin.loader ] }) ]
   },
   plugins: [
-    new CleanWebpackPlugin([PATHS.client.build], { root: process.cwd() }),
+    new CleanWebpackPlugin([ PATHS.client.build ], { root: process.cwd() }),
     new MiniCssExtractPlugin({
-      filename: '[name].[contenthash:4].css',
+      filename: '[name].[contenthash:4].css'
     }),
     new OptimizeCSSAssetsPlugin({
-      cssProcessor: cssnano,
+      cssProcessor       : cssnano,
       cssProcessorOptions: {
         discardComments: {
           removeAll: true
@@ -51,13 +46,13 @@ const PROD_CONFIG = {
     splitChunks: {
       chunks: 'initial'
     },
-    minimizer: [new UglifyWebpackPlugin({ uglifyOptions: { compress: { drop_console: true } } })],
+    minimizer   : [ new UglifyWebpackPlugin({ uglifyOptions: { compress: { drop_console: true } } }) ],
     runtimeChunk: {
       name: 'manifest'
     }
   }
-};
+}
 
 module.exports = function create() {
-  return PROD_CONFIG;
-};
+  return PROD_CONFIG
+}

@@ -28,10 +28,13 @@
     "express": "^4.16.4",
     "http-proxy-middleware": "^0.19.0",
     "ignore-styles": "^5.0.1",
+    "lint-staged": "^8.0.3",
     "loadable-components": "^2.2.3",
     "module-alias": "^2.1.0",
     "morgan": "^1.9.1",
     "ncp": "^2.0.0",
+    "pre-commit": "^1.2.2",
+    "prettier-eslint-cli": "^4.7.1",
     "react": "^16.6.0",
     "react-app-rewired": "^1.6.2",
     "react-dom": "^16.6.0",
@@ -45,7 +48,17 @@
   },
   "scripts": {
     "publish": "git add . && git commit && npm publish",
-    "local-pack": "npm pack && rm -rf ../crassa-no-git && mkdir ../crassa-no-git && mv *.tgz ../crassa-no-git && cd ../crassa-no-git && tar -xvf *.tgz && cp -rf package/. . && rm -rf package/ && rm -rf *.tgz && npm i && sudo npm link"
+    "local-pack": "npm pack && rm -rf ../crassa-no-git && mkdir ../crassa-no-git && mv *.tgz ../crassa-no-git && cd ../crassa-no-git && tar -xvf *.tgz && cp -rf package/. . && rm -rf package/ && rm -rf *.tgz && npm i && sudo npm link",
+    "format": "prettier-eslint --write \"{src,server}/**/*.js\" && eslint . --ext .js --fix",
+    "lint-staged": "lint-staged"
+  },
+  "pre-commit": "lint-staged",
+  "lint-staged": {
+    "{src,server}/**/*.js": [
+      "prettier-eslint --write \"{src,server}/**/*.js\"",
+      "eslint . --ext .js --fix",
+      "git add"
+    ]
   },
   "_moduleAliases": {
     "../config/paths": "./react-scripts-wrapper-paths",

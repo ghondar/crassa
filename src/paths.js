@@ -1,13 +1,12 @@
-const path = require("path");
+const path = require('path')
 
-const appRootPath = process.env.APP_ROOT || process.cwd();
-const crassaRoot =
-  process.env.APP_IT_ROOT || path.dirname(require.main.filename);
+const appRootPath = process.env.APP_ROOT || process.cwd()
+const crassaRoot = process.env.APP_IT_ROOT || path.dirname(require.main.filename)
 
 module.exports = {
   packageRootPath: crassaRoot,
   appRootPath,
-  appShared: path.join(appRootPath, "src/shared"),
-  appClient: path.join(appRootPath, "src/client"),
-  appServer: path.join(appRootPath, "src/server")
-};
+  appShared      : path.join(appRootPath, 'src/shared'),
+  appClient      : path.join(appRootPath, 'src/client'),
+  appServer      : path.join(appRootPath, 'src/server')
+}
