@@ -1,25 +1,15 @@
 const path = require('path')
 const { execCmd, fileExists } = require('../util')
 
-const { appRootPath, appShared, appClient, packageRootPath, appServer } = require('../paths')
+const { appRootPath, appShared, packageRootPath, appServer } = require('../paths')
 
 function countLines() {
   return execCmd(`npx cloc ${appRootPath} --exclude-dir=node_modules,.git,build --exclude-ext=json`)
 }
 
 function lintClient() {
-  // Execute linting in parallel
-  execCmd(`npx eslint ${appClient}/**/*.js* --fix --config ${packageRootPath}/.eslintrc`, {
-    async: true
-  })
-  execCmd(`npx eslint ${appShared}/**/*.js* --fix --config ${packageRootPath}/.eslintrc`, {
-    async: true
-  })
-  execCmd(`npx stylelint ${appClient}/**/*.css --fix --config ${packageRootPath}/.stylelintrc`, {
-    async: true
-  })
-  execCmd(`npx stylelint ${appShared}/**/*.css --fix --config ${packageRootPath}/.stylelintrc`, {
-    async: true
+  execCmd(`npx eslint ${appRootPath}/{src,server}/**/*.js* --fix --config ${packageRootPath}/.eslintrc`, {
+    async: false
   })
 }
 

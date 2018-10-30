@@ -1,6 +1,6 @@
 {
   "name": "crassa",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "preferGlobal": true,
   "bin": "./index.js",
   "main": "index.js",
@@ -49,13 +49,12 @@
   "scripts": {
     "publish": "git add . && git commit && npm publish",
     "local-pack": "npm pack && rm -rf ../crassa-no-git && mkdir ../crassa-no-git && mv *.tgz ../crassa-no-git && cd ../crassa-no-git && tar -xvf *.tgz && cp -rf package/. . && rm -rf package/ && rm -rf *.tgz && npm i && sudo npm link",
-    "format": "prettier-eslint --write \"{src,server}/**/*.js\" && eslint . --ext .js --fix",
+    "format": "eslint . --ext .js --fix",
     "lint-staged": "lint-staged"
   },
   "pre-commit": "lint-staged",
   "lint-staged": {
     "{src,server}/**/*.js": [
-      "prettier-eslint --write \"{src,server}/**/*.js\"",
       "eslint . --ext .js --fix",
       "git add"
     ]
