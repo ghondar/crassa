@@ -42,7 +42,7 @@ async function create({ projectName, projectFolderName }) {
     console.log(colorize('Project was successfully created.').FgGreen())
     console.log(colorize('To get started, execute:').FgCyan())
     console.log(colorize(`cd ${folderNameToUse}`).Underscore())
-    console.log(colorize('crassa dev').Underscore())
+    console.log(colorize('npm run dev').Underscore())
   }, 300)
 }
 
