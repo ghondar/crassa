@@ -3,8 +3,6 @@ const { appRootPath } = require("./src/paths");
 const { existsSync } = require("fs");
 let { replaceRootPath } = require("./src/replace");
 
-console.log(replaceRootPath, appRootPath);
-
 replaceRootPath = replaceRootPath.bind({ appRootPath });
 
 const dotenv = replaceRootPath(".env");

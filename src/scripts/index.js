@@ -86,15 +86,17 @@ function dev() {
 function buildClient() {
   const cmd = `
           npx cross-env
-            APP_ROOT=${appRootPath}
-              npx node ${packageRootPath}/build.js`;
+            NODE_ENV=development
+              npx cross-env
+                APP_ROOT=${appRootPath}
+                  npx node ${packageRootPath}/build.js`;
   execCmd(cmd, { async: true });
 }
 
 function build() {
   const cmd = `
           npx cross-env
-            NODE_ENV=production
+            NODE_ENV=development
               npx cross-env
                 APP_IT_ROOT=${packageRootPath}
                   npx cross-env

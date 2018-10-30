@@ -6,9 +6,13 @@ import { renderToString } from "react-dom/server";
 import { getLoadableState } from "loadable-components/server";
 import Helmet from "react-helmet";
 
-import { replaceRootPath } from "../src/util";
-
 import createServerStore from "./store";
+
+import { appRootPath } from "../src/paths";
+
+let { replaceRootPath } = require("../src/util");
+
+replaceRootPath = replaceRootPath.bind({ appRootPath });
 
 const Root = require(replaceRootPath("src/containers/Root")).default;
 const createRoutes = require(replaceRootPath("src/routes")).default;
