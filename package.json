@@ -1,25 +1,52 @@
 {
-  "name": "demo",
+  "name": "crassa",
   "version": "0.1.0",
   "private": true,
+  "preferGlobal": true,
+  "bin": "./index.js",
+  "main": "index.js",
   "dependencies": {
+    "body-parser": "^1.18.3",
+    "commander": "^2.19.0",
+    "compression": "^1.7.3",
+    "cross-env": "^5.2.0",
+    "express": "^4.16.4",
+    "loadable-components": "^2.2.3",
+    "morgan": "^1.9.1",
+    "ncp": "^2.0.0",
     "react": "^16.6.0",
     "react-dom": "^16.6.0",
-    "react-scripts": "2.0.5"
+    "react-helmet": "^5.2.0",
+    "react-router-dom": "^4.3.1",
+    "react-router-redux": "^4.0.8",
+    "react-scripts": "2.0.5",
+    "redux": "^4.0.1",
+    "redux-saga": "^0.16.2"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "node ./start.js",
+    "build": "BUNDLE_VISUALIZE=1 node ./build.js",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "local-pack": "npm pack && rm -rf ../crassa-no-git && mkdir ../crassa-no-git && mv *.tgz ../crassa-no-git && cd ../crassa-no-git && tar -xvf *.tgz && cp -rf package/. . && rm -rf package/ && rm -rf *.tgz && npm i && sudo npm link"
   },
-  "eslintConfig": {
-    "extends": "react-app"
+  "_moduleAliases": {
+    "../config/paths": "./react-scripts-wrapper-paths",
+    "./paths": "./react-scripts-wrapper-paths"
   },
-  "browserslist": [
-    ">0.2%",
-    "not dead",
-    "not ie <= 11",
-    "not op_mini all"
-  ]
+  "devDependencies": {
+    "@babel/plugin-proposal-class-properties": "7.1.0",
+    "@babel/plugin-proposal-decorators": "7.1.2",
+    "@babel/polyfill": "7.0.0",
+    "@babel/register": "7.0.0",
+    "babel-cli": "6.26.0",
+    "babel-plugin-dynamic-import-node-babel-7": "2.0.7",
+    "babel-plugin-transform-imports": "1.5.1",
+    "babel-plugin-transform-react-remove-prop-types": "0.4.19",
+    "customize-cra": "^0.1.1",
+    "ignore-styles": "^5.0.1",
+    "module-alias": "^2.1.0",
+    "react-app-rewired": "^1.6.2",
+    "webpack-bundle-analyzer": "^3.0.3"
+  }
 }

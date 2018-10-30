@@ -1,0 +1,68 @@
+{
+  "name": "{-- project-name --}",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "crassa dev",
+    "start": "crassa start"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "crassa": {
+    "displayName": "{-- project-name --}",
+    "aliases": {
+      "utils": "./src/utils",
+      "lib": "./src/lib",
+      "reducers": "./src/reducers",
+      "sagas": "./src/sagas",
+      "components": "./src/components",
+      "containers": "./src/containers",
+      "constants": "./src/constants",
+      "api": "./src/api"
+    }
+  },
+  "_moduleAliases": {
+    "utils": "./src/utils",
+    "lib": "./src/lib",
+    "reducers": "./src/reducers",
+    "sagas": "./src/sagas",
+    "components": "./src/components",
+    "containers": "./src/containers",
+    "constants": "./src/constants",
+    "api": "./src/api"
+  },
+  "jest": {
+    "moduleNameMapper": {
+      "utils": "<rootDir>/src/utils",
+      "lib": "<rootDir>/src/lib",
+      "reducers": "<rootDir>/src/reducers",
+      "sagas": "<rootDir>/src/sagas",
+      "components": "<rootDir>/src/components",
+      "containers": "<rootDir>/src/containers",
+      "constants": "<rootDir>/src/constants",
+      "api": "<rootDir>/src/api"
+    }
+  },
+  "dependencies": {
+    "loadable-components": "^2.2.3",
+    "module-alias": "*",
+    "react": "*",
+    "react-dom": "*",
+    "react-redux": "^5.1.0",
+    "react-router-dom": "^4.3.1",
+    "react-router-redux": "^4.0.8",
+    "redux": "^4.0.1",
+    "redux-saga": "^0.16.2"
+  },
+  "devDependencies": {
+    "eslint": "^4.9.0",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-jsx-a11y": "^6.0.2",
+    "eslint-plugin-react": "^7.4.0",
+    "babel-eslint": "^8.2.3"
+  },
+  "browserslist": [">0.2%", "not dead", "not ie <= 11", "not op_mini all"]
+}
