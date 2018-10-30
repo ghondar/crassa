@@ -1,15 +1,15 @@
 {
   "name": "crassa",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "preferGlobal": true,
   "bin": "./index.js",
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "git://github.com/abgv9221/crassa.git"
+    "url": "git://github.com/ghondar/crassa.git"
   },
   "author": "Ghondar <abgv9221@gmail.com>",
-  "homepage": "https://github.com/abgv9221/crassa",
+  "homepage": "https://github.com/ghondar/crassa",
   "license": "MIT",
   "dependencies": {
     "@babel/plugin-proposal-class-properties": "7.1.0",
