@@ -6,7 +6,7 @@ require("ignore-styles");
 
 // Set up babel to do its thing... env for the latest toys, react-app for CRA
 require("@babel/register")({
-  ignore: [/\/(build|node_modules)\//],
+  ignore: [/\/(build|node_modules)\/(?!crassa\b)/],
   presets: ["@babel/env", "@babel/preset-react"],
   plugins: [
     ["@babel/plugin-proposal-class-properties", { loose: true }],
