@@ -24,10 +24,7 @@
     "redux-saga": "^0.16.2"
   },
   "scripts": {
-    "start": "node ./start.js",
-    "build": "BUNDLE_VISUALIZE=1 node ./build.js",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
+    "publish": "git add . && git commit && npm publish",
     "local-pack": "npm pack && rm -rf ../crassa-no-git && mkdir ../crassa-no-git && mv *.tgz ../crassa-no-git && cd ../crassa-no-git && tar -xvf *.tgz && cp -rf package/. . && rm -rf package/ && rm -rf *.tgz && npm i && sudo npm link"
   },
   "_moduleAliases": {

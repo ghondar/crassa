@@ -12,8 +12,6 @@ replaceRootPath = replaceRootPath.bind({ appRootPath });
 const reducers = require(replaceRootPath("src/reducers")).default;
 const rootSaga = require(replaceRootPath("src/sagas")).default;
 
-console.log("store", reducers, rootSaga);
-
 // Create a store and history based on a path
 const createServerStore = (path = "/") => {
   const initialState = {};

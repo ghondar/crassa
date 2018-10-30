@@ -71,14 +71,6 @@ function devServer() {
   execCmd(cmd, { async: true });
 }
 
-function openBrowser() {
-  const cmd = `
-    npx opn http://localhost:8080/
-  `;
-
-  execCmd(cmd, { async: true });
-}
-
 function dev() {
   devClient();
 }
@@ -96,7 +88,7 @@ function buildClient() {
 function build() {
   const cmd = `
           npx cross-env
-            NODE_ENV=development
+            NODE_ENV=production
               npx cross-env
                 APP_IT_ROOT=${packageRootPath}
                   npx cross-env
