@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "dev": "crassa dev",
-    "start": "crassa start"
+    "start": "crassa start",
+    "build": "crassa build:client",
+    "deploy": "crassa build"
   },
   "keywords": [],
   "author": "",
