@@ -1,7 +1,3 @@
-<div style="text-align: center;">
-    <img src="logo.png" width="300" />
-</div>
-
 # :sparkles: Create React App Server Side Application
 ## :battery: A CLI tool to create React + Server Side with one command 
 
