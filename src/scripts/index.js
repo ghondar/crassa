@@ -62,7 +62,7 @@ const commands = [
   {
     name       : 'start',
     fn         : start,
-    description: 'Creates a production build for the frontend application.'
+    description: 'Run the project with server side.'
   },
   {
     name       : 'count-lines',
