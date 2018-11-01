@@ -30,9 +30,9 @@ export function createStore(req, res, next) {
   if(req.url.indexOf('.') !== -1 || req.url.indexOf('api') !== -1) {
     next()
   } else {
-    // Load in our HTML file from our build
     const filePath = replaceRootPath('build/index.html')
 
+    // Load in our HTML file from our build
     fs.readFile(filePath, 'utf8', async (err, htmlData) => {
       // If there's an error... serve up something nasty
       if(err) {
@@ -43,6 +43,8 @@ export function createStore(req, res, next) {
 
       // Create a store and sense of history based on the current path
       const { store, history } = createServerStore(req.path)
+
+      // Set data into locals to passa another middleware
       res.locals = {
         store,
         history,
@@ -56,11 +58,11 @@ export function createStore(req, res, next) {
 export const universalLoader = async (req, res) => {
   // Get store, history and html string from middleware
   const { store, history, htmlData } = res.locals
-
+  // Create routes using history
   const routes = createRoutes(history)
-
+  // Get app wrapping Root (Provider redux) passing store
   const app = <Root store={store}>{routes}</Root>
-
+  // Get loadable components tree
   const loadableState = await getLoadableState(app)
 
   // Render App in React
@@ -80,5 +82,3 @@ export const universalLoader = async (req, res) => {
   // Up, up, and away...
   res.send(html)
 }
-
-export default universalLoader

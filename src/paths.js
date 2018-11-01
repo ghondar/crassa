@@ -6,7 +6,5 @@ const crassaRoot = process.env.APP_IT_ROOT || path.dirname(require.main.filename
 module.exports = {
   packageRootPath: crassaRoot,
   appRootPath,
-  appShared      : path.join(appRootPath, 'src/shared'),
-  appClient      : path.join(appRootPath, 'src/client'),
   appServer      : path.join(appRootPath, 'src/server')
 }

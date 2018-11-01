@@ -9,8 +9,13 @@ const router = express.Router()
 
 const customFile = appRootPath + '/server/preLoadState.js'
 const hasPreLoadState = existsSync(customFile)
-const middleware = hasPreLoadState ? require(customFile).default : function(req, res, next) { next() }
+const middleware = hasPreLoadState ?
+  require(customFile).default :
+  function(req, res, next) {
+    next()
+  }
 
-router.get('/', createStore, middleware,  universalLoader)
+// Set universal render middlewares
+router.get('/', createStore, middleware, universalLoader)
 
 export default router
