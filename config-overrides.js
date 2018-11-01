@@ -1,6 +1,7 @@
 const {
   override,
   disableEsLint,
+  addBabelPlugin,
   addWebpackAlias
 } = require('customize-cra')
 const { existsSync } = require('fs')
