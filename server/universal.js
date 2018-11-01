@@ -26,7 +26,7 @@ const prepHTML = (data, { html, head, body, loadableState }) => {
   return data
 }
 
-const universalLoader = (req, res, next) => {
+export function createStore(req, res, next) {
   if(req.url.indexOf('.') !== -1 || req.url.indexOf('api') !== -1) {
     next()
   } else {
@@ -43,31 +43,42 @@ const universalLoader = (req, res, next) => {
 
       // Create a store and sense of history based on the current path
       const { store, history } = createServerStore(req.path)
-
-      const routes = createRoutes(history)
-
-      const app = <Root store={store}>{routes}</Root>
-
-      const loadableState = await getLoadableState(app)
-
-      // Render App in React
-      const routeMarkup = renderToString(app)
-
-      // Let Helmet know to insert the right tags
-      const helmet = Helmet.renderStatic()
-
-      // Form the final HTML response
-      const html = prepHTML(htmlData, {
-        html         : helmet.htmlAttributes.toString(),
-        head         : helmet.title.toString() + helmet.meta.toString() + helmet.link.toString(),
-        body         : routeMarkup,
-        loadableState: loadableState.getScriptTag()
-      })
-
-      // Up, up, and away...
-      res.send(html)
+      res.locals = {
+        store,
+        history,
+        htmlData
+      }
+      next()
     })
   }
+}
+
+export const universalLoader = async (req, res) => {
+  // Get store, history and html string from middleware
+  const { store, history, htmlData } = res.locals
+
+  const routes = createRoutes(history)
+
+  const app = <Root store={store}>{routes}</Root>
+
+  const loadableState = await getLoadableState(app)
+
+  // Render App in React
+  const routeMarkup = renderToString(app)
+
+  // Let Helmet know to insert the right tags
+  const helmet = Helmet.renderStatic()
+
+  // Form the final HTML response
+  const html = prepHTML(htmlData, {
+    html         : helmet.htmlAttributes.toString(),
+    head         : helmet.title.toString() + helmet.meta.toString() + helmet.link.toString(),
+    body         : routeMarkup,
+    loadableState: loadableState.getScriptTag()
+  })
+
+  // Up, up, and away...
+  res.send(html)
 }
 
 export default universalLoader

@@ -1,10 +1,16 @@
 // Any route that comes in, send it to the universalLoader
 
 import express from 'express'
-import universalLoader from '../universal'
+import { createStore, universalLoader } from '../universal'
+import { existsSync } from 'fs'
+import { appRootPath } from '../../src/paths'
 
 const router = express.Router()
 
-router.get('/', universalLoader)
+const customFile = appRootPath + '/server/preLoadState.js'
+const hasPreLoadState = existsSync(customFile)
+const middleware = hasPreLoadState ? require(customFile).default : function(req, res, next) { next() }
+
+router.get('/', createStore, middleware,  universalLoader)
 
 export default router

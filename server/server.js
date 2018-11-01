@@ -5,7 +5,6 @@ import morgan from 'morgan'
 import path from 'path'
 
 import index from './routes/index'
-import universalLoader from './universal'
 
 import { appRootPath } from '../src/paths'
 
@@ -24,7 +23,6 @@ app.disable('x-powered-by')
 app.use('/', index)
 app.use(express.static(path.resolve(appRootPath + '/build')))
 app.use('/api', require(path.resolve(appRootPath + '/server')).default)
-app.use('/', universalLoader)
 
 // Let's rock
 app.listen(PORT, () => {
