@@ -3,14 +3,14 @@
 import express from 'express'
 import { createStore, universalLoader } from '../universal'
 import { existsSync } from 'fs'
-import { appRootPath } from '../../src/paths'
+import { appServer } from '../../src/paths'
 
 const router = express.Router()
 
-const customFile = appRootPath + '/server/preLoadState.js'
-const hasPreLoadState = existsSync(customFile)
+const preLoadState = appServer + '/preLoadState.js'
+const hasPreLoadState = existsSync(preLoadState)
 const middleware = hasPreLoadState ?
-  require(customFile).default :
+  require(preLoadState).default :
   function(req, res, next) {
     next()
   }

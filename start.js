@@ -9,6 +9,8 @@ Object.keys(_moduleAliases).forEach(key => {
   aliases[key] = _moduleAliases[key].replace('.', packageRootPath)
 })
 
+console.log(aliases)
+
 moduleAlias.addAliases(aliases)
 
 require('react-app-rewired/scripts/start')

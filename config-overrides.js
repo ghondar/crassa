@@ -1,14 +1,9 @@
-const {
-  override,
-  disableEsLint,
-  addBabelPlugin,
-  addWebpackAlias
-} = require('customize-cra')
+const { override, disableEsLint, addBabelPlugin, addWebpackAlias } = require('customize-cra')
+const { appRootPath, appConfigOverrides, appPackage } = require('./src/paths')
 const { existsSync } = require('fs')
-const { appRootPath } = require('./src/paths')
-const { _moduleAliases } = require(appRootPath + '/package.json')
-const customFile = appRootPath + '/config-overrides.js'
-const hasCustomConfig = existsSync(customFile)
+const { _moduleAliases } = require(appPackage)
+
+const hasCustomConfigOverrides = existsSync(appConfigOverrides)
 
 const aliases = {}
 
@@ -22,5 +17,9 @@ module.exports = override(
   addBabelPlugin('loadable-components/babel'),
   addBabelPlugin('transform-react-remove-prop-types'),
   addWebpackAlias({ ...aliases, 'lodash-es': 'lodash' }),
-  hasCustomConfig ? require(customFile) : function(config) {return config}
+  hasCustomConfigOverrides ?
+    require(appConfigOverrides) :
+    function(config) {
+      return config
+    }
 )

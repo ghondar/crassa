@@ -6,7 +6,7 @@ import path from 'path'
 
 import index from './routes/index'
 
-import { appRootPath } from '../src/paths'
+import { appServer, appBuild } from '../src/paths'
 
 // Create our express app (using the port optionally specified)
 const app = express()
@@ -21,8 +21,8 @@ app.disable('x-powered-by')
 
 // Set up route handling, include static assets and an optional API
 app.use('/', index)
-app.use(express.static(path.resolve(appRootPath + '/build')))
-app.use('/api', require(path.resolve(appRootPath + '/server')).default)
+app.use(express.static(path.resolve(appBuild)))
+app.use('/api', require(path.resolve(appServer)).default)
 
 // Let's rock
 app.listen(PORT, () => {

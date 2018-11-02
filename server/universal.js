@@ -7,14 +7,10 @@ import Helmet from 'react-helmet'
 
 import createServerStore from './store'
 
-import { appRootPath } from '../src/paths'
+import { appSrc, appBuild } from '../src/paths'
 
-let { replaceRootPath } = require('../src/util')
-
-replaceRootPath = replaceRootPath.bind({ appRootPath })
-
-const Root = require(replaceRootPath('src/containers/Root')).default
-const createRoutes = require(replaceRootPath('src/routes')).default
+const Root = require(appSrc + '/containers/Root').default
+const createRoutes = require(appSrc + '/routes').default
 
 // A simple helper function to prepare the HTML markup
 const prepHTML = (data, { html, head, body, loadableState }) => {
@@ -30,7 +26,7 @@ export function createStore(req, res, next) {
   if(req.url.indexOf('.') !== -1 || req.url.indexOf('api') !== -1) {
     next()
   } else {
-    const filePath = replaceRootPath('build/index.html')
+    const filePath = appBuild + '/index.html'
 
     // Load in our HTML file from our build
     fs.readFile(filePath, 'utf8', async (err, htmlData) => {

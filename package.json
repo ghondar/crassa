@@ -1,6 +1,6 @@
 {
   "name": "crassa",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "preferGlobal": true,
   "bin": "./index.js",
   "main": "index.js",
@@ -34,7 +34,6 @@
     "morgan": "1.9.1",
     "ncp": "2.0.0",
     "pre-commit": "1.2.2",
-    "prettier-eslint-cli": "4.7.1",
     "react": "16.6.0",
     "react-app-rewired": "1.6.2",
     "react-dom": "16.6.0",

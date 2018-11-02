@@ -3,14 +3,10 @@ import { routerMiddleware } from 'react-router-redux'
 import createSagaMiddleware from 'redux-saga'
 import createHistory from 'history/createMemoryHistory'
 
-import { appRootPath } from '../src/paths'
+import { appSrc } from '../src/paths'
 
-let { replaceRootPath } = require('../src/util')
-
-replaceRootPath = replaceRootPath.bind({ appRootPath })
-
-const reducers = require(replaceRootPath('src/reducers')).default
-const rootSaga = require(replaceRootPath('src/sagas')).default
+const reducers = require(appSrc + '/reducers').default
+const rootSaga = require(appSrc + '/sagas').default
 
 // Create a store and history based on a path
 const createServerStore = (path = '/') => {

@@ -18,8 +18,8 @@ require('@babel/register')({
 
 require('@babel/polyfill')
 
-const { appRootPath } = require('../src/paths')
-const { _moduleAliases } = require(appRootPath + '/package.json')
+const { appRootPath, appPackage } = require('../src/paths')
+const { _moduleAliases } = require(appPackage)
 
 const aliases = {}
 

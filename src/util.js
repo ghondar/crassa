@@ -118,11 +118,6 @@ function log({ text, type }) {
   }
 }
 
-function replaceRootPath(path) {
-  if(path) return this.appRootPath + '/' + path
-  else return this.appRootPath
-}
-
 async function fileExists(path) {
   try {
     const stats = await fileStats(path)
@@ -139,6 +134,5 @@ module.exports = {
   colorize,
   execCmd,
   log,
-  replaceRootPath,
   fileExists
 }
