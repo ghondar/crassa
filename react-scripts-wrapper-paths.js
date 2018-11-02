@@ -19,6 +19,4 @@ paths.appNodeModules = appNodeModules
 paths.servedPath = '/'
 paths.publicUrl = homepage || ''
 
-console.log(paths)
-
 module.exports = paths
