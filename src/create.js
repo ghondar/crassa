@@ -34,7 +34,7 @@ async function create({ projectName, projectFolderName }) {
 
   // Install all dependencies
   setTimeout(() => {
-    childProcess.spawnSync('npm', [ 'install' ], {
+    childProcess.spawnSync('yarn', {
       cwd  : pathToUse,
       stdio: 'inherit'
     })
