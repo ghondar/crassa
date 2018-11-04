@@ -1,15 +1,25 @@
 {
   "name": "crassa",
-  "version": "0.2.5",
+  "version": "0.2.6",
   "preferGlobal": true,
   "bin": "./index.js",
   "main": "index.js",
+  "author": "Ghondar <abgv9221@gmail.com>",
   "repository": {
     "type": "git",
     "url": "git://github.com/ghondar/crassa.git"
   },
-  "author": "Ghondar <abgv9221@gmail.com>",
   "homepage": "https://github.com/ghondar/crassa",
+  "keywords": [
+    "react",
+    "reactjs",
+    "express",
+    "redux",
+    "create-react-app",
+    "cli",
+    "universal",
+    "server-side-application"
+  ],
   "license": "MIT",
   "dependencies": {
     "@babel/plugin-proposal-class-properties": "7.1.0",
@@ -28,11 +38,13 @@
     "express": "4.16.4",
     "http-proxy-middleware": "0.19.0",
     "ignore-styles": "5.0.1",
+    "inquirer": "6.2.0",
     "lint-staged": "8.0.3",
     "loadable-components": "2.2.3",
     "module-alias": "2.1.0",
     "morgan": "1.9.1",
     "ncp": "2.0.0",
+    "nodemon": "1.18.5",
     "pre-commit": "1.2.2",
     "react": "16.6.0",
     "react-app-rewired": "1.6.2",

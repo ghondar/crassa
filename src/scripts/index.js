@@ -13,12 +13,29 @@ function lint() {
   })
 }
 
-function dev() {
+function devClient() {
   const cmd = `
         npx cross-env
           APP_ROOT=${appRootPath}
             npx node ${packageRootPath}/start.js`
   execCmd(cmd, { async: true })
+}
+
+function devServer() {
+  const cmd = `
+          npx cross-env
+            NODE_ENV=development
+              npx cross-env
+                APP_IT_ROOT=${packageRootPath}
+                  npx cross-env
+                    APP_ROOT=${appRootPath}
+                      npx nodemon ${packageRootPath}/server/index.js`
+  execCmd(cmd, { async: true })
+}
+
+function dev() {
+  devClient()
+  devServer()
 }
 
 function build() {

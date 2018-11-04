@@ -7,7 +7,7 @@ const { packageRootPath } = require('./paths')
 
 const { version } = require('../package.json')
 
-async function create({ projectName, projectFolderName }) {
+async function create({ projectName, projectFolderName, manager }) {
   const folderNameToUse = projectFolderName || projectName
   const pathToUse = path.resolve(process.cwd(), folderNameToUse)
   console.log(`Creating project ${colorize(projectName).FgCyan()} in ${colorize(pathToUse).FgCyan()}...`)
@@ -32,9 +32,18 @@ async function create({ projectName, projectFolderName }) {
 
   fs.writeFileSync(path.join(vscodeFolder, 'settings.json'), vscodeConfig)
 
+  const packageManager = {
+    params: '',
+    output: 'yarn dev'
+  }
+
+  if(manager === 'npm') {
+    packageManager.params = 'install'
+    packageManager.output = 'npm run dev'
+  }
   // Install all dependencies
   setTimeout(() => {
-    childProcess.spawnSync('yarn', {
+    childProcess.spawnSync(manager, [ packageManager.params ], {
       cwd  : pathToUse,
       stdio: 'inherit'
     })
@@ -42,7 +51,7 @@ async function create({ projectName, projectFolderName }) {
     console.log(colorize('Project was successfully created.').FgGreen())
     console.log(colorize('To get started, execute:').FgCyan())
     console.log(colorize(`cd ${folderNameToUse}`).Underscore())
-    console.log(colorize('npm run dev').Underscore())
+    console.log(colorize(packageManager.output).Underscore())
   }, 300)
 }
 
