@@ -32,6 +32,12 @@ async function create({ projectName, projectFolderName, manager }) {
 
   fs.writeFileSync(path.join(vscodeFolder, 'settings.json'), vscodeConfig)
 
+  const gitIgnore = fs.readFileSync(path.resolve(__dirname, './templates/gitignore.template'))
+  fs.writeFileSync(path.join(pathToUse, '.gitignore'), gitIgnore)
+
+  const npmrc = fs.readFileSync(path.resolve(__dirname, './templates/npmrc.template'))
+  fs.writeFileSync(path.join(pathToUse, '.npmrc'), npmrc)
+
   const packageManager = {
     params: '',
     output: 'yarn dev'
