@@ -29,7 +29,7 @@ function devServer() {
                 APP_IT_ROOT=${packageRootPath}
                   npx cross-env
                     APP_ROOT=${appRootPath}
-                      npx nodemon --watch ${appRootPath} --config ${appRootPath}/nodemon.json ${packageRootPath}/server/index.js`
+                      npx nodemon --watch ${appRootPath}/server --config ${appRootPath}/nodemon.json ${packageRootPath}/server/index.js`
   execCmd(cmd, { async: true })
 }
 
