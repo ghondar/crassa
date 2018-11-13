@@ -19,7 +19,7 @@ program
         {
           type     : 'list',
           name     : 'manager',
-          message  : 'Package Manager',
+          message  : 'Choose Package Manager:',
           choices  : [ 'npm', 'yarn' ],
           'default': 'yarn'
         }
