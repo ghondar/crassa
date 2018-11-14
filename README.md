@@ -63,7 +63,7 @@ You'll be able create custom template from github to generate your initial proje
 Github repository structure [like](https://github.com/ghondar/counter-with-redux-ducks-and-sagas-template):
 
 ```bash
-    .
+.
 └── template
     ├── nodemon.json
     ├── public
@@ -115,25 +115,24 @@ ghondar/counter-with-redux-ducks-and-sagas-template
 ```
 
 
-
 ## Extensions
 
 Here (__server__ folder) you can extend universal middleware creating __preLoadState.js__ file to dispatch action from server to load initial state into redux store.
 
 Example: (__/server/preLoadState.js__)
 
-​```javascript
+```javascript
 import counterDuck from 'reducers/counter'
 
 export default function(res, req, next) {
-​    // Get store from locals
-​    const { store } = res.locals
-​    // Dispatch a action to change initial state
-​    store.dispatch(counterDuck.creators.addCount())
-​    // Resave new store
-​    res.locals.store = store
-​    // Pass middlerware
-​    next()
+     // Get store from locals
+     const { store } = res.locals
+     // Dispatch a action to change initial state
+     store.dispatch(counterDuck.creators.addCount())
+     // Resave new store
+     res.locals.store = store
+     // Pass middlerware
+     next()
 }
 ```
 
@@ -141,7 +140,7 @@ We handle initial configuration [here](https://github.com/ghondar/crassa/blob/ma
 
 Example: (__/config-overrides.js__)
 
-​```javascript
+```javascript
 const { override, addWebpackAlias, addBundleVisualizer } = require('customize-cra')
 
 module.exports = override(
