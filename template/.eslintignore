@@ -1,7 +1,0 @@
-**/node_modules/**
-**/build/**
-**/public/**
-**/coverage/**
-**/vendor/**
-**/js/**
-package.json

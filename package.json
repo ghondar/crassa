@@ -1,6 +1,6 @@
 {
   "name": "crassa",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "preferGlobal": true,
   "bin": "./index.js",
   "main": "index.js",
@@ -50,7 +50,9 @@
     "react-scripts": "2.0.5"
   },
   "devDependencies": {
-    "inquirer": "6.2.0"
+    "download-git-repo": "1.1.0",
+    "inquirer": "6.2.0",
+    "rimraf": "2.6.2"
   },
   "scripts": {
     "publish": "git add . && git commit && npm publish",

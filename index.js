@@ -13,20 +13,37 @@ program.version(version).description('Create client + server apps with one CLI c
 program
   .command('init <projectName> [projectFolderName]')
   .description('Initialize a project.')
-  .action((projectName, projectFolderName) => {
-    inquirer
-      .prompt([
+  .action(async (projectName, projectFolderName) => {
+    let urlTemplate = 'ghondar/counter-with-redux-ducks-and-sagas-template'
+    const { manager, template } = await inquirer.prompt([
+      {
+        type     : 'list',
+        name     : 'manager',
+        message  : 'Choose Package Manager:',
+        choices  : [ 'yarn', 'npm' ],
+        'default': 'yarn'
+      },
+      {
+        type     : 'list',
+        name     : 'template',
+        message  : 'Choose Template:',
+        choices  : [ 'default', 'custom' ],
+        'default': 'default'
+      }
+    ])
+
+    if(template === 'custom') {
+      const { url } = await inquirer.prompt([
         {
-          type     : 'list',
-          name     : 'manager',
-          message  : 'Choose Package Manager:',
-          choices  : [ 'npm', 'yarn' ],
-          'default': 'yarn'
+          type   : 'input',
+          name   : 'url',
+          message: 'Git URL Template:'
         }
       ])
-      .then(({ manager }) => {
-        createProject({ projectName, projectFolderName, manager })
-      })
+      urlTemplate = url
+    }
+
+    createProject({ projectName, projectFolderName, manager, urlTemplate })
   })
 
 commands.forEach(({ name, fn, description = '' }) => {

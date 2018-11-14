@@ -58,24 +58,82 @@ The interesting files for you are all located in the __src__ folder. The src fol
 
 As you can imagine, the __src__ folder contains all files for the React frontend application and the __server__ folder contains all files for the node.js backend.
 
+## Custom Template
+You'll be able create custom template from github to generate your initial project:
+Github repository structure [like](https://github.com/ghondar/counter-with-redux-ducks-and-sagas-template):
+
+```bash
+    .
+└── template
+    ├── nodemon.json
+    ├── public
+    │   ├── favicon.ico
+    │   ├── index.html
+    │   └── manifest.json
+    ├── server
+    │   ├── index.js
+    │   └── v1
+    │       ├── counter
+    │       │   └── index.js
+    │       └── index.js
+    └── src
+        ├── App.js
+        ├── App.test.js
+        ├── components
+        │   └── Common
+        │       └── Loading.js
+        ├── containers
+        │   ├── Dashboard.js
+        │   ├── DevTools.js
+        │   ├── Root.dev.js
+        │   ├── Root.js
+        │   └── Root.prod.js
+        ├── index.js
+        ├── lib
+        │   └── Request.js
+        ├── reducers
+        │   ├── base.js
+        │   ├── counter.js
+        │   └── index.js
+        ├── registerServiceWorker.js
+        ├── routes
+        │   └── index.js
+        ├── sagas
+        │   ├── counter.js
+        │   └── index.js
+        ├── setupProxy.js
+        └── store
+            ├── configureStore.dev.js
+            ├── configureStore.js
+            └── configureStore.prod.js
+```
+
+You can put your git when crassa cli ask you to choose betwee custom or default template, the url mus to have this structure:
+
+```bash
+ghondar/counter-with-redux-ducks-and-sagas-template
+```
+
+
+
 ## Extensions
 
 Here (__server__ folder) you can extend universal middleware creating __preLoadState.js__ file to dispatch action from server to load initial state into redux store.
 
 Example: (__/server/preLoadState.js__)
 
-```javascript
+​```javascript
 import counterDuck from 'reducers/counter'
 
 export default function(res, req, next) {
-    // Get store from locals
-    const { store } = res.locals
-    // Dispatch a action to change initial state
-    store.dispatch(counterDuck.creators.addCount())
-    // Resave new store
-    res.locals.store = store
-    // Pass middlerware
-    next()
+​    // Get store from locals
+​    const { store } = res.locals
+​    // Dispatch a action to change initial state
+​    store.dispatch(counterDuck.creators.addCount())
+​    // Resave new store
+​    res.locals.store = store
+​    // Pass middlerware
+​    next()
 }
 ```
 
@@ -83,7 +141,7 @@ We handle initial configuration [here](https://github.com/ghondar/crassa/blob/ma
 
 Example: (__/config-overrides.js__)
 
-```javascript
+​```javascript
 const { override, addWebpackAlias, addBundleVisualizer } = require('customize-cra')
 
 module.exports = override(
