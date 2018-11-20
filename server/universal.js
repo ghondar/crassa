@@ -23,7 +23,7 @@ const prepHTML = (data, { html, head, body, loadableState }) => {
 }
 
 export function createStore(req, res, next) {
-  if(req.url.indexOf('.') !== -1 || req.url.indexOf('api') !== -1) {
+  if(req.url.indexOf('.') !== -1 || req.url.indexOf('api') !== -1 || req.url.indexOf('static') !== -1) {
     next()
   } else {
     const filePath = appBuild + '/index.html'

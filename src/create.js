@@ -1,8 +1,6 @@
 const path = require('path')
 const fs = require('fs')
 const childProcess = require('child_process')
-const download = require('download-git-repo')
-const rimraf = require('rimraf')
 
 const { copyDir, replaceAll, colorize } = require('./util')
 const { packageRootPath } = require('./paths')
@@ -10,6 +8,8 @@ const { packageRootPath } = require('./paths')
 const { version } = require('../package.json')
 
 async function create({ projectName, projectFolderName, manager, urlTemplate }) {
+  const download = require('download-git-repo')
+  const rimraf = require('rimraf')
   const folderNameToUse = projectFolderName || projectName
   const pathToUse = path.resolve(process.cwd(), folderNameToUse)
   const [ , name ] = urlTemplate.split('/')
