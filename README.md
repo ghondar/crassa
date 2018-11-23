@@ -136,6 +136,21 @@ export default function(res, req, next) {
 }
 ```
 
+Here (__server__ folder) you can get the html created in __universal.js__  to modify the initial load of DOM.
+
+Example: (__/server/universal.js__)
+
+```javascript
+export const setRenderUniversal = htmlData => {
+  const materialStyle = `
+    <style id='css-server-side' type="text/css">
+      html{margin:0px;padding:0px}
+    </style>
+  `
+
+  return htmlData.replace('<head>', `<head>${materialStyle}`)
+}
+
 We handle initial configuration [here](https://github.com/ghondar/crassa/blob/master/config-overrides.js) adding babel plugins ([transform-imports](https://www.npmjs.com/package/babel-plugin-transform-imports), [loadable-components](https://github.com/smooth-code/loadable-components) and [transform-react-remove-prop-types](https://github.com/oliviertassinari/babel-plugin-transform-react-remove-prop-types)) and webpack alias (basic alias from __package.json__) but you can extend this initial configuration adding to your root project __config-overrides.js__ file.
 
 Example: (__/config-overrides.js__)
