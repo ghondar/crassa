@@ -150,6 +150,7 @@ export const setRenderUniversal = htmlData => {
 
   return htmlData.replace('<head>', `<head>${materialStyle}`)
 }
+```
 
 We handle initial configuration [here](https://github.com/ghondar/crassa/blob/master/config-overrides.js) adding babel plugins ([transform-imports](https://www.npmjs.com/package/babel-plugin-transform-imports), [loadable-components](https://github.com/smooth-code/loadable-components) and [transform-react-remove-prop-types](https://github.com/oliviertassinari/babel-plugin-transform-react-remove-prop-types)) and webpack alias (basic alias from __package.json__) but you can extend this initial configuration adding to your root project __config-overrides.js__ file.
 
