@@ -7,10 +7,13 @@ import Helmet from 'react-helmet'
 
 import createServerStore from './store'
 
-import { appSrc, appBuild } from '../src/paths'
+import { appSrc, appBuild, appServer } from '../src/paths'
 
 const Root = require(appSrc + '/containers/Root').default
 const createRoutes = require(appSrc + '/routes').default
+
+const universalJS = appServer + '/universal.js'
+const hasUniversal = fs.existsSync(universalJS)
 
 // A simple helper function to prepare the HTML markup
 const prepHTML = (data, { html, head, body, loadableState }) => {
@@ -67,8 +70,15 @@ export const universalLoader = async (req, res) => {
   // Let Helmet know to insert the right tags
   const helmet = Helmet.renderStatic()
 
+  let prevHtml = htmlData
+
+  if(hasUniversal) {
+    const universalProject = require(universalJS)
+    if(universalProject.setRenderUniversal)
+      prevHtml = universalProject.setRenderUniversal(htmlData)
+  }
   // Form the final HTML response
-  const html = prepHTML(htmlData, {
+  const html = prepHTML(prevHtml, {
     html         : helmet.htmlAttributes.toString(),
     head         : helmet.title.toString() + helmet.meta.toString() + helmet.link.toString(),
     body         : routeMarkup,
