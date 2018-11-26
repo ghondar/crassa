@@ -18,7 +18,7 @@ require('@babel/register')({
 
 require('@babel/polyfill')
 
-const { appRootPath, appPackage } = require('../src/paths')
+const { appRootPath, appPackage, appDotEnv } = require('../src/paths')
 const { _moduleAliases } = require(appPackage)
 
 const aliases = {}
@@ -29,5 +29,8 @@ Object.keys(_moduleAliases).forEach(key => {
 
 moduleAlias.addAliases(aliases)
 
+require('dotenv').config({
+  path: appDotEnv
+})
 // Now that the nonsense is over... load up the server entry point
 require('./server')
