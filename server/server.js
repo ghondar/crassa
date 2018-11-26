@@ -20,7 +20,6 @@ app.use(morgan('dev'))
 app.disable('x-powered-by')
 
 // Set up route handling, include static assets and an optional API
-app.use('/', index)
 app.use(express.static(path.resolve(appBuild)))
 app.use('/api', require(path.resolve(appServer)).default)
 app.use('/', index)
