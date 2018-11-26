@@ -26,7 +26,7 @@ const prepHTML = (data, { html, head, body, loadableState }) => {
 }
 
 export function createStore(req, res, next) {
-  if(req.url.indexOf('.') !== -1 || req.url.indexOf('api') !== -1 || req.url.indexOf('static') !== -1) {
+  if(req.baseUrl.indexOf('.') !== -1 || req.baseUrl.indexOf('api') !== -1 || req.baseUrl.indexOf('static') !== -1) {
     next()
   } else {
     const filePath = appBuild + '/index.html'
@@ -41,7 +41,7 @@ export function createStore(req, res, next) {
       }
 
       // Create a store and sense of history based on the current path
-      const { store, history } = createServerStore(req.path)
+      const { store, history } = createServerStore(req.baseUrl)
 
       // Set data into locals to passa another middleware
       res.locals = {
