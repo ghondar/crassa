@@ -16,6 +16,6 @@ const middleware = hasPreLoadState ?
   }
 
 // Set universal render middlewares
-router.get('/*', createStore, middleware, universalLoader)
+router.use(createStore, middleware, universalLoader)
 
 export default router

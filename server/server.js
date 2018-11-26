@@ -19,10 +19,12 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(morgan('dev'))
 app.disable('x-powered-by')
 
+app.use('^/$', index)
+app.use('/api', require(path.resolve(appServer)).default)
 // Set up route handling, include static assets and an optional API
 app.use(express.static(path.resolve(appBuild)))
-app.use('/api', require(path.resolve(appServer)).default)
-app.use('/', index)
+// any other route should be handled by react-router, so serve the index page
+app.use('*', index)
 
 // Let's rock
 app.listen(PORT, () => {
