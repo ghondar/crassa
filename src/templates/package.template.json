@@ -46,7 +46,10 @@
     }
   },
   "dependencies": {
+    "axios": "0.18.0",
     "crassa": "{-- project-version --}",
+    "extensible-duck": "1.4.0",
+    "immer": "1.7.4",
     "loadable-components": "2.2.3",
     "react": "16.6.0",
     "react-dom": "16.6.0",

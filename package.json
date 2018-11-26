@@ -1,6 +1,6 @@
 {
   "name": "crassa",
-  "version": "0.3.1",
+  "version": "0.3.8",
   "preferGlobal": true,
   "bin": "./index.js",
   "main": "index.js",
@@ -35,9 +35,12 @@
     "compression": "1.7.3",
     "cross-env": "5.2.0",
     "customize-cra": "0.1.1",
+    "download-git-repo": "1.1.0",
     "express": "4.16.4",
     "http-proxy-middleware": "0.19.0",
     "ignore-styles": "5.0.1",
+    "immer": "1.7.4",
+    "inquirer": "6.2.0",
     "lint-staged": "8.0.3",
     "loadable-components": "2.2.3",
     "module-alias": "2.1.0",
@@ -46,10 +49,8 @@
     "nodemon": "1.18.5",
     "pre-commit": "1.2.2",
     "react-app-rewired": "1.6.2",
-    "react-scripts": "2.0.5"
-  },
-  "devDependencies": {
-    "inquirer": "6.2.0"
+    "react-scripts": "2.0.5",
+    "rimraf": "2.6.2"
   },
   "scripts": {
     "publish": "git add . && git commit && npm publish",
