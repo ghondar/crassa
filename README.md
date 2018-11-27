@@ -148,7 +148,7 @@ Example: (__/server/preLoadState.js__)
 ```javascript
 import counterDuck from 'reducers/counter'
 
-export default function(res, req, next) {
+export default function(req, res, next) {
      // Get store from locals
      const { store } = res.locals
      // Dispatch a action to change initial state
