@@ -1,6 +1,6 @@
 {
   "name": "crassa",
-  "version": "0.4.2",
+  "version": "0.4.3",
   "preferGlobal": true,
   "bin": "./index.js",
   "main": "index.js",
@@ -51,6 +51,7 @@
     "pre-commit": "1.2.2",
     "react-app-rewired": "1.6.2",
     "react-scripts": "2.0.5",
+    "redux-wait-for-action": "0.0.8",
     "rimraf": "2.6.2"
   },
   "scripts": {
