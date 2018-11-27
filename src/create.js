@@ -3,7 +3,6 @@ const fs = require('fs')
 const childProcess = require('child_process')
 
 const { copyDir, replaceAll, colorize } = require('./util')
-const { packageRootPath } = require('./paths')
 
 const { version } = require('../package.json')
 
@@ -17,10 +16,6 @@ async function create({ projectName, projectFolderName, manager, urlTemplate }) 
   const templatePath = tmp + name
 
   console.log(`Creating project ${colorize(projectName).FgCyan()} in ${colorize(pathToUse).FgCyan()}...`)
-
-  const packageJSONTemplate = fs.readFileSync(path.resolve(__dirname, './templates/package.template.json'))
-  let packageJSON = replaceAll(packageJSONTemplate.toString(), '{-- project-name --}', projectName)
-  packageJSON = replaceAll(packageJSON.toString(), '{-- project-version --}', version)
 
   if(fs.existsSync(path.resolve(__dirname, tmp))) {
     if(fs.existsSync(path.resolve(__dirname, tmp, name))) rimraf.sync(path.resolve(__dirname, tmp, name))
@@ -39,21 +34,19 @@ async function create({ projectName, projectFolderName, manager, urlTemplate }) 
         destination: pathToUse
       })
 
+      const packageJSONTemplate = fs.readFileSync(path.resolve(__dirname, templatePath, 'package.json'))
+      let packageJSON = replaceAll(packageJSONTemplate.toString(), '{-- project-name --}', projectName)
+      packageJSON = replaceAll(packageJSON.toString(), '{-- project-version --}', version)
+
       // Create real package.json
       fs.writeFileSync(path.join(pathToUse, 'package.json'), packageJSON)
 
-      const vscodeConfigTemplate = fs.readFileSync(path.resolve(__dirname, './templates/settings.template.json'))
-      const vscodeConfig = replaceAll(vscodeConfigTemplate.toString(), '{-- eslintrcPath --}', path.join(packageRootPath, '.eslintrc'))
-
-      const vscodeFolder = path.join(pathToUse, '.vscode')
-      if(!fs.existsSync(vscodeFolder)) fs.mkdirSync(vscodeFolder)
-
-      fs.writeFileSync(path.join(vscodeFolder, 'settings.json'), vscodeConfig)
-
-      const gitIgnore = fs.readFileSync(path.resolve(__dirname, './templates/gitignore.template'))
+      // Copy .gitignore to real project
+      const gitIgnore = fs.readFileSync(path.resolve(__dirname, templatePath, '.gitignore'))
       fs.writeFileSync(path.join(pathToUse, '.gitignore'), gitIgnore)
 
-      const npmrc = fs.readFileSync(path.resolve(__dirname, './templates/npmrc.template'))
+      // Copy .npmrc to real project
+      const npmrc = fs.readFileSync(path.resolve(__dirname, templatePath, '.npmrc'))
       fs.writeFileSync(path.join(pathToUse, '.npmrc'), npmrc)
 
       const packageManager = {
