@@ -1,4 +1,0 @@
-{
-    "eslint.options": { "configFile": "{-- eslintrcPath --}" }
-}
-  
