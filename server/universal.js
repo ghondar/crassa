@@ -3,6 +3,7 @@ import fs from 'fs'
 import React from 'react'
 import { renderToString } from 'react-dom/server'
 import { getLoadableState } from 'loadable-components/server'
+import jsan from 'jsan'
 import Helmet from 'react-helmet'
 
 import createServerStore from './store'
@@ -16,11 +17,18 @@ const universalJS = appServer + '/universal.js'
 const hasUniversal = fs.existsSync(universalJS)
 
 // A simple helper function to prepare the HTML markup
-const prepHTML = (data, { html, head, body, loadableState }) => {
+const prepHTML = (data, { html, head, body, loadableState, preloadedState }) => {
   data = data.replace('<html lang="en">', `<html ${html}`)
   data = data.replace('</head>', `${head}</head>`)
   data = data.replace('<div id="root"></div>', `<div id="root">${body}</div>`)
-  data = data.replace('<script', loadableState + '<script')
+  data = data.replace(
+    '<script',
+    loadableState +
+      `<script>
+        window.__PRELOADED_STATE__ = ${preloadedState.replace(/</g, '\\u003c')}
+      </script>` +
+      '<script'
+  )
 
   return data
 }
@@ -74,15 +82,18 @@ export const universalLoader = async (req, res) => {
 
   if(hasUniversal) {
     const universalProject = require(universalJS)
-    if(universalProject.setRenderUniversal)
-      prevHtml = universalProject.setRenderUniversal(htmlData)
+    if(universalProject.setRenderUniversal) prevHtml = universalProject.setRenderUniversal(htmlData)
   }
+
+  const preloadedState = jsan.stringify(store.getState())
+
   // Form the final HTML response
   const html = prepHTML(prevHtml, {
     html         : helmet.htmlAttributes.toString(),
     head         : helmet.title.toString() + helmet.meta.toString() + helmet.link.toString(),
     body         : routeMarkup,
-    loadableState: loadableState.getScriptTag()
+    loadableState: loadableState.getScriptTag(),
+    preloadedState
   })
 
   // Up, up, and away...
