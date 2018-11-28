@@ -8863,6 +8863,11 @@ reduce-css-calc@^2.0.0:
     css-unit-converter "^1.1.1"
     postcss-value-parser "^3.3.0"
 
+redux-wait-for-action@0.0.8:
+  version "0.0.8"
+  resolved "https://registry.yarnpkg.com/redux-wait-for-action/-/redux-wait-for-action-0.0.8.tgz#980a648db8293119bfaa1375610319f76c20514f"
+  integrity sha1-mApkjbgpMRm/qhN1YQMZ92wgUU8=
+
 regenerate-unicode-properties@^7.0.0:
   version "7.0.0"
   resolved "https://registry.yarnpkg.com/regenerate-unicode-properties/-/regenerate-unicode-properties-7.0.0.tgz#107405afcc4a190ec5ed450ecaa00ed0cafa7a4c"

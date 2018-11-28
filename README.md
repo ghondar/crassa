@@ -106,6 +106,30 @@ Github repository structure [like](https://github.com/ghondar/counter-with-redux
             ├── configureStore.dev.js
             ├── configureStore.js
             └── configureStore.prod.js
+├── .gitignore
+├── .npmrc
+└── package.json
+```
+
+Where package.json basically it must have name and displayName tag with {-- project-name --} and crassa with version tag {-- project-version --} like this:
+
+```json
+{
+    "name": "{-- project-name --}",
+    ...
+    "crassa": {
+        "displayName": "{-- project-name --}",
+        "aliases": {
+            ...
+        }
+    },
+    ...
+    "dependencies": {
+        "crassa":  "{-- project-version --}",
+        ...
+    },
+    ...
+}
 ```
 
 You can put your git when crassa cli ask you to choose betwee custom or default template, the url mus to have this structure:
@@ -124,7 +148,7 @@ Example: (__/server/preLoadState.js__)
 ```javascript
 import counterDuck from 'reducers/counter'
 
-export default function(res, req, next) {
+export default function(req, res, next) {
      // Get store from locals
      const { store } = res.locals
      // Dispatch a action to change initial state

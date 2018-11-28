@@ -1,6 +1,7 @@
 import { createStore, applyMiddleware, compose } from 'redux'
 import { routerMiddleware } from 'react-router-redux'
 import createSagaMiddleware from 'redux-saga'
+import createReduxWaitForMiddleware from 'redux-wait-for-action'
 import createHistory from 'history/createMemoryHistory'
 
 import { appSrc } from '../src/paths'
@@ -18,7 +19,10 @@ const createServerStore = (path = '/') => {
 
   // All the middlewares
   const middleware = [ sagaMiddleware, routerMiddleware(history) ]
-  const composedEnhancers = compose(applyMiddleware(...middleware))
+  const composedEnhancers = compose(
+    applyMiddleware(...middleware),
+    applyMiddleware(createReduxWaitForMiddleware())
+  )
 
   // Store it all
   const store = createStore(reducers, initialState, composedEnhancers)
