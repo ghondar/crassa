@@ -1,6 +1,6 @@
 {
   "name": "crassa",
-  "version": "0.4.4",
+  "version": "0.4.5",
   "preferGlobal": true,
   "bin": "./index.js",
   "main": "index.js",
@@ -42,6 +42,7 @@
     "ignore-styles": "5.0.1",
     "immer": "1.7.4",
     "inquirer": "6.2.0",
+    "jsan": "3.1.11",
     "lint-staged": "8.0.3",
     "loadable-components": "2.2.3",
     "module-alias": "2.1.0",
