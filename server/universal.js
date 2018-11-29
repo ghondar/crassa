@@ -81,9 +81,9 @@ export const universalLoader = async (req, res) => {
   if(hasUniversal) {
     const universalProject = require(universalJS)
     if(universalProject.setRenderUniversal) {
-      const { routeMarkup: routeMarkupAux, prevHtml: prevHtmlAux } = universalProject.setRenderUniversal(app, htmlData, store)
-      routeMarkup = routeMarkupAux
+      const { prevHtml: prevHtmlAux,  renderString } = universalProject.setRenderUniversal(htmlData, app, store)
       prevHtml = prevHtmlAux
+      routeMarkup = renderString
     }
   }
 
