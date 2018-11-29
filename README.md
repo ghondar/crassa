@@ -167,7 +167,7 @@ Example: (__/server/universal.js__)
 ```javascript
 import { renderToString } from 'react-dom/server'
 
-export const setRenderUniversal = (app, html, store) => {
+export const setRenderUniversal = (htmlData, app, store) => {
     // store => access to store ( redux )
 
     const renderString = renderToString(app) // optional
