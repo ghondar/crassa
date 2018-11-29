@@ -18,7 +18,7 @@ const hasUniversal = fs.existsSync(universalJS)
 
 // A simple helper function to prepare the HTML markup
 const prepHTML = (data, { html, head, body, loadableState, preloadedState }) => {
-  data = data.replace('<html lang="en">', `<html ${html}`)
+  data = data.replace('<html lang="en">', `<html ${html} >`)
   data = data.replace('</head>', `${head}</head>`)
   data = data.replace('<div id="root"></div>', `<div id="root">${body}</div>`)
   data = data.replace(
