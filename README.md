@@ -160,7 +160,7 @@ export default function(req, res, next) {
 }
 ```
 
-Here (__server__ folder) you can get the html created in __universal.js__  to modify the initial load of DOM.
+Here (__server__ folder) you can get the html created in __universal.js__  to modify the initial load of DOM or wrapping your app src react project.
 
 Example: (__/server/universal.js__)
 
@@ -170,7 +170,7 @@ import { renderToString } from 'react-dom/server'
 export const setRenderUniversal = (htmlData, app, store) => {
     // store => access to store ( redux )
 
-    const renderString = renderToString(app) // optional
+    const renderString = renderToString(app) // wrapping optional
 
     const materialStyle = `
       <style id='css-server-side' type="text/css">
