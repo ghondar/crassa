@@ -160,7 +160,7 @@ export default function(req, res, next) {
 }
 ```
 
-Here (__server__ folder) you can get the html created in __universal.js__  to modify the initial load of DOM.
+Here (__server__ folder) you can get the html created in __universal.js__  to modify the initial load of DOM or wrapping your app src react project.
 
 Example: (__/server/universal.js__)
 
@@ -173,6 +173,14 @@ export const setRenderUniversal = htmlData => {
   `
 
   return htmlData.replace('<head>', `<head>${materialStyle}`)
+}
+
+export const wrapApp = app => {
+  return (
+    <Custom>
+      {app}
+    </Custom>
+  )
 }
 ```
 
