@@ -72,18 +72,24 @@ export const universalLoader = async (req, res) => {
   // Get loadable components tree
   const loadableState = await getLoadableState(app)
 
-  // Render App in React
-  const routeMarkup = renderToString(app)
-
   // Let Helmet know to insert the right tags
   const helmet = Helmet.renderStatic()
 
-  let prevHtml = htmlData
+  let prevHtml = null,
+    routeMarkup = null
 
   if(hasUniversal) {
     const universalProject = require(universalJS)
-    if(universalProject.setRenderUniversal) prevHtml = universalProject.setRenderUniversal(htmlData)
+    if(universalProject.setRenderUniversal) {
+      const { routeMarkup: routeMarkupAux, prevHtml: prevHtmlAux } = universalProject.setRenderUniversal(app, htmlData, store)
+      routeMarkup = routeMarkupAux
+      prevHtml = prevHtmlAux
+    }
   }
+
+  if(!prevHtml) prevHtml = htmlData
+  // Render App in React
+  if(!routeMarkup) routeMarkup = renderToString(app)
 
   const preloadedState = jsan.stringify(store.getState())
 
