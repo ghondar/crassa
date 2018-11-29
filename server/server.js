@@ -1,5 +1,6 @@
 import bodyParser from 'body-parser'
 import compression from 'compression'
+import cookieParser from 'cookie-parser'
 import express from 'express'
 import morgan from 'morgan'
 import path from 'path'
@@ -14,6 +15,7 @@ const PORT = process.env.PORT || 5000
 
 // Compress, parse, and log
 app.use(compression())
+app.use(cookieParser())
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(morgan('dev'))

@@ -165,22 +165,23 @@ Here (__server__ folder) you can get the html created in __universal.js__  to mo
 Example: (__/server/universal.js__)
 
 ```javascript
-export const setRenderUniversal = htmlData => {
-  const materialStyle = `
-    <style id='css-server-side' type="text/css">
-      html{margin:0px;padding:0px}
-    </style>
-  `
+import { renderToString } from 'react-dom/server'
 
-  return htmlData.replace('<head>', `<head>${materialStyle}`)
-}
+export const setRenderUniversal = (htmlData, app, store) => {
+    // store => access to store ( redux )
 
-export const wrapApp = app => {
-  return (
-    <Custom>
-      {app}
-    </Custom>
-  )
+    const renderString = renderToString(app) // wrapping optional
+
+    const materialStyle = `
+      <style id='css-server-side' type="text/css">
+        html { margin:0px; padding:0px }
+      </style>
+    `
+
+  return {
+    prevHtml: html.replace('<head>', `<head>${materialStyle}`),
+    renderString // optional
+  }
 }
 ```
 

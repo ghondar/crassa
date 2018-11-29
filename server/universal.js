@@ -63,15 +63,6 @@ export function createStore(req, res, next) {
 }
 
 export const universalLoader = async (req, res) => {
-  let setRenderUniversal = null
-  let wrapApp = null
-
-  if(hasUniversal) {
-    const universalProject = require(universalJS)
-    setRenderUniversal = universalProject.setRenderUniversal
-    wrapApp = universalProject.wrapApp
-  }
-
   // Get store, history and html string from middleware
   const { store, history, htmlData } = res.locals
   // Create routes using history
@@ -81,16 +72,29 @@ export const universalLoader = async (req, res) => {
   // Get loadable components tree
   const loadableState = await getLoadableState(app)
 
-  // Render App in React
-  const routeMarkup = renderToString(wrapApp ? wrapApp(app) : app)
-
   // Let Helmet know to insert the right tags
   const helmet = Helmet.renderStatic()
+
+  let prevHtml = null,
+    routeMarkup = null
+
+  if(hasUniversal) {
+    const universalProject = require(universalJS)
+    if(universalProject.setRenderUniversal) {
+      const { prevHtml: prevHtmlAux,  renderString } = universalProject.setRenderUniversal(htmlData, app, store)
+      prevHtml = prevHtmlAux
+      routeMarkup = renderString
+    }
+  }
+
+  if(!prevHtml) prevHtml = htmlData
+  // Render App in React
+  if(!routeMarkup) routeMarkup = renderToString(app)
 
   const preloadedState = jsan.stringify(store.getState())
 
   // Form the final HTML response
-  const html = prepHTML(setRenderUniversal ? setRenderUniversal(htmlData) : htmlData, {
+  const html = prepHTML(prevHtml, {
     html         : helmet.htmlAttributes.toString(),
     head         : helmet.title.toString() + helmet.meta.toString() + helmet.link.toString(),
     body         : routeMarkup,
