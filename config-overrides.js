@@ -1,4 +1,4 @@
-const { override, disableEsLint, addBabelPlugin, addWebpackAlias } = require('customize-cra')
+const { override, disableEsLint, addBabelPlugins, addWebpackAlias } = require('customize-cra')
 const { appRootPath, appConfigOverrides, appPackage } = require('./src/paths')
 const { existsSync } = require('fs')
 const { _moduleAliases } = require(appPackage)
@@ -13,9 +13,7 @@ Object.keys(_moduleAliases).forEach(key => {
 
 module.exports = override(
   disableEsLint(),
-  addBabelPlugin('transform-imports'),
-  addBabelPlugin('loadable-components/babel'),
-  addBabelPlugin('transform-react-remove-prop-types'),
+  ...addBabelPlugins('transform-imports', 'loadable-components/babel', 'transform-react-remove-prop-types'),
   addWebpackAlias({ ...aliases, 'lodash-es': 'lodash' }),
   hasCustomConfigOverrides ?
     require(appConfigOverrides) :
