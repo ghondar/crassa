@@ -1,6 +1,7 @@
 const { override, disableEsLint, addBabelPlugins, addWebpackAlias } = require('customize-cra')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 const LoadablePlugin = require('@loadable/webpack-plugin')
-const { appRootPath, appConfigOverrides, appPackage } = require('./src/paths')
+const { appRootPath, appConfigOverrides, appPublic, appPackage } = require('./src/paths')
 const { existsSync } = require('fs')
 const { _moduleAliases } = require(appPackage)
 
@@ -18,6 +19,26 @@ module.exports = override(
   addWebpackAlias({ ...aliases, 'lodash-es': 'lodash' }),
   function(config) {
     config.plugins.push(new LoadablePlugin())
+    config.plugins.shift()
+
+    config.plugins.unshift(
+      new HtmlWebpackPlugin({
+        inject  : false,
+        template: appPublic + '/index.html',
+        minify  : {
+          removeComments               : true,
+          collapseWhitespace           : true,
+          removeRedundantAttributes    : true,
+          useShortDoctype              : true,
+          removeEmptyAttributes        : true,
+          removeStyleLinkTypeAttributes: true,
+          keepClosingSlash             : true,
+          minifyJS                     : true,
+          minifyCSS                    : true,
+          minifyURLs                   : true
+        }
+      })
+    )
 
     return config
   },

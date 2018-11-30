@@ -24,12 +24,12 @@ const prepHTML = (data, { html, head, body, loadableState, preloadedState }) => 
   data = data.replace('</head>', `${head}</head>`)
   data = data.replace('<div id="root"></div>', `<div id="root">${body}</div>`)
   data = data.replace(
-    '<script',
+    '</body>',
     loadableState +
       `<script>
         window.__PRELOADED_STATE__ = ${preloadedState.replace(/</g, '\\u003c')}
       </script>` +
-      '<script'
+      '</body>'
   )
 
   return data
