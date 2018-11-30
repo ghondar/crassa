@@ -19,32 +19,29 @@ module.exports = override(
   addWebpackAlias({ ...aliases, 'lodash-es': 'lodash' }),
   function(config) {
     config.plugins.push(new LoadablePlugin())
-    config.plugins.shift()
-
-    config.plugins.unshift(
-      new HtmlWebpackPlugin({
-        inject  : false,
-        template: appPublic + '/index.html',
-        minify  : {
-          removeComments               : true,
-          collapseWhitespace           : true,
-          removeRedundantAttributes    : true,
-          useShortDoctype              : true,
-          removeEmptyAttributes        : true,
-          removeStyleLinkTypeAttributes: true,
-          keepClosingSlash             : true,
-          minifyJS                     : true,
-          minifyCSS                    : true,
-          minifyURLs                   : true
-        }
-      })
-    )
+    if(process.env.NODE_ENV === 'production') {
+      config.plugins.shift()
+      config.plugins.unshift(
+        new HtmlWebpackPlugin({
+          inject  : false,
+          template: appPublic + '/index.html',
+          minify  : {
+            removeComments               : true,
+            collapseWhitespace           : true,
+            removeRedundantAttributes    : true,
+            useShortDoctype              : true,
+            removeEmptyAttributes        : true,
+            removeStyleLinkTypeAttributes: true,
+            keepClosingSlash             : true,
+            minifyJS                     : true,
+            minifyCSS                    : true,
+            minifyURLs                   : true
+          }
+        })
+      )
+    }
 
     return config
   },
-  hasCustomConfigOverrides ?
-    require(appConfigOverrides) :
-    function(config) {
-      return config
-    }
+  hasCustomConfigOverrides && require(appConfigOverrides)
 )
