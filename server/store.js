@@ -6,7 +6,7 @@ import createHistory from 'history/createMemoryHistory'
 
 import { appSrc } from '../src/paths'
 
-const reducers = require(appSrc + '/reducers').default
+const createRootReducer = require(appSrc + '/reducers').default
 const rootSaga = require(appSrc + '/sagas').default
 
 // Create a store and history based on a path
@@ -25,7 +25,7 @@ const createServerStore = (path = '/') => {
   )
 
   // Store it all
-  const store = createStore(reducers, initialState, composedEnhancers)
+  const store = createStore(createRootReducer(history), initialState, composedEnhancers)
   sagaMiddleware.run(rootSaga)
 
   // Return all that I need
