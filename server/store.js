@@ -1,5 +1,5 @@
 import { createStore, applyMiddleware, compose } from 'redux'
-import { routerMiddleware } from 'react-router-redux'
+import { routerMiddleware } from 'connected-react-router'
 import createSagaMiddleware from 'redux-saga'
 import createReduxWaitForMiddleware from 'redux-wait-for-action'
 import createHistory from 'history/createMemoryHistory'
