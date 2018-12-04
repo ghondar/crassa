@@ -1,5 +1,7 @@
-const { override, disableEsLint, addBabelPlugin, addWebpackAlias } = require('customize-cra')
-const { appRootPath, appConfigOverrides, appPackage } = require('./src/paths')
+const { override, disableEsLint, addBabelPlugins, addWebpackAlias } = require('customize-cra')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const LoadablePlugin = require('@loadable/webpack-plugin')
+const { appRootPath, appConfigOverrides, appPublic, appPackage } = require('./src/paths')
 const { existsSync } = require('fs')
 const { _moduleAliases } = require(appPackage)
 
@@ -13,13 +15,33 @@ Object.keys(_moduleAliases).forEach(key => {
 
 module.exports = override(
   disableEsLint(),
-  addBabelPlugin('transform-imports'),
-  addBabelPlugin('loadable-components/babel'),
-  addBabelPlugin('transform-react-remove-prop-types'),
+  ...addBabelPlugins('transform-imports', '@loadable/babel-plugin', 'transform-react-remove-prop-types'),
   addWebpackAlias({ ...aliases, 'lodash-es': 'lodash' }),
-  hasCustomConfigOverrides ?
-    require(appConfigOverrides) :
-    function(config) {
-      return config
+  function(config) {
+    config.plugins.push(new LoadablePlugin())
+    if(process.env.NODE_ENV === 'production') {
+      config.plugins.shift()
+      config.plugins.unshift(
+        new HtmlWebpackPlugin({
+          inject  : false,
+          template: appPublic + '/index.html',
+          minify  : {
+            removeComments               : true,
+            collapseWhitespace           : true,
+            removeRedundantAttributes    : true,
+            useShortDoctype              : true,
+            removeEmptyAttributes        : true,
+            removeStyleLinkTypeAttributes: true,
+            keepClosingSlash             : true,
+            minifyJS                     : true,
+            minifyCSS                    : true,
+            minifyURLs                   : true
+          }
+        })
+      )
     }
+
+    return config
+  },
+  hasCustomConfigOverrides && require(appConfigOverrides)
 )

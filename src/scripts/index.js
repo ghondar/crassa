@@ -41,10 +41,14 @@ function dev() {
 function build() {
   const cmd = `
           npx cross-env
-            NODE_ENV=development
+            INLINE_RUNTIME_CHUNK=false
               npx cross-env
-                APP_ROOT=${appRootPath}
-                  npx node ${packageRootPath}/build.js`
+                GENERATE_SOURCEMAP=false 
+                  npx cross-env
+                    NODE_ENV=development
+                      npx cross-env
+                        APP_ROOT=${appRootPath}
+                          npx node ${packageRootPath}/build.js`
   execCmd(cmd, { async: true })
 }
 
