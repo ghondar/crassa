@@ -24,7 +24,7 @@ This will fire up the backend and the frontend development server. Just edit fil
 :warning: Crassa is in early stage of development and may not meet all your requirements. That's why contributions of any kind are highly appreciated, as the best tools are built by communities!
 
 ## Usage
-:star: Create a new crana project.
+:star: Create a new crassa project.
 ```bash
 crassa init <projectName> [projectFolderName]
 ```
