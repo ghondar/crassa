@@ -64,48 +64,52 @@ export function createStore(req, res, next) {
   }
 }
 
-export const universalLoader = async (req, res) => {
-  // Get store, history and html string from middleware
-  const { store, history, htmlData } = res.locals
-  // Create routes using history
-  const routes = createRoutes(history)
-  // Get app wrapping Root (Provider redux) passing store
-  const app = <Root store={store}>{routes}</Root>
+export const universalLoader = async (req, res, next) => {
+  if(req.baseUrl.indexOf('.') !== -1 || req.baseUrl.indexOf('api') !== -1 || req.baseUrl.indexOf('static') !== -1) {
+    next()
+  } else {
+    // Get store, history and html string from middleware
+    const { store, history, htmlData } = res.locals
+    // Create routes using history
+    const routes = createRoutes(history)
+    // Get app wrapping Root (Provider redux) passing store
+    const app = <Root store={store}>{routes}</Root>
 
-  const extractor = new ChunkExtractor({ statsFile })
-  // Get loadable components tree
-  const jsx = extractor.collectChunks(app)
+    const extractor = new ChunkExtractor({ statsFile })
+    // Get loadable components tree
+    const jsx = extractor.collectChunks(app)
 
-  // Let Helmet know to insert the right tags
-  const helmet = Helmet.renderStatic()
+    // Let Helmet know to insert the right tags
+    const helmet = Helmet.renderStatic()
 
-  let prevHtml = null,
-    routeMarkup = null
+    let prevHtml = null,
+      routeMarkup = null
 
-  if(hasUniversal) {
-    const universalProject = require(universalJS)
-    if(universalProject.setRenderUniversal) {
-      const { prevHtml: prevHtmlAux, renderString } = universalProject.setRenderUniversal(htmlData, jsx, store)
-      prevHtml = prevHtmlAux
-      routeMarkup = renderString
+    if(hasUniversal) {
+      const universalProject = require(universalJS)
+      if(universalProject.setRenderUniversal) {
+        const { prevHtml: prevHtmlAux, renderString } = universalProject.setRenderUniversal(htmlData, jsx, store)
+        prevHtml = prevHtmlAux
+        routeMarkup = renderString
+      }
     }
+
+    if(!prevHtml) prevHtml = htmlData
+    // Render App in React
+    if(!routeMarkup) routeMarkup = renderToString(jsx)
+
+    const preloadedState = jsan.stringify(store.getState())
+
+    // Form the final HTML response
+    const html = prepHTML(prevHtml, {
+      html         : helmet.htmlAttributes.toString(),
+      head         : helmet.title.toString() + helmet.meta.toString() + helmet.link.toString(),
+      body         : routeMarkup,
+      loadableState: extractor.getScriptTags(),
+      preloadedState
+    })
+
+    // Up, up, and away...
+    res.send(html)
   }
-
-  if(!prevHtml) prevHtml = htmlData
-  // Render App in React
-  if(!routeMarkup) routeMarkup = renderToString(jsx)
-
-  const preloadedState = jsan.stringify(store.getState())
-
-  // Form the final HTML response
-  const html = prepHTML(prevHtml, {
-    html         : helmet.htmlAttributes.toString(),
-    head         : helmet.title.toString() + helmet.meta.toString() + helmet.link.toString(),
-    body         : routeMarkup,
-    loadableState: extractor.getScriptTags(),
-    preloadedState
-  })
-
-  // Up, up, and away...
-  res.send(html)
 }

@@ -1,6 +1,7 @@
 import bodyParser from 'body-parser'
 import compression from 'compression'
 import cookieParser from 'cookie-parser'
+import { existsSync } from 'fs'
 import express from 'express'
 import morgan from 'morgan'
 import path from 'path'
@@ -13,6 +14,9 @@ import { appServer, appBuild } from '../src/paths'
 const app = express()
 const PORT = process.env.PORT || 5000
 
+const configExpress = appServer + '/configExpress.js'
+const hasConfigExpress = existsSync(configExpress)
+
 // Compress, parse, and log
 app.use(compression())
 app.use(cookieParser())
@@ -20,6 +24,7 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(morgan('dev'))
 app.disable('x-powered-by')
+hasConfigExpress && require(preLoadState).default(app)
 
 app.use('^/$', index)
 app.use('/api', require(path.resolve(appServer)).default)
