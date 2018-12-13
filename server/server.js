@@ -24,7 +24,7 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(morgan('dev'))
 app.disable('x-powered-by')
-hasConfigExpress && require(preLoadState).default(app)
+hasConfigExpress && require(configExpress).default(app)
 
 app.use('^/$', index)
 app.use('/api', require(path.resolve(appServer)).default)
