@@ -39,7 +39,6 @@ export function createStore(req, res, next) {
   if(req.baseUrl.indexOf('.') !== -1 || req.baseUrl.indexOf('api') !== -1 || req.baseUrl.indexOf('static') !== -1) {
     next()
   } else {
-    console.log('algo')
     const filePath = appBuild + '/index.html'
 
     // Load in our HTML file from our build
