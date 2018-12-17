@@ -15,11 +15,11 @@ Object.keys(_moduleAliases).forEach(key => {
 
 module.exports = override(
   disableEsLint(),
-  ...addBabelPlugins('transform-imports', '@loadable/babel-plugin', 'transform-react-remove-prop-types'),
+  ...addBabelPlugins('babel-plugin-smart-webpack-import', 'transform-imports', '@loadable/babel-plugin', 'transform-react-remove-prop-types'),
   addWebpackAlias({ ...aliases, 'lodash-es': 'lodash' }),
   function(config) {
-    config.plugins.push(new LoadablePlugin())
     if(process.env.NODE_ENV === 'production') {
+      config.plugins.push(new LoadablePlugin())
       config.plugins.shift()
       config.plugins.unshift(
         new HtmlWebpackPlugin({
