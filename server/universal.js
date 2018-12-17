@@ -19,18 +19,18 @@ const hasUniversal = fs.existsSync(universalJS)
 const statsFile = appBuild + '/loadable-stats.json'
 
 // A simple helper function to prepare the HTML markup
-const prepHTML = (data, { html, head, body, loadableState, preloadedState }) => {
+const prepHTML = (data, { html, head, body, loadableState, preloadedState, isCustomState }) => {
   data = data.replace('<html lang="en">', `<html ${html} >`)
   data = data.replace('</head>', `${head}</head>`)
   data = data.replace('<div id="root"></div>', `<div id="root">${body}</div>`)
-  data = data.replace(
-    '</body>',
-    loadableState +
+  data = data.replace('</body>', loadableState + '</body>')
+  if(!isCustomState)
+    data = data.replace(
+      '</body>',
       `<script>
         window.__PRELOADED_STATE__ = ${preloadedState.replace(/</g, '\\u003c')}
-      </script>` +
-      '</body>'
-  )
+      </script>` + '</body>'
+    )
 
   return data
 }
@@ -39,6 +39,7 @@ export function createStore(req, res, next) {
   if(req.baseUrl.indexOf('.') !== -1 || req.baseUrl.indexOf('api') !== -1 || req.baseUrl.indexOf('static') !== -1) {
     next()
   } else {
+    console.log('algo')
     const filePath = appBuild + '/index.html'
 
     // Load in our HTML file from our build
@@ -64,48 +65,55 @@ export function createStore(req, res, next) {
   }
 }
 
-export const universalLoader = async (req, res) => {
-  // Get store, history and html string from middleware
-  const { store, history, htmlData } = res.locals
-  // Create routes using history
-  const routes = createRoutes(history)
-  // Get app wrapping Root (Provider redux) passing store
-  const app = <Root store={store}>{routes}</Root>
+export const universalLoader = async (req, res, next) => {
+  if(req.baseUrl.indexOf('.') !== -1 || req.baseUrl.indexOf('api') !== -1 || req.baseUrl.indexOf('static') !== -1) {
+    next()
+  } else {
+    // Get store, history and html string from middleware
+    const { store, history, htmlData } = res.locals
+    // Create routes using history
+    const routes = createRoutes(history, req.protocol + '://' + req.headers.host, store)
+    // Get app wrapping Root (Provider redux) passing store
+    const app = <Root store={store}>{routes}</Root>
 
-  const extractor = new ChunkExtractor({ statsFile })
-  // Get loadable components tree
-  const jsx = extractor.collectChunks(app)
+    const extractor = new ChunkExtractor({ statsFile })
+    // Get loadable components tree
+    const jsx = extractor.collectChunks(app)
 
-  // Let Helmet know to insert the right tags
-  const helmet = Helmet.renderStatic()
+    // Let Helmet know to insert the right tags
+    const helmet = Helmet.renderStatic()
 
-  let prevHtml = null,
-    routeMarkup = null
+    let prevHtml = null,
+      routeMarkup = null,
+      isCustomState = false
 
-  if(hasUniversal) {
-    const universalProject = require(universalJS)
-    if(universalProject.setRenderUniversal) {
-      const { prevHtml: prevHtmlAux, renderString } = universalProject.setRenderUniversal(htmlData, jsx, store)
-      prevHtml = prevHtmlAux
-      routeMarkup = renderString
+    if(hasUniversal) {
+      const universalProject = require(universalJS)
+      if(universalProject.setRenderUniversal) {
+        const { prevHtml: prevHtmlAux, renderString, customState } = universalProject.setRenderUniversal(res.locals, jsx)
+        isCustomState = !!customState
+        prevHtml = prevHtmlAux
+        routeMarkup = renderString
+      }
     }
+
+    if(!prevHtml) prevHtml = htmlData
+    // Render App in React
+    if(!routeMarkup) routeMarkup = renderToString(jsx)
+
+    const preloadedState = jsan.stringify(store.getState())
+
+    // Form the final HTML response
+    const html = prepHTML(prevHtml, {
+      html         : helmet.htmlAttributes.toString(),
+      head         : helmet.title.toString() + helmet.meta.toString() + helmet.link.toString(),
+      body         : routeMarkup,
+      loadableState: extractor.getScriptTags(),
+      isCustomState,
+      preloadedState
+    })
+
+    // Up, up, and away...
+    res.send(html)
   }
-
-  if(!prevHtml) prevHtml = htmlData
-  // Render App in React
-  if(!routeMarkup) routeMarkup = renderToString(jsx)
-
-  const preloadedState = jsan.stringify(store.getState())
-
-  // Form the final HTML response
-  const html = prepHTML(prevHtml, {
-    html         : helmet.htmlAttributes.toString(),
-    head         : helmet.title.toString() + helmet.meta.toString() + helmet.link.toString(),
-    body         : routeMarkup,
-    loadableState: extractor.getScriptTags(),
-    preloadedState
-  })
-
-  // Up, up, and away...
-  res.send(html)
 }
