@@ -2,7 +2,7 @@ import fs from 'fs'
 
 import React from 'react'
 import { renderToString } from 'react-dom/server'
-import { ChunkExtractor } from '@loadable/server'
+import { getLoadableState } from 'loadable-components/server'
 import jsan from 'jsan'
 import Helmet from 'react-helmet'
 
@@ -15,8 +15,6 @@ const createRoutes = require(appSrc + '/routes').default
 
 const universalJS = appServer + '/universal.js'
 const hasUniversal = fs.existsSync(universalJS)
-
-const statsFile = appBuild + '/loadable-stats.json'
 
 // A simple helper function to prepare the HTML markup
 const prepHTML = (data, { html, head, body, loadableState, preloadedState, isCustomState }) => {
@@ -75,9 +73,8 @@ export const universalLoader = async (req, res, next) => {
     // Get app wrapping Root (Provider redux) passing store
     const app = <Root store={store}>{routes}</Root>
 
-    const extractor = new ChunkExtractor({ statsFile })
     // Get loadable components tree
-    const jsx = extractor.collectChunks(app)
+    const loadableState = await getLoadableState(app)
 
     // Let Helmet know to insert the right tags
     const helmet = Helmet.renderStatic()
@@ -89,7 +86,7 @@ export const universalLoader = async (req, res, next) => {
     if(hasUniversal) {
       const universalProject = require(universalJS)
       if(universalProject.setRenderUniversal) {
-        const { prevHtml: prevHtmlAux, renderString, customState } = universalProject.setRenderUniversal(res.locals, jsx)
+        const { prevHtml: prevHtmlAux, renderString, customState } = universalProject.setRenderUniversal(res.locals, app)
         isCustomState = !!customState
         prevHtml = prevHtmlAux
         routeMarkup = renderString
@@ -98,7 +95,7 @@ export const universalLoader = async (req, res, next) => {
 
     if(!prevHtml) prevHtml = htmlData
     // Render App in React
-    if(!routeMarkup) routeMarkup = renderToString(jsx)
+    if(!routeMarkup) routeMarkup = renderToString(app)
 
     const preloadedState = jsan.stringify(store.getState())
 
@@ -107,7 +104,7 @@ export const universalLoader = async (req, res, next) => {
       html         : helmet.htmlAttributes.toString(),
       head         : helmet.title.toString() + helmet.meta.toString() + helmet.link.toString(),
       body         : routeMarkup,
-      loadableState: extractor.getScriptTags(),
+      loadableState: loadableState.getScriptTag(),
       isCustomState,
       preloadedState
     })

@@ -8,12 +8,7 @@ require('ignore-styles')
 require('@babel/register')({
   ignore : [ /\/(build|node_modules)\/(?!crassa\b)/ ],
   presets: [ '@babel/env', '@babel/preset-react' ],
-  plugins: [
-    'babel-plugin-smart-webpack-import',
-    [ '@babel/plugin-proposal-class-properties', { loose: true } ],
-    'babel-plugin-dynamic-import-node',
-    '@loadable/babel-plugin'
-  ]
+  plugins: [ [ '@babel/plugin-proposal-class-properties', { loose: true } ], 'babel-plugin-dynamic-import-node', 'loadable-components/babel' ]
 })
 
 require('@babel/polyfill')
