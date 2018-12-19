@@ -21,13 +21,13 @@ const prepHTML = (data, { html, head, body, loadableState, preloadedState, isCus
   data = data.replace('<html lang="en">', `<html ${html} >`)
   data = data.replace('</head>', `${head}</head>`)
   data = data.replace('<div id="root"></div>', `<div id="root">${body}</div>`)
-  data = data.replace('</body>', loadableState + '</body>')
+  data = data.replace('<body>', loadableState + '<body>')
   if(!isCustomState)
     data = data.replace(
-      '</body>',
+      '<body>',
       `<script>
         window.__PRELOADED_STATE__ = ${preloadedState.replace(/</g, '\\u003c')}
-      </script>` + '</body>'
+      </script>` + '<body>'
     )
 
   return data
