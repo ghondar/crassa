@@ -4,7 +4,7 @@ import React from 'react'
 import { renderToString } from 'react-dom/server'
 import { getLoadableState } from 'loadable-components/server'
 import jsan from 'jsan'
-import Helmet from 'react-helmet'
+import { HelmetProvider } from 'react-helmet-async'
 
 import createServerStore from './store'
 
@@ -21,13 +21,13 @@ const prepHTML = (data, { html, head, body, loadableState, preloadedState, isCus
   data = data.replace('<html lang="en">', `<html ${html} >`)
   data = data.replace('</head>', `${head}</head>`)
   data = data.replace('<div id="root"></div>', `<div id="root">${body}</div>`)
-  data = data.replace('<body>', loadableState + '<body>')
+  data = data.replace('<script', loadableState + '<script')
   if(!isCustomState)
     data = data.replace(
-      '<body>',
+      '<script',
       `<script>
         window.__PRELOADED_STATE__ = ${preloadedState.replace(/</g, '\\u003c')}
-      </script>` + '<body>'
+      </script>` + '<script'
     )
 
   return data
@@ -68,16 +68,21 @@ export const universalLoader = async (req, res, next) => {
   } else {
     // Get store, history and html string from middleware
     const { store, history, htmlData } = res.locals
+    const helmetContext = {}
     // Create routes using history
     const routes = createRoutes(history, req.protocol + '://' + req.headers.host, store)
     // Get app wrapping Root (Provider redux) passing store
-    const app = <Root store={store}>{routes}</Root>
+    const app = (
+      <HelmetProvider context={helmetContext}>
+        <Root store={store}>{routes}</Root>
+      </HelmetProvider>
+    )
 
     // Get loadable components tree
     const loadableState = await getLoadableState(app)
 
     // Let Helmet know to insert the right tags
-    const helmet = Helmet.renderStatic()
+    const { helmet } = helmetContext
 
     let prevHtml = null,
       routeMarkup = null,
