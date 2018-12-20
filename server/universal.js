@@ -83,9 +83,6 @@ export const universalLoader = async (req, res, next) => {
     const extractor = new ChunkExtractor({ statsFile })
     const jsx = extractor.collectChunks(app)
 
-    // Let Helmet know to insert the right tags
-    const { helmet } = helmetContext
-
     let prevHtml = null,
       routeMarkup = null,
       isCustomState = false
@@ -104,6 +101,7 @@ export const universalLoader = async (req, res, next) => {
     // Render App in React
     if(!routeMarkup) routeMarkup = renderToString(jsx)
 
+    const { helmet } = helmetContext
     const chunksPrefetch = extractor.chunks.concat(extractor.entrypoints)
     const assetsPrefetch = extractor.getChunkChildAssets(chunksPrefetch, 'prefetch')
 
