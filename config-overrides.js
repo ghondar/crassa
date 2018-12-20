@@ -3,7 +3,7 @@ const { override, disableEsLint, addBabelPlugins, addWebpackAlias } = require('c
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const LoadablePlugin = require('@loadable/webpack-plugin')
 
-const { appRootPath, appConfigOverrides, appPackage } = require('./src/paths')
+const { appRootPath, appConfigOverrides, appPackage, appPublic } = require('./src/paths')
 const { existsSync } = require('fs')
 const { _moduleAliases } = require(appPackage)
 
