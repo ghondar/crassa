@@ -23,13 +23,13 @@ const prepHTML = (data, { html, head, body, loadableState, preloadedState, isCus
   data = data.replace('<html lang="en">', `<html ${html} >`)
   data = data.replace('</head>', `${head}</head>`)
   data = data.replace('<div id="root"></div>', `<div id="root">${body}</div>`)
-  data = data.replace('<script', loadableState + '<script')
+  data = data.replace('<body>','<body>' + loadableState)
   if(!isCustomState)
     data = data.replace(
-      '<script',
+      '<body>','<body>' +
       `<script>
         window.__PRELOADED_STATE__ = ${preloadedState.replace(/</g, '\\u003c')}
-      </script>` + '<script'
+      </script>`
     )
 
   return data
@@ -102,6 +102,7 @@ export const universalLoader = async (req, res, next) => {
     if(!routeMarkup) routeMarkup = renderToString(jsx)
 
     const { helmet } = helmetContext
+
     const chunksPrefetch = extractor.chunks.concat(extractor.entrypoints)
     const assetsPrefetch = extractor.getChunkChildAssets(chunksPrefetch, 'prefetch')
 
@@ -114,7 +115,7 @@ export const universalLoader = async (req, res, next) => {
     // Form the final HTML response
     const html = prepHTML(prevHtml, {
       html         : helmet.htmlAttributes.toString(),
-      head         : helmet.title.toString() + helmet.meta.toString() + helmet.link.toString() + linksPrefetch,
+      head         : helmet.title.toString() + helmet.meta.toString() + helmet.link.toString() + linksPrefetch.join(''),
       body         : routeMarkup,
       loadableState: extractor.getScriptTags(),
       isCustomState,
