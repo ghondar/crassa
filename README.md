@@ -149,14 +149,20 @@ Example: (__/server/preLoadState.js__)
 import counterDuck from 'reducers/counter'
 
 export default function(req, res, next) {
-     // Get store from locals
-     const { store } = res.locals
-     // Dispatch a action to change initial state
-     store.dispatch(counterDuck.creators.addCount())
-     // Resave new store
-     res.locals.store = store
-     // Pass middlerware
-     next()
+    if(req.baseUrl.indexOf('.') !== -1 || req.baseUrl.indexOf('api') !== -1 || req.baseUrl.indexOf('static') !== -1) {
+    next()
+  	} else {
+         // Get store from locals
+         const { store } = res.locals
+         // Show local resources
+         console.log(res.locals)
+         // Dispatch a action to change initial state
+         store.dispatch(counterDuck.creators.addCount())
+         // Resave new store
+         res.locals.store = store
+         // Pass middlerware
+         next()
+    }
 }
 ```
 
@@ -167,7 +173,10 @@ Example: (__/server/universal.js__)
 ```javascript
 import { renderToString } from 'react-dom/server'
 
-export const setRenderUniversal = (htmlData, app, store) => {
+export const setRenderUniversal = (locals, app) => {
+    const { htmlData } = locals
+    console.log(locals) // htmlData, store, history
+    
     // store => access to store ( redux )
 
     const renderString = renderToString(app) // wrapping optional
@@ -187,6 +196,30 @@ export const setRenderUniversal = (htmlData, app, store) => {
 
 We handle initial configuration [here](https://github.com/ghondar/crassa/blob/master/config-overrides.js) adding babel plugins ([transform-imports](https://www.npmjs.com/package/babel-plugin-transform-imports), [loadable-components](https://github.com/smooth-code/loadable-components) and [transform-react-remove-prop-types](https://github.com/oliviertassinari/babel-plugin-transform-react-remove-prop-types)) and webpack alias (basic alias from __package.json__) but you can extend this initial configuration adding to your root project __config-overrides.js__ file.
 
+Example: (__/configExpress.js__)
+
+```javascript
+import express from 'express'
+import session from 'express-session'
+import { resolve } from 'path'
+
+export default function(app) {
+  app.use(
+    session({
+      secret           : 'Cr4ss4',
+      resave           : true,
+      saveUninitialized: true
+    })
+  )
+
+  app.use('/src', express.static(resolve(__dirname, './static')))
+   
+  return app
+}
+```
+
+With __configExpress.js__ you can add configurations to express, like statics, uses or add web sockets too.
+
 Example: (__/config-overrides.js__)
 
 ```javascript
@@ -198,6 +231,7 @@ module.exports = override(
 ```
 
 ## Technologies
+
 As soon as you bootstrapped a new project, you have an application running with:
 
 - Node.js with [Express](https://github.com/expressjs/express) backend.
