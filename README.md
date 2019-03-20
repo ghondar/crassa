@@ -149,20 +149,16 @@ Example: (__/server/preLoadState.js__)
 import counterDuck from 'reducers/counter'
 
 export default function(req, res, next) {
-    if(req.baseUrl.indexOf('.') !== -1 || req.baseUrl.indexOf('api') !== -1 || req.baseUrl.indexOf('static') !== -1) {
-    next()
-  	} else {
-         // Get store from locals
-         const { store } = res.locals
-         // Show local resources
-         console.log(res.locals)
-         // Dispatch a action to change initial state
-         store.dispatch(counterDuck.creators.addCount())
-         // Resave new store
-         res.locals.store = store
-         // Pass middlerware
-         next()
-    }
+  // Get store from locals
+  const { store } = res.locals
+  // Show local resources
+  console.log(res.locals)
+  // Dispatch a action to change initial state
+  store.dispatch(counterDuck.creators.addCount())
+  // Resave new store
+  res.locals.store = store
+  // Pass middlerware
+  next()
 }
 ```
 
