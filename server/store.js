@@ -2,7 +2,7 @@ import { createStore, applyMiddleware, compose } from 'redux'
 import { routerMiddleware } from 'connected-react-router'
 import createSagaMiddleware from 'redux-saga'
 import createReduxWaitForMiddleware from 'redux-wait-for-action'
-import createHistory from 'history/createMemoryHistory'
+import { createMemoryHistory } from 'history'
 
 import { appSrc } from '../src/paths'
 
@@ -15,7 +15,7 @@ const createServerStore = (path = '/') => {
   const sagaMiddleware = createSagaMiddleware()
 
   // We don't have a DOM, so let's create some fake history and push the current path
-  const history = createHistory({ initialEntries: [ path ] })
+  const history = createMemoryHistory({ initialEntries: [ path ] })
 
   // All the middlewares
   const middleware = [ sagaMiddleware, routerMiddleware(history) ]

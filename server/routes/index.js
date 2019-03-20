@@ -17,9 +17,9 @@ const middleware =
       } else {
         require(preLoadState).default(req, res, next)
       }
+    } else {
+      next()
     }
-
-    next()
   }
 
 // Set universal render middlewares
