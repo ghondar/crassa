@@ -30,11 +30,11 @@ crassa init <projectName> [projectFolderName]
 ```
 :dizzy: Concurrently starts the frontend and the backend in development mode.
 ```bash
-yarn dev                                     
+yarn dev
 ```
 :books: See how many LOC you've already written.
 ```bash
-yarn count                            
+yarn count
 ```
 
 :mag: Executes eslint and styleling in autofix mode.
@@ -44,11 +44,15 @@ yarn lint
 ```
 :car: Starts the project for production with server side.
 ```bash
-yarn start                                   
+yarn start
+```
+:dizzy: Starts the project for production with server side with nodemon.
+```bash
+yarn start:dev
 ```
 :blue_car: Creates a production build for the frontend application.
 ```bash
-yarn build                         
+yarn build
 ```
 
 ## Project structure
