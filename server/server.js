@@ -12,7 +12,7 @@ import { appServer, appBuild } from '../src/paths'
 
 // Create our express app (using the port optionally specified)
 const app = express()
-const PORT = process.env.PORT || 5000
+const PORT = process.env.PORT_SERVER || process.env.PORT || 5000
 
 const configExpress = appServer + '/configExpress.js'
 const hasConfigExpress = existsSync(configExpress)
