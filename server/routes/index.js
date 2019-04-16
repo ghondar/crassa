@@ -9,10 +9,17 @@ const router = express.Router()
 
 const preLoadState = appServer + '/preLoadState.js'
 const hasPreLoadState = existsSync(preLoadState)
-const middleware = hasPreLoadState ?
-  require(preLoadState).default :
+const middleware = 
   function(req, res, next) {
-    next()
+    if(hasPreLoadState) {
+      if(req.baseUrl.indexOf('.') !== -1 || req.baseUrl.indexOf('api') !== -1 || req.baseUrl.indexOf('static') !== -1) {
+        next()
+      } else {
+        require(preLoadState).default(req, res, next)
+      }
+    } else {
+      next()
+    }
   }
 
 // Set universal render middlewares

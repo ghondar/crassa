@@ -64,6 +64,18 @@ function start() {
   execCmd(cmd, { async: true })
 }
 
+function startDev() {
+  const cmd = `
+          npx cross-env
+            NODE_ENV=production
+              npx cross-env
+                APP_IT_ROOT=${packageRootPath}
+                  npx cross-env
+                    APP_ROOT=${appRootPath}
+                      npx nodemon --watch ${appRootPath}/server --config ${appRootPath}/nodemon.json ${packageRootPath}/server/index.js`
+  execCmd(cmd, { async: true })
+}
+
 const commands = [
   {
     name       : 'dev',
@@ -84,6 +96,11 @@ const commands = [
     name       : 'start',
     fn         : start,
     description: 'Run the project with server side.'
+  },
+  {
+    name       : 'start-dev',
+    fn         : startDev,
+    description: 'Run the project with server side using nodemon.'
   },
   {
     name       : 'count-lines',

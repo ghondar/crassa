@@ -30,11 +30,11 @@ crassa init <projectName> [projectFolderName]
 ```
 :dizzy: Concurrently starts the frontend and the backend in development mode.
 ```bash
-yarn dev                                     
+yarn dev
 ```
 :books: See how many LOC you've already written.
 ```bash
-yarn count                            
+yarn count
 ```
 
 :mag: Executes eslint and styleling in autofix mode.
@@ -44,11 +44,15 @@ yarn lint
 ```
 :car: Starts the project for production with server side.
 ```bash
-yarn start                                   
+yarn start
+```
+:dizzy: Starts the project for production with server side with nodemon.
+```bash
+yarn start:dev
 ```
 :blue_car: Creates a production build for the frontend application.
 ```bash
-yarn build                         
+yarn build
 ```
 
 ## Project structure
@@ -149,20 +153,16 @@ Example: (__/server/preLoadState.js__)
 import counterDuck from 'reducers/counter'
 
 export default function(req, res, next) {
-    if(req.baseUrl.indexOf('.') !== -1 || req.baseUrl.indexOf('api') !== -1 || req.baseUrl.indexOf('static') !== -1) {
-    next()
-  	} else {
-         // Get store from locals
-         const { store } = res.locals
-         // Show local resources
-         console.log(res.locals)
-         // Dispatch a action to change initial state
-         store.dispatch(counterDuck.creators.addCount())
-         // Resave new store
-         res.locals.store = store
-         // Pass middlerware
-         next()
-    }
+  // Get store from locals
+  const { store } = res.locals
+  // Show local resources
+  console.log(res.locals)
+  // Dispatch a action to change initial state
+  store.dispatch(counterDuck.creators.addCount())
+  // Resave new store
+  res.locals.store = store
+  // Pass middlerware
+  next()
 }
 ```
 
