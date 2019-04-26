@@ -57,7 +57,7 @@
     "pre-commit": "1.2.2",
     "react-app-rewired": "2.1.0",
     "react-helmet-async": "0.2.0",
-    "react-scripts": "2.1.5",
+    "react-scripts": "3.0.0",
     "redux-wait-for-action": "0.0.8",
     "rimraf": "2.6.3"
   },
