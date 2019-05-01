@@ -42,6 +42,11 @@ yarn count
 ```bash
 yarn lint
 ```
+
+:blue_car: Creates a production build for the frontend application.
+```bash
+yarn build
+```
 :car: Starts the project for production with server side.
 ```bash
 yarn start
@@ -50,10 +55,7 @@ yarn start
 ```bash
 yarn start:dev
 ```
-:blue_car: Creates a production build for the frontend application.
-```bash
-yarn build
-```
+
 
 ## Project structure
 The interesting files for you are all located in the __src__ folder. The src folder has three subfolders:
