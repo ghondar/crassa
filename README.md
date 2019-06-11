@@ -146,6 +146,15 @@ You can put your git when crassa cli ask you to choose betwee custom or default 
 ghondar/counter-with-redux-ducks-and-sagas-template
 ```
 
+## Environments
+
+You can configure the project environment variables
+
+```
+  > REACT_APP_PORT_SERVER
+  > REACT_APP_REST_API_LOCATION
+  > REACT_APP_API_VERSION
+```
 
 ## Extensions
 
@@ -178,21 +187,20 @@ Example: (__/server/universal.js__)
 import { renderToString } from 'react-dom/server'
 
 export const setRenderUniversal = (locals, app) => {
-    const { htmlData } = locals
-    console.log(locals) // htmlData, store, history
+    const { htmlData } = locals // htmlData, store, history
     
     // store => access to store ( redux )
 
     const renderString = renderToString(app) // wrapping optional
 
-    const materialStyle = `
+    const style = `
       <style id='css-server-side' type="text/css">
         html { margin:0px; padding:0px }
       </style>
     `
 
   return {
-    prevHtml: html.replace('<head>', `<head>${materialStyle}`),
+    prevHtml: html.replace('<head>', `<head>${style}`),
     renderString // optional
   }
 }
@@ -230,7 +238,7 @@ Example: (__/config-overrides.js__)
 const { override, addWebpackAlias, addBundleVisualizer } = require('customize-cra')
 
 module.exports = override(
-	process.env.BUNDLE_VISUALIZE == 1 && addBundleVisualizer()
+  process.env.BUNDLE_VISUALIZE == 1 && addBundleVisualizer()
 )
 ```
 
