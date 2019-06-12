@@ -49,7 +49,7 @@ export function createStore(req, res, next) {
       }
 
       // Create a store and sense of history based on the current path
-      const { store, history } = createServerStore(req.baseUrl)
+      const { store, history } = createServerStore(req.originalUrl)
 
       // Set data into locals to passa another middleware
       res.locals = {
