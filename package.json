@@ -1,6 +1,6 @@
 {
   "name": "crassa",
-  "version": "0.7.5",
+  "version": "0.7.6",
   "preferGlobal": true,
   "bin": "./index.js",
   "main": "index.js",
