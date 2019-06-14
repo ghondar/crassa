@@ -24,17 +24,21 @@ This will fire up the backend and the frontend development server. Just edit fil
 :warning: Crassa is in early stage of development and may not meet all your requirements. That's why contributions of any kind are highly appreciated, as the best tools are built by communities!
 
 ## Usage
+:sos: Show all crassa's commands.
+```bash
+crassa --help
+```
 :star: Create a new crassa project.
 ```bash
 crassa init <projectName> [projectFolderName]
 ```
 :dizzy: Concurrently starts the frontend and the backend in development mode.
 ```bash
-yarn dev                                     
+yarn dev
 ```
 :books: See how many LOC you've already written.
 ```bash
-yarn count                            
+yarn count
 ```
 
 :mag: Executes eslint and styleling in autofix mode.
@@ -44,11 +48,15 @@ yarn lint
 ```
 :car: Starts the project for production with server side.
 ```bash
-yarn start                                   
+yarn start
+```
+:dizzy: Starts the project for production with server side with nodemon.
+```bash
+yarn start:dev
 ```
 :blue_car: Creates a production build for the frontend application.
 ```bash
-yarn build                         
+yarn build
 ```
 
 ## Project structure
@@ -138,6 +146,15 @@ You can put your git when crassa cli ask you to choose betwee custom or default 
 ghondar/counter-with-redux-ducks-and-sagas-template
 ```
 
+## Environments
+
+You can configure the project environment variables
+
+```
+  > REACT_APP_PORT_SERVER
+  > REACT_APP_REST_API_LOCATION
+  > REACT_APP_API_VERSION
+```
 
 ## Extensions
 
@@ -149,20 +166,16 @@ Example: (__/server/preLoadState.js__)
 import counterDuck from 'reducers/counter'
 
 export default function(req, res, next) {
-    if(req.baseUrl.indexOf('.') !== -1 || req.baseUrl.indexOf('api') !== -1 || req.baseUrl.indexOf('static') !== -1) {
-    next()
-  	} else {
-         // Get store from locals
-         const { store } = res.locals
-         // Show local resources
-         console.log(res.locals)
-         // Dispatch a action to change initial state
-         store.dispatch(counterDuck.creators.addCount())
-         // Resave new store
-         res.locals.store = store
-         // Pass middlerware
-         next()
-    }
+  // Get store from locals
+  const { store } = res.locals
+  // Show local resources
+  console.log(res.locals)
+  // Dispatch a action to change initial state
+  store.dispatch(counterDuck.creators.addCount())
+  // Resave new store
+  res.locals.store = store
+  // Pass middlerware
+  next()
 }
 ```
 
@@ -174,21 +187,20 @@ Example: (__/server/universal.js__)
 import { renderToString } from 'react-dom/server'
 
 export const setRenderUniversal = (locals, app) => {
-    const { htmlData } = locals
-    console.log(locals) // htmlData, store, history
+    const { htmlData } = locals // htmlData, store, history
     
     // store => access to store ( redux )
 
     const renderString = renderToString(app) // wrapping optional
 
-    const materialStyle = `
+    const style = `
       <style id='css-server-side' type="text/css">
         html { margin:0px; padding:0px }
       </style>
     `
 
   return {
-    prevHtml: html.replace('<head>', `<head>${materialStyle}`),
+    prevHtml: html.replace('<head>', `<head>${style}`),
     renderString // optional
   }
 }
@@ -226,7 +238,7 @@ Example: (__/config-overrides.js__)
 const { override, addWebpackAlias, addBundleVisualizer } = require('customize-cra')
 
 module.exports = override(
-	process.env.BUNDLE_VISUALIZE == 1 && addBundleVisualizer()
+  process.env.BUNDLE_VISUALIZE == 1 && addBundleVisualizer()
 )
 ```
 
