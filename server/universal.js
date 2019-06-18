@@ -90,7 +90,7 @@ export const universalLoader = async (req, res, next) => {
     if(hasUniversal) {
       const universalProject = require(universalJS)
       if(universalProject.setRenderUniversal) {
-        const { prevHtml: prevHtmlAux, renderString, customState } = universalProject.setRenderUniversal(res.locals, jsx)
+        const { prevHtml: prevHtmlAux, renderString, customState } = universalProject.setRenderUniversal(res.locals, jsx, extractor)
         isCustomState = !!customState
         prevHtml = prevHtmlAux
         routeMarkup = renderString

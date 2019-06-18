@@ -186,9 +186,12 @@ Example: (__/server/universal.js__)
 ```javascript
 import { renderToString } from 'react-dom/server'
 
-export const setRenderUniversal = (locals, app) => {
+export const setRenderUniversal = (locals, app, extractor) => {
     const { htmlData } = locals // htmlData, store, history
     
+    // extractor
+    // extractor.getStyleTags()
+
     // store => access to store ( redux )
 
     const renderString = renderToString(app) // wrapping optional
