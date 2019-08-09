@@ -61,7 +61,7 @@
     "rimraf": "2.6.3"
   },
   "scripts": {
-    "publish": "git add . && git commit && npm publish",
+    "publish": "git add . && git commit && npm publish --access public",
     "local-pack": "npm pack && rm -rf ../crassa-no-git && mkdir ../crassa-no-git && mv *.tgz ../crassa-no-git && cd ../crassa-no-git && tar -xvf *.tgz && cp -rf package/. . && rm -rf package/ && rm -rf *.tgz && npm i && sudo npm link",
     "format": "eslint . --ext .js --fix",
     "lint-staged": "lint-staged"
@@ -76,5 +76,9 @@
   "_moduleAliases": {
     "../config/paths": "./react-scripts-wrapper-paths",
     "./paths": "./react-scripts-wrapper-paths"
+  },
+  "description": "A CLI tool to create React + Server Side with one command",
+  "bugs": {
+    "url": "https://github.com/ghondar/crassa/issues"
   }
 }
