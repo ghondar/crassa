@@ -1,10 +1,10 @@
 import fs from 'fs'
 
 import React from 'react'
-import { renderToString } from 'react-dom/server'
-import { getLoadableState } from 'loadable-components/server'
 import jsan from 'jsan'
 import { HelmetProvider } from 'react-helmet-async'
+import { renderToString } from 'react-dom/server'
+import { ChunkExtractor } from '@loadable/server'
 
 import createServerStore from './store'
 
@@ -15,6 +15,9 @@ const createRoutes = require(appSrc + '/routes').default
 
 const universalJS = appServer + '/universal.js'
 const hasUniversal = fs.existsSync(universalJS)
+
+const statsFile = appBuild + '/loadable-stats.json'
+const extractor = new ChunkExtractor({ statsFile })
 
 // A simple helper function to prepare the HTML markup
 const prepHTML = (data, { html, head, body, loadableState, preloadedState, isCustomState }) => {
@@ -71,18 +74,17 @@ export const universalLoader = async (req, res, next) => {
     const helmetContext = {}
     // Create routes using history
     const routes = createRoutes(history, req.protocol + '://' + req.headers.host, store)
+
     // Get app wrapping Root (Provider redux) passing store
-    const app = (
+    const jsx = (
       <HelmetProvider context={helmetContext}>
         <Root store={store}>{routes}</Root>
       </HelmetProvider>
     )
 
     // Get loadable components tree
-    const loadableState = await getLoadableState(app)
-
-    // Let Helmet know to insert the right tags
-    const { helmet } = helmetContext
+    // const loadableState = await getLoadableState(app)
+    const app = extractor.collectChunks(jsx)
 
     let prevHtml = null,
       routeMarkup = null,
@@ -104,12 +106,15 @@ export const universalLoader = async (req, res, next) => {
 
     const preloadedState = jsan.stringify(store.getState())
 
+    // Let Helmet know to insert the right tags
+    const { helmet } = helmetContext
+
     // Form the final HTML response
     const html = prepHTML(prevHtml, {
       html         : helmet.htmlAttributes.toString(),
       head         : helmet.title.toString() + helmet.meta.toString() + helmet.link.toString(),
       body         : routeMarkup,
-      loadableState: loadableState.getScriptTag(),
+      loadableState: extractor.getScriptTags(),
       isCustomState,
       preloadedState
     })
