@@ -11,7 +11,7 @@ require('@babel/register')({
   plugins: [ [ '@babel/plugin-proposal-class-properties', { loose: true } ], 'babel-plugin-dynamic-import-node', '@loadable/babel-plugin' ]
 })
 
-require('@babel/polyfill')
+require('regenerator-runtime/runtime')
 
 const { appRootPath, appPackage, appDotEnv } = require('../src/paths')
 const { _moduleAliases } = require(appPackage)
