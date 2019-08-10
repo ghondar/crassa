@@ -3,7 +3,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const LoadablePlugin = require('@loadable/webpack-plugin')
 const { existsSync } = require('fs')
 
-const { appRootPath, appConfigOverrides, appPackage } = require('./src/paths')
+const { appRootPath, appConfigOverrides, appPublic, appPackage } = require('./src/paths')
 const { _moduleAliases } = require(appPackage)
 
 const hasCustomConfigOverrides = existsSync(appConfigOverrides)
