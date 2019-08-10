@@ -1,9 +1,8 @@
 const { override, disableEsLint, addBabelPlugins, addWebpackAlias } = require('customize-cra')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
 const LoadablePlugin = require('@loadable/webpack-plugin')
 const { existsSync } = require('fs')
 
-const { appRootPath, appConfigOverrides, appPublic, appPackage } = require('./src/paths')
+const { appRootPath, appConfigOverrides, appPackage } = require('./src/paths')
 const { _moduleAliases } = require(appPackage)
 
 const hasCustomConfigOverrides = existsSync(appConfigOverrides)
@@ -18,25 +17,8 @@ const addLoadablePlugin =  config => {
   config.plugins.push(
     new LoadablePlugin()
   )
-  config.plugins.shift()
-  config.plugins.unshift(
-    new HtmlWebpackPlugin({
-      inject  : false,
-      template: appPublic + '/index.html',
-      minify  : {
-        removeComments               : true,
-        collapseWhitespace           : true,
-        removeRedundantAttributes    : true,
-        useShortDoctype              : true,
-        removeEmptyAttributes        : true,
-        removeStyleLinkTypeAttributes: true,
-        keepClosingSlash             : true,
-        minifyJS                     : true,
-        minifyCSS                    : true,
-        minifyURLs                   : true
-      }
-    })
-  )
+
+  config.plugins[0].options.inject = false
 
   return config
 }

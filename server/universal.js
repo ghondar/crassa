@@ -24,7 +24,7 @@ const prepHTML = (data, { html, head, body, loadableState, preloadedState, isCus
   data = data.replace('<html lang="en">', `<html ${html} >`)
   data = data.replace('</head>', `${head}</head>`)
   data = data.replace('<div id="root"></div>', `<div id="root">${body}</div>`)
-  data = data.replace('<script', loadableState + '<script')
+  data = data.replace('<body', loadableState + '<body')
   if(!isCustomState)
     data = data.replace(
       '<script',
