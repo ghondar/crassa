@@ -6,8 +6,10 @@ import { createMemoryHistory } from 'history'
 
 import { appSrc } from '../src/paths'
 
-const createRootReducer = require(appSrc + '/reducers').default
-const rootSaga = require(appSrc + '/sagas').default
+let { 'default': createRootReducer, rootSaga } = require(appSrc + '/reducers')
+
+if(!rootSaga)
+  rootSaga = require(appSrc + '/sagas').default
 
 // Create a store and history based on a path
 const createServerStore = (path = '/') => {
