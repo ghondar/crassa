@@ -1,11 +1,8 @@
 const { override, disableEsLint, addBabelPlugins, addWebpackAlias } = require('customize-cra')
+const LoadablePlugin = require('@loadable/webpack-plugin')
 const { existsSync } = require('fs')
 
-const HtmlWebpackPlugin = require('html-webpack-plugin')
-const LoadablePlugin = require('@loadable/webpack-plugin')
-
-const { appRootPath, appConfigOverrides, appPackage, appPublic } = require('./src/paths')
-
+const { appRootPath, appConfigOverrides, appPackage } = require('./src/paths')
 const { _moduleAliases } = require(appPackage)
 
 const hasCustomConfigOverrides = existsSync(appConfigOverrides)
@@ -31,31 +28,5 @@ module.exports = override(
   disableEsLint(),
   ...addBabelPlugins('transform-imports', '@loadable/babel-plugin', 'transform-react-remove-prop-types'),
   addWebpackAlias({ ...aliases, 'lodash-es': 'lodash' }),
-  function(config) {
-    if(process.env.NODE_ENV === 'production') {
-      config.plugins.push(new LoadablePlugin())
-      config.plugins.shift()
-      config.plugins.unshift(
-        new HtmlWebpackPlugin({
-          inject  : false,
-          template: appPublic + '/index.html',
-          minify  : {
-            removeComments               : true,
-            collapseWhitespace           : true,
-            removeRedundantAttributes    : true,
-            useShortDoctype              : true,
-            removeEmptyAttributes        : true,
-            removeStyleLinkTypeAttributes: true,
-            keepClosingSlash             : true,
-            minifyJS                     : true,
-            minifyCSS                    : true,
-            minifyURLs                   : true
-          }
-        })
-      )
-    }
-
-    return config
-  },
   hasCustomConfigOverrides && require(appConfigOverrides)
 )
