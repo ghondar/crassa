@@ -1,12 +1,11 @@
 const { override, disableEsLint, addBabelPlugins, addWebpackAlias } = require('customize-cra')
+const { existsSync } = require('fs')
 
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const LoadablePlugin = require('@loadable/webpack-plugin')
 
 const { appRootPath, appConfigOverrides, appPackage, appPublic } = require('./src/paths')
-const { existsSync } = require('fs')
 
-const { appRootPath, appConfigOverrides, appPackage } = require('./src/paths')
 const { _moduleAliases } = require(appPackage)
 
 const hasCustomConfigOverrides = existsSync(appConfigOverrides)
