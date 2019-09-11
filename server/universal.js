@@ -1,16 +1,14 @@
 import fs from 'fs'
 
 import React from 'react'
-import { renderToString } from 'react-dom/server'
-import { ChunkExtractor } from '@loadable/server'
 import jsan from 'jsan'
 import { HelmetProvider } from 'react-helmet-async'
+import { renderToString } from 'react-dom/server'
+import { ChunkExtractor } from '@loadable/server'
 
 import createServerStore from './store'
 
 import { appSrc, appBuild, appServer } from '../src/paths'
-
-const statsFile = appBuild + '/loadable-stats.json'
 
 const Root = require(appSrc + '/containers/Root').default
 const createRoutes = require(appSrc + '/routes').default
@@ -18,18 +16,19 @@ const createRoutes = require(appSrc + '/routes').default
 const universalJS = appServer + '/universal.js'
 const hasUniversal = fs.existsSync(universalJS)
 
+const statsFile = appBuild + '/loadable-stats.json'
+const extractor = new ChunkExtractor({ statsFile })
+
 // A simple helper function to prepare the HTML markup
 const prepHTML = (data, { html, head, body, loadableState, preloadedState, isCustomState }) => {
   data = data.replace('<html lang="en">', `<html ${html} >`)
   data = data.replace('</head>', `${head}</head>`)
   data = data.replace('<div id="root"></div>', `<div id="root">${body}</div>`)
-  data = data.replace('<body>','<body>' + loadableState)
+  data = data.replace('</body', loadableState + '</body')
   if(!isCustomState)
     data = data.replace(
-      '<body>','<body>' +
-      `<script>
-        window.__PRELOADED_STATE__ = ${preloadedState.replace(/</g, '\\u003c')}
-      </script>`
+      '</body>',
+      `<script>window.__PRELOADED_STATE__ =${preloadedState.replace(/</g, '\\u003c')}</script></body>`
     )
 
   return data
@@ -51,7 +50,7 @@ export function createStore(req, res, next) {
       }
 
       // Create a store and sense of history based on the current path
-      const { store, history } = createServerStore(req.originalUrl)
+      const { store, history } = createServerStore(Object.keys(req.query).length > 0 ? req.originalUrl : req.baseUrl)
 
       // Set data into locals to passa another middleware
       res.locals = {
@@ -73,15 +72,16 @@ export const universalLoader = async (req, res, next) => {
     const helmetContext = {}
     // Create routes using history
     const routes = createRoutes(history, req.protocol + '://' + req.headers.host, store)
+
     // Get app wrapping Root (Provider redux) passing store
-    const app = (
+    const jsx = (
       <HelmetProvider context={helmetContext}>
         <Root store={store}>{routes}</Root>
       </HelmetProvider>
     )
 
-    const extractor = new ChunkExtractor({ statsFile })
-    const jsx = extractor.collectChunks(app)
+    // Get loadable components tree
+    const app = extractor.collectChunks(jsx)
 
     let prevHtml = null,
       routeMarkup = null,
@@ -90,7 +90,7 @@ export const universalLoader = async (req, res, next) => {
     if(hasUniversal) {
       const universalProject = require(universalJS)
       if(universalProject.setRenderUniversal) {
-        const { prevHtml: prevHtmlAux, renderString, customState } = universalProject.setRenderUniversal(res.locals, jsx, extractor)
+        const { prevHtml: prevHtmlAux, renderString, customState } = universalProject.setRenderUniversal(res.locals, jsx, app)
         isCustomState = !!customState
         prevHtml = prevHtmlAux
         routeMarkup = renderString
@@ -111,6 +111,9 @@ export const universalLoader = async (req, res, next) => {
     ))
 
     const preloadedState = jsan.stringify(store.getState())
+
+    // Let Helmet know to insert the right tags
+    const { helmet } = helmetContext
 
     // Form the final HTML response
     const html = prepHTML(prevHtml, {
