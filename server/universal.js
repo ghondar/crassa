@@ -101,8 +101,6 @@ export const universalLoader = async (req, res, next) => {
     // Render App in React
     if(!routeMarkup) routeMarkup = renderToString(jsx)
 
-    const { helmet } = helmetContext
-
     const chunksPrefetch = extractor.chunks.concat(extractor.entrypoints)
     const assetsPrefetch = extractor.getChunkChildAssets(chunksPrefetch, 'prefetch')
 
