@@ -127,24 +127,21 @@ Where package.json basically it must have name and displayName tag with {-- proj
     ...
     "crassa": {
         "displayName": "{-- project-name --}",
-        "aliases": {
-            ...
-        }
     },
     ...
     "dependencies": {
-        "crassa":  "{-- project-version --}",
+        "@crassa/next":  "{-- project-version --}",
         ...
     },
     ...
 }
 ```
 
-You can put your git when crassa cli ask you to choose betwee custom or default template, the url mus to have this structure:
+You can put your git when crassa cli ask you to choose between next or custom template, the url mus to have this structure:
 
-```bash
-ghondar/counter-with-redux-ducks-and-sagas-template
-```
+- ghondar/counter-with-redux-ducks-and-sagas-template
+- grovertb/crasa-template-antd
+- grovertb/crasa-template-material-ui
 
 ## Environments
 
@@ -189,10 +186,8 @@ import { renderToString } from 'react-dom/server'
 export const setRenderUniversal = (locals, app, extractor) => {
     const { htmlData } = locals // htmlData, store, history
     
-    // extractor
-    // extractor.getStyleTags()
-
     // store => access to store ( redux )
+    // extractor.getStyleTags() => access to styles of the app
 
     const renderString = renderToString(app) // wrapping optional
 

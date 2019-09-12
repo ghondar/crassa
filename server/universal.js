@@ -106,8 +106,6 @@ export const universalLoader = async (req, res, next) => {
     // Let Helmet know to insert the right tags
     const { helmet } = helmetContext
 
-    console.log('holaaaa')
-
     // Form the final HTML response
     const html = prepHTML(prevHtml, {
       html         : helmet.htmlAttributes.toString(),
