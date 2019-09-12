@@ -28,9 +28,7 @@ const prepHTML = (data, { html, head, body, loadableState, preloadedState, isCus
   if(!isCustomState)
     data = data.replace(
       '<script',
-      `<script>
-        window.__PRELOADED_STATE__ = ${preloadedState.replace(/</g, '\\u003c')}
-      </script>` + '<script'
+      `<script>window.__PRELOADED_STATE__ = ${preloadedState.replace(/</g, '\\u003c')}</script><script`
     )
 
   return data
@@ -93,7 +91,7 @@ export const universalLoader = async (req, res, next) => {
     if(hasUniversal) {
       const universalProject = require(universalJS)
       if(universalProject.setRenderUniversal) {
-        const { prevHtml: prevHtmlAux, renderString, customState } = universalProject.setRenderUniversal(res.locals, app)
+        const { prevHtml: prevHtmlAux, renderString, customState } = universalProject.setRenderUniversal(res.locals, app, extractor)
         isCustomState = !!customState
         prevHtml = prevHtmlAux
         routeMarkup = renderString
