@@ -90,7 +90,7 @@ export const universalLoader = async (req, res, next) => {
     if(hasUniversal) {
       const universalProject = require(universalJS)
       if(universalProject.setRenderUniversal) {
-        const { prevHtml: prevHtmlAux, renderString, customState } = universalProject.setRenderUniversal(res.locals, jsx, app)
+        const { prevHtml: prevHtmlAux, renderString, customState } = universalProject.setRenderUniversal(res.locals, app, extractor)
         isCustomState = !!customState
         prevHtml = prevHtmlAux
         routeMarkup = renderString
@@ -101,24 +101,17 @@ export const universalLoader = async (req, res, next) => {
     // Render App in React
     if(!routeMarkup) routeMarkup = renderToString(jsx)
 
-    const chunksPrefetch = extractor.chunks.concat(extractor.entrypoints)
-    const assetsPrefetch = extractor.getChunkChildAssets(chunksPrefetch, 'prefetch')
-
-    const linksPrefetch = assetsPrefetch.map(({ chunk, linkType, scriptType, url, type }) => (
-      `<link ${type === 'mainAsset' ? 'data-chunk' : 'data-parent-chunk'}="${chunk}" rel="${linkType}" as="${scriptType}" href="${url}">`
-    ))
-
     const preloadedState = jsan.stringify(store.getState())
 
     // Let Helmet know to insert the right tags
     const { helmet } = helmetContext
 
-    console.log('holaaaa');
+    console.log('holaaaa')
 
     // Form the final HTML response
     const html = prepHTML(prevHtml, {
       html         : helmet.htmlAttributes.toString(),
-      head         : helmet.title.toString() + helmet.meta.toString() + helmet.link.toString() + linksPrefetch.join(''),
+      head         : helmet.title.toString() + helmet.meta.toString() + helmet.link.toString(),
       body         : routeMarkup,
       loadableState: extractor.getScriptTags(),
       isCustomState,
