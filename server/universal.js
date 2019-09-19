@@ -16,8 +16,12 @@ const createRoutes = require(appSrc + '/routes').default
 const universalJS = appServer + '/universal.js'
 const hasUniversal = fs.existsSync(universalJS)
 
-const statsFile = appBuild + '/loadable-stats.json'
-const extractor = new ChunkExtractor({ statsFile })
+let extractor = null
+
+if(process.env.NODE_ENV !== 'development') {
+  const statsFile = appBuild + '/loadable-stats.json'
+  extractor = new ChunkExtractor({ statsFile })
+}
 
 // A simple helper function to prepare the HTML markup
 const prepHTML = (data, { html, head, body, loadableState, preloadedState, isCustomState }) => {
@@ -81,7 +85,6 @@ export const universalLoader = async (req, res, next) => {
     )
 
     // Get loadable components tree
-    // const loadableState = await getLoadableState(app)
     const app = extractor.collectChunks(jsx)
 
     let prevHtml = null,

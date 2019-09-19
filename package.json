@@ -1,6 +1,6 @@
 {
   "name": "@crassa/next",
-  "version": "0.9.12",
+  "version": "0.9.13",
   "preferGlobal": true,
   "bin": {
     "crassa": "./index.js"
