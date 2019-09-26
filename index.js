@@ -51,6 +51,7 @@ program
 commands.forEach(({ name, fn, description = '' }) => {
   program
     .command(name)
+    .allowUnknownOption()
     .description(description)
     .action(async () => {
       const { error } = await preHook()

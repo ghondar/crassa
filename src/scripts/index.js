@@ -77,6 +77,9 @@ function startDev() {
 }
 
 function test() {
+  const argv = process.argv
+  const args = argv.slice(3, argv.length)
+
   const cmd = `
           npx cross-env
             NODE_ENV=development
@@ -84,7 +87,7 @@ function test() {
                 APP_IT_ROOT=${packageRootPath}
                   npx cross-env
                     APP_ROOT=${appRootPath}
-                      npx node ${packageRootPath}/test.js`
+                      npx node ${packageRootPath}/test.js ${args.join(' ')}`
   execCmd(cmd, { async: true })
 }
 
