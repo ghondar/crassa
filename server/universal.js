@@ -12,6 +12,10 @@ import { appSrc, appBuild, appServer } from '../src/paths'
 
 const Root = require(appSrc + '/containers/Root').default
 const createRoutes = require(appSrc + '/routes').default
+let { rootSaga } = require(appSrc + '/reducers')
+
+if(!rootSaga)
+  rootSaga = require(appSrc + '/sagas').default
 
 const universalJS = appServer + '/universal.js'
 const hasUniversal = fs.existsSync(universalJS)
@@ -103,24 +107,33 @@ export const universalLoader = async (req, res, next) => {
 
     if(!prevHtml) prevHtml = htmlData
     // Render App in React
-    if(!routeMarkup) routeMarkup = renderToString(app)
+    if(!routeMarkup) {
+      const task = store.runSaga(rootSaga)
 
-    const preloadedState = jsan.stringify(store.getState())
+      task.toPromise().then(() => {
+        const state = store.getState()
+        const preloadedState = jsan.stringify(state)
+        const routeMarkup = renderToString(app)
+        const { helmet } = helmetContext
 
-    // Let Helmet know to insert the right tags
-    const { helmet } = helmetContext
+        // Form the final HTML response
+        const html = prepHTML(prevHtml, {
+          html         : helmet.htmlAttributes.toString(),
+          head         : helmet.title.toString() + helmet.meta.toString() + helmet.link.toString(),
+          body         : routeMarkup,
+          loadableState: extractor.getScriptTags(),
+          isCustomState,
+          preloadedState
+        })
 
-    // Form the final HTML response
-    const html = prepHTML(prevHtml, {
-      html         : helmet.htmlAttributes.toString(),
-      head         : helmet.title.toString() + helmet.meta.toString() + helmet.link.toString(),
-      body         : routeMarkup,
-      loadableState: extractor.getScriptTags(),
-      isCustomState,
-      preloadedState
-    })
-
-    // Up, up, and away...
-    res.send(html)
+        // Up, up, and away...
+        res.send(html)
+      }).catch((e) => {
+        console.log(e.message)
+        res.status(500).send(e.message)
+      })
+      renderToString(app)
+      store.close()
+    }
   }
 }
