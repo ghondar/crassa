@@ -91,30 +91,30 @@ export const universalLoader = async (req, res, next) => {
     // Get loadable components tree
     const app = extractor.collectChunks(jsx)
 
-    let prevHtml = null,
-      routeMarkup = null,
-      isCustomState = false
-
-    if(hasUniversal) {
-      const universalProject = require(universalJS)
-      if(universalProject.setRenderUniversal) {
-        const { prevHtml: prevHtmlAux, renderString, customState } = universalProject.setRenderUniversal(res.locals, app, extractor)
-        isCustomState = !!customState
-        prevHtml = prevHtmlAux
-        routeMarkup = renderString
-      }
-    }
-
-    if(!prevHtml) prevHtml = htmlData
     // Render App in React
     const task = store.runSaga(rootSaga)
 
     task.toPromise().then(() => {
+      let prevHtml = null,
+        routeMarkup = null,
+        isCustomState = false
       const state = store.getState()
       const preloadedState = jsan.stringify(state)
-      const { helmet } = helmetContext
 
+      if(hasUniversal) {
+        const universalProject = require(universalJS)
+        if(universalProject.setRenderUniversal) {
+          const { prevHtml: prevHtmlAux, renderString, customState } = universalProject.setRenderUniversal(res.locals, app, extractor)
+          isCustomState = !!customState
+          prevHtml = prevHtmlAux
+          routeMarkup = renderString
+        }
+      }
+
+      if(!prevHtml) prevHtml = htmlData
       if(!routeMarkup) routeMarkup = renderToString(app)
+
+      const { helmet } = helmetContext
 
       // Form the final HTML response
       const html = prepHTML(prevHtml, {
@@ -131,6 +131,7 @@ export const universalLoader = async (req, res, next) => {
     }).catch((e) => {
       res.status(500).send(e.message)
     })
+    renderToString(app)
     store.close()
   }
 }
