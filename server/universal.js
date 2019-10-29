@@ -91,49 +91,47 @@ export const universalLoader = async (req, res, next) => {
     // Get loadable components tree
     const app = extractor.collectChunks(jsx)
 
-    let prevHtml = null,
-      routeMarkup = null,
-      isCustomState = false
-
-    if(hasUniversal) {
-      const universalProject = require(universalJS)
-      if(universalProject.setRenderUniversal) {
-        const { prevHtml: prevHtmlAux, renderString, customState } = universalProject.setRenderUniversal(res.locals, app, extractor)
-        isCustomState = !!customState
-        prevHtml = prevHtmlAux
-        routeMarkup = renderString
-      }
-    }
-
-    if(!prevHtml) prevHtml = htmlData
     // Render App in React
-    if(!routeMarkup) {
-      const task = store.runSaga(rootSaga)
+    const task = store.runSaga(rootSaga)
 
-      task.toPromise().then(() => {
-        const state = store.getState()
-        const preloadedState = jsan.stringify(state)
-        const routeMarkup = renderToString(app)
-        const { helmet } = helmetContext
+    task.toPromise().then(() => {
+      let prevHtml = null,
+        routeMarkup = null,
+        isCustomState = false
+      const state = store.getState()
+      const preloadedState = jsan.stringify(state)
 
-        // Form the final HTML response
-        const html = prepHTML(prevHtml, {
-          html         : helmet.htmlAttributes.toString(),
-          head         : helmet.title.toString() + helmet.meta.toString() + helmet.link.toString(),
-          body         : routeMarkup,
-          loadableState: extractor.getScriptTags(),
-          isCustomState,
-          preloadedState
-        })
+      if(hasUniversal) {
+        const universalProject = require(universalJS)
+        if(universalProject.setRenderUniversal) {
+          const { prevHtml: prevHtmlAux, renderString, customState } = universalProject.setRenderUniversal(res.locals, app, extractor)
+          isCustomState = !!customState
+          prevHtml = prevHtmlAux
+          routeMarkup = renderString
+        }
+      }
 
-        // Up, up, and away...
-        res.send(html)
-      }).catch((e) => {
-        console.log(e.message)
-        res.status(500).send(e.message)
+      if(!prevHtml) prevHtml = htmlData
+      if(!routeMarkup) routeMarkup = renderToString(app)
+
+      const { helmet } = helmetContext
+
+      // Form the final HTML response
+      const html = prepHTML(prevHtml, {
+        html         : helmet.htmlAttributes.toString(),
+        head         : helmet.title.toString() + helmet.meta.toString() + helmet.link.toString(),
+        body         : routeMarkup,
+        loadableState: extractor.getScriptTags(),
+        isCustomState,
+        preloadedState
       })
-      renderToString(app)
-      store.close()
-    }
+
+      // Up, up, and away...
+      res.send(html)
+    }).catch((e) => {
+      res.status(500).send(e.message)
+    })
+    renderToString(app)
+    store.close()
   }
 }
