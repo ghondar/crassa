@@ -107,33 +107,30 @@ export const universalLoader = async (req, res, next) => {
 
     if(!prevHtml) prevHtml = htmlData
     // Render App in React
-    if(!routeMarkup) {
-      const task = store.runSaga(rootSaga)
+    const task = store.runSaga(rootSaga)
 
-      task.toPromise().then(() => {
-        const state = store.getState()
-        const preloadedState = jsan.stringify(state)
-        const routeMarkup = renderToString(app)
-        const { helmet } = helmetContext
+    task.toPromise().then(() => {
+      const state = store.getState()
+      const preloadedState = jsan.stringify(state)
+      const { helmet } = helmetContext
 
-        // Form the final HTML response
-        const html = prepHTML(prevHtml, {
-          html         : helmet.htmlAttributes.toString(),
-          head         : helmet.title.toString() + helmet.meta.toString() + helmet.link.toString(),
-          body         : routeMarkup,
-          loadableState: extractor.getScriptTags(),
-          isCustomState,
-          preloadedState
-        })
+      if(!routeMarkup) routeMarkup = renderToString(app)
 
-        // Up, up, and away...
-        res.send(html)
-      }).catch((e) => {
-        console.log(e.message)
-        res.status(500).send(e.message)
+      // Form the final HTML response
+      const html = prepHTML(prevHtml, {
+        html         : helmet.htmlAttributes.toString(),
+        head         : helmet.title.toString() + helmet.meta.toString() + helmet.link.toString(),
+        body         : routeMarkup,
+        loadableState: extractor.getScriptTags(),
+        isCustomState,
+        preloadedState
       })
-      renderToString(app)
-      store.close()
-    }
+
+      // Up, up, and away...
+      res.send(html)
+    }).catch((e) => {
+      res.status(500).send(e.message)
+    })
+    store.close()
   }
 }
