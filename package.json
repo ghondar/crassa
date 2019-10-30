@@ -7,6 +7,9 @@
   },
   "main": "index.js",
   "author": "Ghondar <abgv9221@gmail.com>",
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
+  },
   "repository": {
     "type": "git",
     "url": "git://github.com/ghondar/crassa.git"
