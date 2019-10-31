@@ -1,14 +1,16 @@
 import fs from 'fs'
 
 import React from 'react'
-import jsan from 'jsan'
-import { HelmetProvider } from 'react-helmet-async'
+import { RequestHandler } from 'express'
+import { HelmetProvider, Helmet } from 'react-helmet-async'
 import { renderToString } from 'react-dom/server'
 import { ChunkExtractor } from '@loadable/server'
 
 import createServerStore from './store'
 
 import { appSrc, appBuild, appServer } from '../src/paths'
+
+const jsan = require('jsan').default
 
 const Root = require(appSrc + '/containers/Root').default
 const createRoutes = require(appSrc + '/routes').default
@@ -20,15 +22,25 @@ if(!rootSaga)
 const universalJS = appServer + '/universal.js'
 const hasUniversal = fs.existsSync(universalJS)
 
-let extractor = null
+
+let extractor: ChunkExtractor | null = null
 
 if(process.env.NODE_ENV !== 'development') {
   const statsFile = appBuild + '/loadable-stats.json'
   extractor = new ChunkExtractor({ statsFile })
 }
 
+interface Payload {
+  html: string,
+  head: string,
+  body: string,
+  loadableState: string | null,
+  preloadedState: string,
+  isCustomState: boolean
+}
+
 // A simple helper function to prepare the HTML markup
-const prepHTML = (data, { html, head, body, loadableState, preloadedState, isCustomState }) => {
+const prepHTML = (data: string, { html, head, body, loadableState = '', preloadedState, isCustomState }: Payload) => {
   data = data.replace('<html lang="en">', `<html ${html} >`)
   data = data.replace('</head>', `${head}</head>`)
   data = data.replace('<div id="root"></div>', `<div id="root">${body}</div>`)
@@ -42,7 +54,7 @@ const prepHTML = (data, { html, head, body, loadableState, preloadedState, isCus
   return data
 }
 
-export function createStore(req, res, next) {
+export const createStore: RequestHandler = (req, res, next) => {
   if(req.baseUrl.indexOf('.') !== -1 || req.baseUrl.indexOf('api') !== -1 || req.baseUrl.indexOf('static') !== -1) {
     next()
   } else {
@@ -71,13 +83,17 @@ export function createStore(req, res, next) {
   }
 }
 
-export const universalLoader = async (req, res, next) => {
+export const universalLoader: RequestHandler = async (req, res, next) => {
   if(req.baseUrl.indexOf('.') !== -1 || req.baseUrl.indexOf('api') !== -1 || req.baseUrl.indexOf('static') !== -1) {
     next()
   } else {
     // Get store, history and html string from middleware
     const { store, history, htmlData } = res.locals
-    const helmetContext = {}
+    const helmetContext: {
+      helmet: any
+    } = {
+      helmet: ''
+    }
     // Create routes using history
     const routes = createRoutes(history, req.protocol + '://' + req.headers.host, store)
 
@@ -89,7 +105,7 @@ export const universalLoader = async (req, res, next) => {
     )
 
     // Get loadable components tree
-    const app = extractor.collectChunks(jsx)
+    const app = extractor && extractor.collectChunks(jsx)
 
     // Render App in React
     const task = store.runSaga(rootSaga)
@@ -112,7 +128,7 @@ export const universalLoader = async (req, res, next) => {
       }
 
       if(!prevHtml) prevHtml = htmlData
-      if(!routeMarkup) routeMarkup = renderToString(app)
+      if(!routeMarkup && app) routeMarkup = renderToString(app)
 
       const { helmet } = helmetContext
 
@@ -121,17 +137,17 @@ export const universalLoader = async (req, res, next) => {
         html         : helmet.htmlAttributes.toString(),
         head         : helmet.title.toString() + helmet.meta.toString() + helmet.link.toString(),
         body         : routeMarkup,
-        loadableState: extractor.getScriptTags(),
+        loadableState: extractor && extractor.getScriptTags(),
         isCustomState,
         preloadedState
       })
 
       // Up, up, and away...
       res.send(html)
-    }).catch((e) => {
+    }).catch((e: any) => {
       res.status(500).send(e.message)
     })
-    renderToString(app)
+    app && renderToString(app)
     store.close()
   }
 }

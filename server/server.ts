@@ -11,7 +11,7 @@ import index from './routes/index'
 import { appServer, appBuild } from '../src/paths'
 
 // Create our express app (using the port optionally specified)
-const app = express()
+const app: express.Application = express()
 const PORT = process.env.REACT_APP_PORT_SERVER || process.env.PORT || 5000
 const HOST = process.env.REACT_APP_HOST_SERVER || '0.0.0.0'
 
@@ -40,7 +40,7 @@ http.listen(PORT, HOST, () => {
 })
 
 // Handle the bugs somehow
-http.on('error', error => {
+http.on('error', (error: any) => {
   if(error.syscall !== 'listen') throw error
 
   const bind = typeof PORT === 'string' ? 'Pipe ' + PORT : 'Port ' + PORT

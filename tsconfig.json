@@ -1,0 +1,32 @@
+{
+  "compilerOptions": {
+    "importHelpers": true,
+    "allowJs": true,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "isolatedModules": true,
+    "jsx": "react",
+    "lib": [
+      "es6",
+      "dom"
+    ],
+    "module": "esnext",
+    "moduleResolution": "node",
+    "noEmit": true,
+    "strict": true,
+    "target": "esnext",
+    "resolveJsonModule": true, // Required for JSON files
+    "skipLibCheck": true,
+    "baseUrl": "."
+  },
+  "include": [
+    "server"
+  ],
+  "exclude": [
+    "node_modules",
+    "src/lib/**/*.js",
+    "e2e",
+    "**/*.json", // Don't try and check JSON files
+    "**/*.spec.ts",
+  ]
+}

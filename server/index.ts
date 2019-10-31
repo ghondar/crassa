@@ -13,10 +13,14 @@ require('@babel/register')({
 
 require('regenerator-runtime/runtime')
 
+export {}
+
 const { appRootPath, appPackage, appDotEnv } = require('../src/paths')
 const { _moduleAliases } = require(appPackage)
 
-const aliases = {}
+const aliases: {
+  [propName: string]: any
+} = {}
 
 Object.keys(_moduleAliases).forEach(key => {
   aliases[key] = _moduleAliases[key].replace('.', appRootPath)

@@ -35,6 +35,15 @@
     "@loadable/component": "5.10.3",
     "@loadable/server": "5.10.3",
     "@loadable/webpack-plugin": "5.7.1",
+    "@types/body-parser": "1.17.1",
+    "@types/compression": "1.0.1",
+    "@types/cookie-parser": "1.4.2",
+    "@types/express": "4.17.1",
+    "@types/history": "4.7.3",
+    "@types/loadable__server": "5.9.1",
+    "@types/morgan": "1.7.37",
+    "@types/react": "16.9.11",
+    "@types/react-dom": "16.9.3",
     "babel-cli": "6.26.0",
     "babel-plugin-dynamic-import-node": "2.3.0",
     "babel-plugin-transform-imports": "2.0.0",
@@ -42,12 +51,14 @@
     "body-parser": "1.19.0",
     "commander": "3.0.2",
     "compression": "1.7.4",
+    "connected-react-router": "6.5.2",
     "cookie-parser": "1.4.4",
     "cross-env": "6.0.3",
     "customize-cra": "0.8.0",
     "dotenv": "8.2.0",
     "download-git-repo": "3.0.2",
     "express": "4.17.1",
+    "history": "4.10.1",
     "http-proxy-middleware": "0.20.0",
     "husky": "3.0.9",
     "ignore-styles": "5.0.1",
@@ -59,9 +70,13 @@
     "morgan": "1.9.1",
     "ncp": "2.0.0",
     "nodemon": "1.19.4",
+    "react": "16.11.0",
     "react-app-rewired": "2.1.4",
+    "react-dom": "16.11.0",
     "react-helmet-async": "1.0.4",
     "react-scripts": "3.2.0",
+    "redux": "4.0.4",
+    "redux-saga": "1.1.1",
     "redux-wait-for-action": "0.0.8",
     "regenerator-runtime": "0.13.3",
     "rimraf": "3.0.0"
@@ -90,5 +105,8 @@
   "description": "A CLI tool to create React + Server Side with one command",
   "bugs": {
     "url": "https://github.com/ghondar/crassa/issues"
+  },
+  "devDependencies": {
+    "typescript": "3.7.1-rc"
   }
 }

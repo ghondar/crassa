@@ -1,7 +1,7 @@
 {
-  "parser": "babel-eslint",
+  "parser": "@typescript-eslint/parser",
   "parserOptions": {
-    "ecmaVersion": 6,
+    "ecmaVersion": 2018,
     "sourceType": "module",
     "ecmaFeatures": {
       "jsx": true,
@@ -22,8 +22,26 @@
       "classes": true
     }
   },
-  "plugins": ["react", "eslint-plugin-react"],
+  "extends": ["plugin:@typescript-eslint/recommended"],
+  "plugins": ["react", "eslint-plugin-react",  "local", "@typescript-eslint"],
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
+  },
+  "overrides": [
+    {
+        "files": ["**/*.tsx", "**/*.ts"],
+        "rules": {
+            "local/jsx-uses-my-pragma": "error",
+            "local/jsx-uses-vars": "error"
+        }
+    }
+  ],
   "rules": {
+    "@typescript-eslint/no-var-requires": 0,
+    "@typescript-eslint/explicit-function-return-type": 0,
+    "@typescript-eslint/ban-ts-ignore": 0,
     "react/jsx-no-bind": [
       2,
       {
@@ -181,3 +199,4 @@
     ]
   }
 }
+
