@@ -1,32 +1,47 @@
 {
   "compilerOptions": {
+    "outDir": "build",
+    "module": "commonjs",
+    "target": "es6",
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "noImplicitAny": true,
+    "sourceMap": true,
+    "esModuleInterop": true,
+    "jsx": "react",
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "strictNullChecks": true,
+    "suppressImplicitAnyIndexErrors": true,
+    "noUnusedLocals": true,
+    "removeComments": true,
+    "rootDirs": [
+      "server"
+    ],
     "importHelpers": true,
     "allowJs": true,
     "allowSyntheticDefaultImports": true,
-    "esModuleInterop": true,
     "isolatedModules": true,
-    "jsx": "react",
     "lib": [
+      "es5",
       "es6",
+      "es7",
+      "es2017",
       "dom"
     ],
-    "module": "esnext",
-    "moduleResolution": "node",
-    "noEmit": true,
-    "strict": true,
-    "target": "esnext",
-    "resolveJsonModule": true, // Required for JSON files
-    "skipLibCheck": true,
-    "baseUrl": "."
+    // "strict": true,
+    "resolveJsonModule": true,
+    // "skipLibCheck": true,
+    "baseUrl": ".",
+    "forceConsistentCasingInFileNames": true
   },
   "include": [
-    "server"
+    "server",
+    "src"
   ],
   "exclude": [
     "node_modules",
-    "src/lib/**/*.js",
-    "e2e",
-    "**/*.json", // Don't try and check JSON files
-    "**/*.spec.ts",
+    "package.json"
   ]
 }

@@ -23,21 +23,12 @@
     }
   },
   "extends": ["plugin:@typescript-eslint/recommended"],
-  "plugins": ["react", "eslint-plugin-react",  "local", "@typescript-eslint"],
+  "plugins": ["react", "eslint-plugin-react", "@typescript-eslint"],
   "settings": {
     "react": {
       "version": "detect"
     }
   },
-  "overrides": [
-    {
-        "files": ["**/*.tsx", "**/*.ts"],
-        "rules": {
-            "local/jsx-uses-my-pragma": "error",
-            "local/jsx-uses-vars": "error"
-        }
-    }
-  ],
   "rules": {
     "@typescript-eslint/no-var-requires": 0,
     "@typescript-eslint/explicit-function-return-type": 0,

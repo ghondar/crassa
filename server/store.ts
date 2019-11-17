@@ -1,4 +1,4 @@
-import { createStore, applyMiddleware, compose, Action, Dispatch, Store, AnyAction } from 'redux'
+import { createStore, applyMiddleware, compose, Action, Store, AnyAction } from 'redux'
 import { routerMiddleware } from 'connected-react-router'
 import createSagaMiddleware, { END, Task, Saga } from 'redux-saga'
 import { createMemoryHistory } from 'history'
