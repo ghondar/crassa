@@ -19,13 +19,7 @@ if(!rootSaga)
 
 const universalJS = appServer + '/universal.js'
 const hasUniversal = fs.existsSync(universalJS)
-
-let extractor = null
-
-if(process.env.NODE_ENV !== 'development') {
-  const statsFile = appBuild + '/loadable-stats.json'
-  extractor = new ChunkExtractor({ statsFile })
-}
+const statsFile = appBuild + '/loadable-stats.json'
 
 // A simple helper function to prepare the HTML markup
 const prepHTML = (data, { html, head, body, loadableState, preloadedState, isCustomState }) => {
@@ -88,6 +82,8 @@ export const universalLoader = async (req, res, next) => {
       </HelmetProvider>
     )
 
+    const extractor = new ChunkExtractor({ statsFile })
+    
     // Get loadable components tree
     const app = extractor.collectChunks(jsx)
 
@@ -121,7 +117,7 @@ export const universalLoader = async (req, res, next) => {
         html         : helmet.htmlAttributes.toString(),
         head         : helmet.title.toString() + helmet.meta.toString() + helmet.link.toString(),
         body         : routeMarkup,
-        loadableState: extractor.getScriptTags(),
+        loadableState: extractor.getScriptTags() + extractor.getStyleTags(),
         isCustomState,
         preloadedState
       })
