@@ -1,6 +1,6 @@
 {
   "name": "@crassa/next",
-  "version": "0.9.21",
+  "version": "0.9.22",
   "preferGlobal": true,
   "bin": {
     "crassa": "./index.js"
@@ -24,7 +24,7 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@babel/core": "7.7.4",
+    "@babel/core": "7.7.5",
     "@babel/plugin-proposal-class-properties": "7.7.4",
     "@babel/plugin-transform-flow-strip-types": "7.7.4",
     "@babel/register": "7.7.4",
@@ -48,8 +48,8 @@
     "http-proxy-middleware": "0.20.0",
     "husky": "3.1.0",
     "ignore-styles": "5.0.1",
-    "immer": "5.0.0",
-    "inquirer": "7.0.0",
+    "immer": "5.0.1",
+    "inquirer": "7.0.1",
     "jsan": "3.1.13",
     "lint-staged": "9.5.0",
     "module-alias": "2.2.2",
@@ -58,7 +58,7 @@
     "nodemon": "2.0.1",
     "react-app-rewired": "2.1.5",
     "react-helmet-async": "1.0.4",
-    "react-scripts": "3.2.0",
+    "react-scripts": "3.3.0",
     "redux-wait-for-action": "0.0.8",
     "regenerator-runtime": "0.13.3",
     "rimraf": "3.0.0"
