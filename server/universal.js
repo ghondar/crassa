@@ -115,7 +115,7 @@ export const universalLoader = async (req, res, next) => {
       // Form the final HTML response
       const html = prepHTML(prevHtml, {
         html         : helmet.htmlAttributes.toString(),
-        head         : helmet.title.toString() + helmet.meta.toString() + helmet.link.toString(),
+        head         : helmet.title.toString() + helmet.meta.toString() + helmet.link.toString() + helmet.script.toString(),
         body         : routeMarkup,
         loadableState: extractor.getScriptTags() + extractor.getStyleTags(),
         isCustomState,
