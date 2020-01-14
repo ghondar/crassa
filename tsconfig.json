@@ -1,0 +1,47 @@
+{
+  "compilerOptions": {
+    "outDir": "build",
+    "module": "commonjs",
+    "target": "es2016",
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "noImplicitAny": true,
+    "sourceMap": true,
+    "esModuleInterop": true,
+    "jsx": "react",
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "strictNullChecks": true,
+    "suppressImplicitAnyIndexErrors": true,
+    "noUnusedLocals": true,
+    "removeComments": true,
+    "rootDirs": [
+      "server"
+    ],
+    "importHelpers": true,
+    "allowJs": true,
+    "allowSyntheticDefaultImports": true,
+    "isolatedModules": true,
+    "lib": [
+      "es5",
+      "es6",
+      "es7",
+      "es2017",
+      "dom"
+    ],
+    // "strict": true,
+    "resolveJsonModule": true,
+    // "skipLibCheck": true,
+    "baseUrl": ".",
+    "forceConsistentCasingInFileNames": true
+  },
+  "include": [
+    "server",
+    "src"
+  ],
+  "exclude": [
+    "node_modules",
+    "package.json"
+  ]
+}
