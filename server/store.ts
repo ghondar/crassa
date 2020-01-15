@@ -5,7 +5,7 @@ import { createMemoryHistory } from 'history'
 
 import { appBuild } from '../src/paths'
 
-const { 'default': createRootReducer } = require(appBuild + 'ssr/reducers')
+const { 'default': createRootReducer } = require(appBuild + '/ssr/reducers')
 
 // Create a store and history based on a path
 const createServerStore = (path = '/') => {

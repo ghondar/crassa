@@ -12,12 +12,12 @@ import { appBuild, appServer } from '../src/paths'
 
 const jsan = require('jsan').default
 
-const Root = require(appBuild + 'ssr/containers/Root').default
-const createRoutes = require(appBuild + 'ssr/routes').default
-let { rootSaga } = require(appBuild + 'ssr/reducers')
+const Root = require(appBuild + '/ssr/containers/Root').default
+const createRoutes = require(appBuild + '/ssr/routes').default
+let { rootSaga } = require(appBuild + '/ssr/reducers')
 
 if(!rootSaga)
-  rootSaga = require(appBuild + 'ssr/sagas').default
+  rootSaga = require(appBuild + '/ssr/sagas').default
 
 const universalJS = appServer + '/universal.js'
 const hasUniversal = fs.existsSync(universalJS)
