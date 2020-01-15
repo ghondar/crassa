@@ -8,20 +8,19 @@ import { ChunkExtractor } from '@loadable/server'
 
 import createServerStore from './store'
 
-import { appSrc, appBuild, appServer } from '../src/paths'
+import { appBuild, appServer } from '../src/paths'
 
 const jsan = require('jsan').default
 
-const Root = require(appSrc + '/containers/Root').default
-const createRoutes = require(appSrc + '/routes').default
-let { rootSaga } = require(appSrc + '/reducers')
+const Root = require(appBuild + 'ssr/containers/Root').default
+const createRoutes = require(appBuild + 'ssr/routes').default
+let { rootSaga } = require(appBuild + 'ssr/reducers')
 
 if(!rootSaga)
-  rootSaga = require(appSrc + '/sagas').default
+  rootSaga = require(appBuild + 'ssr/sagas').default
 
 const universalJS = appServer + '/universal.js'
 const hasUniversal = fs.existsSync(universalJS)
-
 
 let extractor: ChunkExtractor | null = null
 
@@ -31,12 +30,12 @@ if(process.env.NODE_ENV !== 'development') {
 }
 
 interface Payload {
-  html: string,
-  head: string,
-  body: string,
-  loadableState: string | null,
-  preloadedState: string,
-  isCustomState: boolean
+  html: string;
+  head: string;
+  body: string;
+  loadableState: string | null;
+  preloadedState: string;
+  isCustomState: boolean;
 }
 
 // A simple helper function to prepare the HTML markup
@@ -90,7 +89,7 @@ export const universalLoader: RequestHandler = async (req, res, next) => {
     // Get store, history and html string from middleware
     const { store, history, htmlData } = res.locals
     const helmetContext: {
-      helmet: any
+      helmet: any;
     } = {
       helmet: ''
     }

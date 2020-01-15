@@ -19,7 +19,7 @@ const { appRootPath, appPackage, appDotEnv } = require('../src/paths')
 const { _moduleAliases } = require(appPackage)
 
 const aliases: {
-  [propName: string]: any
+  [propName: string]: any;
 } = {}
 
 Object.keys(_moduleAliases).forEach(key => {
