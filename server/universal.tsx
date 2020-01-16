@@ -8,16 +8,16 @@ import { ChunkExtractor } from '@loadable/server'
 
 import createServerStore from './store'
 
-import { appBuild, appServer } from '../src/paths'
+import { appBuild, appLib, appServer } from '../src/paths'
 
 const jsan = require('jsan').default
 
-const Root = require(appBuild + '/ssr/containers/Root').default
-const createRoutes = require(appBuild + '/ssr/routes').default
-let { rootSaga } = require(appBuild + '/ssr/reducers')
+const Root = require(appLib + '/ssr/containers/Root').default
+const createRoutes = require(appLib + '/ssr/routes').default
+let { rootSaga } = require(appLib + '/ssr/reducers')
 
 if(!rootSaga)
-  rootSaga = require(appBuild + '/ssr/sagas').default
+  rootSaga = require(appLib + '/ssr/sagas').default
 
 const universalJS = appServer + '/universal.js'
 const hasUniversal = fs.existsSync(universalJS)

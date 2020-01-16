@@ -34,7 +34,13 @@
     "resolveJsonModule": true,
     // "skipLibCheck": true,
     "baseUrl": ".",
-    "forceConsistentCasingInFileNames": true
+    "forceConsistentCasingInFileNames": true,
+    "types": [
+      "node"
+    ],
+    "typeRoots": [
+      "node_modules/@types"
+    ]
   },
   "include": [
     "server",
