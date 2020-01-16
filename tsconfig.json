@@ -1,13 +1,12 @@
 {
   "compilerOptions": {
     "outDir": "build",
-    "module": "commonjs",
+    "module": "esnext",
     "target": "es6",
     "moduleResolution": "node",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "noImplicitAny": true,
-    "sourceMap": true,
     "esModuleInterop": true,
     "jsx": "react",
     "noImplicitReturns": true,
