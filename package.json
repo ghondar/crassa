@@ -34,7 +34,7 @@
     "@loadable/babel-plugin": "5.11.0",
     "@loadable/component": "5.11.0",
     "@loadable/server": "5.11.0",
-    "@loadable/webpack-plugin": "5.11.0",
+    "@loadable/webpack-plugin": "5.7.1",
     "@types/body-parser": "1.17.1",
     "@types/compression": "1.0.1",
     "@types/cookie-parser": "1.4.2",
