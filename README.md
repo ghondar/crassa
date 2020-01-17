@@ -148,9 +148,10 @@ You can put your git when crassa cli ask you to choose between next or custom te
 You can configure the project environment variables
 
 ```
-  > REACT_APP_PORT_SERVER
-  > REACT_APP_REST_API_LOCATION
-  > REACT_APP_API_VERSION
+  > REACT_APP_PORT_SERVER=5000 // Port of server this is optional 
+  > REACT_APP_REST_API_LOCATION=http://localhost:5000 // Domain the server application
+  > REACT_APP_API_VERSION=v1 // Api version for default is v1
+  > BODY_PARSER_LIMIT=10mb // Configure size limit body-parser
 ```
 
 ## Extensions

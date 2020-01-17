@@ -103,6 +103,8 @@ export const universalLoader: RequestHandler = async (req, res, next) => {
       </HelmetProvider>
     )
 
+    const extractor = new ChunkExtractor({ statsFile })
+    
     // Get loadable components tree
     const app = extractor && extractor.collectChunks(jsx)
 
@@ -134,9 +136,9 @@ export const universalLoader: RequestHandler = async (req, res, next) => {
       // Form the final HTML response
       const html = prepHTML(prevHtml, {
         html         : helmet.htmlAttributes.toString(),
-        head         : helmet.title.toString() + helmet.meta.toString() + helmet.link.toString(),
+        head         : helmet.title.toString() + helmet.meta.toString() + helmet.link.toString() + helmet.script.toString(),
         body         : routeMarkup,
-        loadableState: extractor && extractor.getScriptTags(),
+        loadableState: extractor.getScriptTags() + extractor.getStyleTags(),
         isCustomState,
         preloadedState
       })

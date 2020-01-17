@@ -8,7 +8,7 @@ function countLines() {
 }
 
 function lint() {
-  execCmd(`npx eslint ${appRootPath}/{src,server}/**/*.js* --fix --config ${appRootPath}/.eslintrc`, {
+  execCmd(`npx eslint ${appRootPath}/{src,server}/**/*.js --fix --config ${appRootPath}/.eslintrc`, {
     async: true
   })
 }
