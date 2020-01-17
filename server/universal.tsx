@@ -22,13 +22,6 @@ if(!rootSaga)
 const universalJS = appServer + '/universal.js'
 const hasUniversal = fs.existsSync(universalJS)
 
-let extractor: ChunkExtractor | null = null
-
-if(process.env.NODE_ENV !== 'development') {
-  const statsFile = appBuild + '/loadable-stats.json'
-  extractor = new ChunkExtractor({ statsFile })
-}
-
 interface Payload {
   html: string;
   head: string;
@@ -103,7 +96,12 @@ export const universalLoader: RequestHandler = async (req, res, next) => {
       </HelmetProvider>
     )
 
-    const extractor = new ChunkExtractor({ statsFile })
+    let extractor: ChunkExtractor | null = null
+
+    if(process.env.NODE_ENV !== 'development') {
+      const statsFile = appBuild + '/loadable-stats.json'
+      extractor = new ChunkExtractor({ statsFile })
+    }
     
     // Get loadable components tree
     const app = extractor && extractor.collectChunks(jsx)
@@ -138,7 +136,7 @@ export const universalLoader: RequestHandler = async (req, res, next) => {
         html         : helmet.htmlAttributes.toString(),
         head         : helmet.title.toString() + helmet.meta.toString() + helmet.link.toString() + helmet.script.toString(),
         body         : routeMarkup,
-        loadableState: extractor.getScriptTags() + extractor.getStyleTags(),
+        loadableState: extractor && extractor.getScriptTags() + extractor && extractor.getStyleTags(),
         isCustomState,
         preloadedState
       })
