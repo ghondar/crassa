@@ -10,7 +10,7 @@ import createServerStore from './store'
 
 import { appBuild, appLib, appServer } from '../src/paths'
 
-const jsan = require('jsan').default
+const jsan = require('jsan')
 
 const Root = require(appLib + '/ssr/containers/Root').default
 const createRoutes = require(appLib + '/ssr/routes').default
