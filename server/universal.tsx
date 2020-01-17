@@ -136,7 +136,7 @@ export const universalLoader: RequestHandler = async (req, res, next) => {
         html         : helmet.htmlAttributes.toString(),
         head         : helmet.title.toString() + helmet.meta.toString() + helmet.link.toString() + helmet.script.toString(),
         body         : routeMarkup,
-        loadableState: extractor && extractor.getScriptTags() + extractor && extractor.getStyleTags(),
+        loadableState: extractor && (extractor.getScriptTags() + extractor.getStyleTags()),
         isCustomState,
         preloadedState
       })
