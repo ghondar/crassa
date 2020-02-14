@@ -83,7 +83,7 @@ export const universalLoader = async (req, res, next) => {
     )
 
     const extractor = new ChunkExtractor({ statsFile })
-    
+
     // Get loadable components tree
     const app = extractor.collectChunks(jsx)
 
