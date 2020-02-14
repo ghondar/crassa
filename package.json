@@ -1,6 +1,6 @@
 {
   "name": "@crassa/next",
-  "version": "0.9.25-next",
+  "version": "0.9.25",
   "preferGlobal": true,
   "bin": {
     "crassa": "./index.js"
@@ -58,7 +58,7 @@
     "nodemon": "2.0.2",
     "react-app-rewired": "2.1.5",
     "react-helmet-async": "1.0.4",
-    "react-scripts": "3.3.1",
+    "react-scripts": "3.4.0",
     "redux-wait-for-action": "0.0.8",
     "regenerator-runtime": "0.13.3",
     "rimraf": "3.0.2"

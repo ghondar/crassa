@@ -53,7 +53,8 @@ commands.forEach(({ name, fn, description = '' }) => {
     .command(name)
     .allowUnknownOption()
     .description(description)
-    .action(async () => {
+    .action(async (source, destination) => {
+      console.log(source, destination)
       const { error } = await preHook()
       if(!error) fn()
       else log({ text: colorize(error).FgRed(), type: 'error' })
