@@ -21,7 +21,7 @@ const hasConfigExpress = existsSync(configExpress)
 // Compress, parse, and log
 app.use(compression())
 app.use(cookieParser())
-app.use(bodyParser.json(process.env.BODY_PARSER_LIMIT ? { limit: process.env.BODY_PARSER_LIMIT } : {} ))
+app.use(bodyParser.json(process.env.BODY_PARSER_LIMIT ? { limit: process.env.BODY_PARSER_LIMIT } : {}))
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(morgan('dev'))
 app.disable('x-powered-by')

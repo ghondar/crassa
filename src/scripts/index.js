@@ -22,6 +22,9 @@ function devClient() {
 }
 
 function devServer() {
+  const argv = process.argv
+  const args = argv.slice(3, argv.length)
+
   const cmd = `
           npx cross-env
             NODE_ENV=development
@@ -29,7 +32,7 @@ function devServer() {
                 APP_IT_ROOT=${packageRootPath}
                   npx cross-env
                     APP_ROOT=${appRootPath}
-                      npx nodemon --watch ${appRootPath}/server --config ${appRootPath}/nodemon.json ${packageRootPath}/lib/server/index.js`
+                      npx nodemon ${args.join(' ')} --watch ${appRootPath}/server --config ${appRootPath}/nodemon.json ${packageRootPath}/server/index.js`
   execCmd(cmd, { async: true })
 }
 
@@ -60,11 +63,14 @@ function start() {
                 APP_IT_ROOT=${packageRootPath}
                   npx cross-env
                     APP_ROOT=${appRootPath}
-                      npx node ${packageRootPath}/lib/server/index.js`
+                      npx node ${packageRootPath}/server/index.js`
   execCmd(cmd, { async: true })
 }
 
 function startDev() {
+  const argv = process.argv
+  const args = argv.slice(3, argv.length)
+
   const cmd = `
           npx cross-env
             NODE_ENV=production
@@ -72,7 +78,7 @@ function startDev() {
                 APP_IT_ROOT=${packageRootPath}
                   npx cross-env
                     APP_ROOT=${appRootPath}
-                      npx nodemon --watch ${appRootPath}/server --config ${appRootPath}/nodemon.json ${packageRootPath}/lib/server/index.js`
+                      npx nodemon ${args.join(' ')} --watch ${appRootPath}/server --config ${appRootPath}/nodemon.json ${packageRootPath}/server/index.js`
   execCmd(cmd, { async: true })
 }
 
