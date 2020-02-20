@@ -1,31 +1,4 @@
-// Any route that comes in, send it to the universalLoader
-
-// import express from 'express'
-// import { createStore, universalLoader } from '../universal'
-// import { existsSync } from 'fs'
-// import { appServer } from '../../src/paths'
-
-// const router = express.Router()
-
-// const preLoadState = appServer + '/preLoadState.js'
-// const hasPreLoadState = existsSync(preLoadState)
-// const middleware =
-//   function(req, res, next) {
-//     if(hasPreLoadState)
-//       if(req.baseUrl.indexOf('.') !== -1 || req.baseUrl.indexOf('api') !== -1 || req.baseUrl.indexOf('static') !== -1) {
-//         next()
-//       } else {
-//         require(preLoadState).default(req, res, next)
-//       }
-//     else
-//       next()
-//   }
-
-// Set universal render middlewares
-// router.use(createStore, middleware, universalLoader)
-
-// export default router
-
+import { createStore, universalLoader } from '../universal'
 import { existsSync } from 'fs'
 import { appServer } from '../../src/paths'
 
@@ -33,14 +6,25 @@ const preLoadState = appServer + '/preLoadState.js'
 const hasPreLoadState = existsSync(preLoadState)
 
 module.exports = function(f, opts, next) {
-  f.get('*', (req, res) => {
-    if(hasPreLoadState)
-      if(req.originalUrl.indexOf('.') !== -1 || req.originalUrl.indexOf('api') !== -1 || req.originalUrl.indexOf('static') !== -1) {
-        next()
-      } else {
-        require(preLoadState).default(req, res, next)
-      }
+  f.decorateReply('locals', {
+    store   : null,
+    history : null,
+    htmlData: null
   })
+
+  f.addHook('preHandler', createStore)
+  f.addHook('preHandler',  (req, res, done) => {
+    if(hasPreLoadState)
+      if(req.raw.url.indexOf('.') !== -1 || req.raw.url.indexOf('api') !== -1 || req.raw.url.indexOf('static') !== -1) {
+        done()
+      } else {
+        require(preLoadState).default(req, res, done)
+      }
+    else
+      done()
+  })
+
+  f.get('*', (req, res) => universalLoader(req, res, next))
 
   next()
 }

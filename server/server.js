@@ -5,7 +5,7 @@ import path from 'path'
 
 // import index from './routes/index'
 
-import { appServer/* , appBuild  */ } from '../src/paths'
+import { appServer, appBuild } from '../src/paths'
 
 // Create our express app (using the port optionally specified)
 const fastify = Fastify({
@@ -30,22 +30,22 @@ fastify.register(AutoLoad, {
 })
 
 // fastify.use('/api', require(path.resolve(appServer)).default)
-// fastify.register(AutoLoad, {
-//   dir    : path.resolve(appServer),
-//   options: {
-//     prefix: '/api/'
-//   }
-// })
+fastify.register(AutoLoad, {
+  dir    : path.resolve(appServer),
+  options: {
+    prefix: '/api/'
+  }
+})
 // Set up route handling, include static assets and an optional API
 // fastify.use(express.static(path.resolve(appBuild)))
-// fastify.register(require('fastify-static'), {
-//   root  : path.resolve(appBuild),
-//   prefix: '/static/'
-// })
+fastify.register(require('fastify-static'), {
+  root  : path.resolve(appBuild),
+  prefix: '/public/'
+})
 // // any other route should be handled by react-router, so serve the index page
 // // fastify.use('*', index)
 // fastify.register(AutoLoad, {
-//   dir    : path.join(__dirname, 'server', 'routes'),
+//   dir    : path.join(__dirname, 'routes'),
 //   options: {
 //     prefix: '*'
 //   }

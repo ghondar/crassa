@@ -36,9 +36,9 @@ const prepHTML = (data, { html, head, body, loadableState, preloadedState, isCus
   return data
 }
 
-export function createStore(req, res, next) {
-  if(req.baseUrl.indexOf('.') !== -1 || req.baseUrl.indexOf('api') !== -1 || req.baseUrl.indexOf('static') !== -1) {
-    next()
+export function createStore(req, res, done) {
+  if(req.raw.url.indexOf('.') !== -1 || req.raw.url.indexOf('api') !== -1 || req.raw.url.indexOf('static') !== -1) {
+    done()
   } else {
     const filePath = appBuild + '/index.html'
 
@@ -52,7 +52,7 @@ export function createStore(req, res, next) {
       }
 
       // Create a store and sense of history based on the current path
-      const { store, history } = createServerStore(Object.keys(req.query).length > 0 ? req.originalUrl : req.baseUrl)
+      const { store, history } = createServerStore(Object.keys(req.query).length > 0 ? req.raw.url : req.raw.url)
 
       // Set data into locals to passa another middleware
       res.locals = {
@@ -60,20 +60,21 @@ export function createStore(req, res, next) {
         history,
         htmlData
       }
-      next()
+      done()
     })
   }
 }
 
-export const universalLoader = async (req, res, next) => {
-  if(req.baseUrl.indexOf('.') !== -1 || req.baseUrl.indexOf('api') !== -1 || req.baseUrl.indexOf('static') !== -1) {
+export const universalLoader = (req, res, next) => {
+  if(req.raw.url.indexOf('.') !== -1 || req.raw.url.indexOf('api') !== -1 || req.raw.url.indexOf('static') !== -1) {
     next()
   } else {
     // Get store, history and html string from middleware
     const { store, history, htmlData } = res.locals
     const helmetContext = {}
     // Create routes using history
-    const routes = createRoutes(history, req.protocol + '://' + req.headers.host, store)
+    // const routes = createRoutes(history, req.protocol + '://' + req.headers.host, store)
+    const routes = createRoutes(history, 'http://' + req.headers.host, store)
 
     // Get app wrapping Root (Provider redux) passing store
     const jsx = (
@@ -123,11 +124,18 @@ export const universalLoader = async (req, res, next) => {
       })
 
       // Up, up, and away...
-      res.send(html)
+      res
+        .code(200)
+        .header('Content-Type', 'text/html; charset=utf-8')
+        .send(html)
     }).catch((e) => {
-      res.status(500).send(e.message)
+      res.code(500).send(e.message)
+
+      return
     })
     renderToString(app)
     store.close()
+
+    return
   }
 }
