@@ -1,6 +1,6 @@
 {
   "name": "@crassa/next",
-  "version": "0.9.26",
+  "version": "0.9.27",
   "preferGlobal": true,
   "bin": {
     "crassa": "./index.js"
@@ -45,13 +45,13 @@
     "dotenv": "8.2.0",
     "download-git-repo": "3.0.2",
     "express": "4.17.1",
-    "http-proxy-middleware": "0.20.0",
+    "http-proxy-middleware": "1.0.0",
     "husky": "4.2.3",
     "ignore-styles": "5.0.1",
     "immer": "5.3.6",
     "inquirer": "7.0.4",
     "jsan": "3.1.13",
-    "lint-staged": "10.0.7",
+    "lint-staged": "10.0.8",
     "module-alias": "2.2.2",
     "morgan": "1.9.1",
     "ncp": "2.0.0",
