@@ -1,6 +1,6 @@
 {
   "name": "@crassa/next",
-  "version": "0.9.28",
+  "version": "0.9.29",
   "preferGlobal": true,
   "bin": {
     "crassa": "./index.js"
@@ -24,7 +24,7 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@babel/core": "7.9.0",
+    "@babel/core": "7.9.6",
     "@babel/plugin-proposal-class-properties": "7.8.3",
     "@babel/plugin-transform-flow-strip-types": "7.9.0",
     "@babel/register": "7.9.0",
@@ -33,11 +33,11 @@
     "@loadable/server": "5.12.0",
     "@loadable/webpack-plugin": "5.12.0",
     "babel-cli": "6.26.0",
-    "babel-plugin-dynamic-import-node": "2.3.0",
+    "babel-plugin-dynamic-import-node": "2.3.3",
     "babel-plugin-transform-imports": "2.0.0",
     "babel-plugin-transform-react-remove-prop-types": "0.4.24",
     "body-parser": "1.19.0",
-    "commander": "5.0.0",
+    "commander": "5.1.0",
     "compression": "1.7.4",
     "cookie-parser": "1.4.5",
     "cross-env": "7.0.2",
@@ -46,18 +46,18 @@
     "download-git-repo": "3.0.2",
     "express": "4.17.1",
     "http-proxy-middleware": "1.0.3",
-    "husky": "4.2.3",
+    "husky": "4.2.5",
     "ignore-styles": "5.0.1",
     "immer": "6.0.3",
     "inquirer": "7.1.0",
     "jsan": "3.1.13",
-    "lint-staged": "10.1.1",
+    "lint-staged": "10.2.2",
     "module-alias": "2.2.2",
     "morgan": "1.10.0",
     "ncp": "2.0.0",
-    "nodemon": "2.0.2",
-    "react-app-rewired": "2.1.5",
-    "react-helmet-async": "1.0.4",
+    "nodemon": "2.0.3",
+    "react-app-rewired": "2.1.6",
+    "react-helmet-async": "1.0.6",
     "react-scripts": "3.4.1",
     "redux-wait-for-action": "0.0.8",
     "regenerator-runtime": "0.13.5",
@@ -76,7 +76,7 @@
   },
   "lint-staged": {
     "{src,server}/**/*.js": [
-      "eslint . --ext .js --fix"
+      "eslint --ext .js --fix"
     ]
   },
   "_moduleAliases": {
