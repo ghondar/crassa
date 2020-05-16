@@ -1,6 +1,6 @@
 {
   "name": "@crassa/next",
-  "version": "0.9.29",
+  "version": "0.9.30",
   "preferGlobal": true,
   "bin": {
     "crassa": "./index.js"
@@ -48,14 +48,14 @@
     "http-proxy-middleware": "1.0.3",
     "husky": "4.2.5",
     "ignore-styles": "5.0.1",
-    "immer": "6.0.3",
+    "immer": "6.0.5",
     "inquirer": "7.1.0",
     "jsan": "3.1.13",
     "lint-staged": "10.2.2",
     "module-alias": "2.2.2",
     "morgan": "1.10.0",
     "ncp": "2.0.0",
-    "nodemon": "2.0.3",
+    "nodemon": "2.0.4",
     "react-app-rewired": "2.1.6",
     "react-helmet-async": "1.0.6",
     "react-scripts": "3.4.1",
