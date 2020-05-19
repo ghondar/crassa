@@ -128,11 +128,22 @@ async function fileExists(path) {
   }
 }
 
+async function folderExists(path) {
+  try {
+    const stats = await fileStats(path)
+
+    return stats.isDirectory()
+  } catch (e) {
+    return false
+  }
+}
+
 module.exports = {
   copyDir,
   replaceAll,
   colorize,
   execCmd,
   log,
-  fileExists
+  fileExists,
+  folderExists
 }
