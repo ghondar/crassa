@@ -2,6 +2,7 @@
 **/build/**
 **/public/**
 **/coverage/**
+**/templates/**
 **/vendor/**
 **/js/**
 package.json

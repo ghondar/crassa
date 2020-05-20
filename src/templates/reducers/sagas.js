@@ -7,7 +7,7 @@ export const fetchCounter = ({ types, selectors }) => function* (addMore) {
     const status = yield select(selectors.getStatus)
     if(status !== 'READY' || addMore) {
       yield put({ type: types.FETCH_PENDING })
-      const payload = yield call(Get, 'counter')
+      const payload = yield call(Get, 'counters')
 
       const count = yield select(selectors.getCount)
 

@@ -1,27 +1,26 @@
-import { WAIT_FOR_ACTION } from 'redux-wait-for-action'
 import produce from 'immer'
 
 import base from 'reducers/base'
 import * as sagas from './sagas'
 import takes from './takes'
 
-export default base({
+const {-- name --}Ducks = base({
   namespace   : 'crassa',
   store       : '{-- name --}',
   initialState: {
-    count: 0
+    docs: []
   }
 }).extend({
-  types  : [ 'ADD_COUNT', 'REMOVE_COUNT' ],
+  types  : [ 'FETCH_{-- upperName --}S', 'FETCH_{-- upperName --}', 'ADD_{-- upperName --}S' ],
   reducer: (state, action, { types }) =>
     produce(state, draft => {
       switch (action.type) {
-        case types.ADD_COUNT:
-          draft.count++
+        case types.ADD_{-- upperName --}S:
+          for (key in action.payload)
+            if(key === 'docs') draft[key] = draft[key].concat(action.payload[key])
+            else (draft[key]) = action.payload[key]
 
-          return
-        case types.REMOVE_COUNT:
-          draft.count--
+          draft.status = statuses.READY
 
           return
         default:
@@ -29,14 +28,36 @@ export default base({
       }
     }),
   selectors: ({ store }) => ({
-    getCount : state => state[store].count,
+    get{-- capitalizeName --}s   : state => state[store].{-- name --}s,
+    get{-- capitalizeName --}ById: new Duck.Selector(selectors => (state, id) =>
+      selectors.get{-- capitalizeName --}s(state).find({-- name --} => id === {-- name --}.id)
+    ),
     getStatus: state => state[store].status
   }),
   creators: ({ types }) => ({
-    addCount          : () => ({ type: types.ADD_COUNT }),
-    removeCount       : () => ({ type: types.REMOVE_COUNT }),
-    addCountFromServer: addMore => ({ type: types.FETCH, [WAIT_FOR_ACTION]: types.FETCH_FULFILLED, addMore })
+    fetch{-- capitalizeName --}s: addMore => ({ type: types.FETCH_{-- upperName --}S, addMore }),
+    fetch{-- capitalizeName --} : id => ({ type: types.FETCH_{-- upperName --}, id }),
+    post{-- capitalizeName --}  : ({-- name --}) => ({ type: types.POST, {-- name --} }),
+    update{-- capitalizeName --}: (id, {-- name --}) => ({ type: types.UPDATE, id, {-- name --} }),
+    delete{-- capitalizeName --}: id => ({ type: types.DELETE, id })
   }),
   sagas,
   takes
 })
+
+export const {
+  selectors: {
+    get{-- capitalizeName --}s,
+    get{-- capitalizeName --}ById,
+    getStatus
+  },
+  creators: {
+    fetch{-- capitalizeName --}s,
+    fetch{-- capitalizeName --},
+    post{-- capitalizeName --},
+    update{-- capitalizeName --},
+    delete{-- capitalizeName --}
+  }
+} = {-- name --}Ducks
+
+export default {-- name --}Ducks

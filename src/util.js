@@ -29,6 +29,10 @@ function replaceAll(str, what, withThat) {
   return retStr
 }
 
+function capitalize(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1)
+}
+
 function colorize(str) {
   const colorsMods = {
     Reset     : '\x1b[0m',
@@ -145,5 +149,6 @@ module.exports = {
   execCmd,
   log,
   fileExists,
+  capitalize,
   folderExists
 }
