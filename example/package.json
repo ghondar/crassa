@@ -92,8 +92,7 @@
   },
   "lint-staged": {
     "{src,server}/**/*.js": [
-      "eslint --ext .js --fix",
-      "git add"
+      "eslint --ext .js --fix"
     ]
   },
   "browserslist": [
