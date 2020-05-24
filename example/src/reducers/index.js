@@ -10,5 +10,7 @@ export default history => combineReducers({
 })
 
 export function* rootSaga() {
-  yield all([ ...counter.takes ])
+  yield all([
+    ...counter.takes
+  ])
 }
