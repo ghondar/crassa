@@ -26,7 +26,7 @@ This will fire up the backend and the frontend development server. Just edit fil
 ## RoadMap
 
 - [x] Analize and crate paramater in crassa to generate templates
-- [ ] sCreate server templates
+- [ ] Create server templates
 - [x]  Generate advance template
   - [x] Create folder function with validation
   - [x] Create file function
@@ -36,6 +36,7 @@ This will fire up the backend and the frontend development server. Just edit fil
   - [x] Create sagas file template
   - [x] Create takes file template
 - [ ] Generate basic template
+- [ ] Update documentation
 
 
 ## Usage
