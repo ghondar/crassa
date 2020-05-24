@@ -24,7 +24,7 @@ async function createFile(name, path, file) {
   parsedTemplate = replaceAll(parsedTemplate.toString(), '{-- upperName --}', name.toUpperCase())
   parsedTemplate = replaceAll(parsedTemplate.toString(), '{-- capitalizeName --}', capitalize(name))
 
-  await promises.writeFile(join(appSrc, 'reducers', name, 'index.js'), parsedTemplate)
+  await promises.writeFile(join(appSrc, 'reducers', name, file), parsedTemplate)
 }
 
 async function readReducerFile(name) {
@@ -47,6 +47,8 @@ async function generateReducer() {
 
   await createFolder(name)
   await createFile(name, 'reducers', 'index.js')
+  await createFile(name, 'reducers', 'sagas.js')
+  await createFile(name, 'reducers', 'takes.js')
   await readReducerFile(name)
 
   log({ text: colorize(`generate ${name} reducer files`).FgGreen(), type: 'info' })

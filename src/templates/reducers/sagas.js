@@ -1,21 +1,17 @@
 import { select, call, put } from 'redux-saga/effects'
 
-import { Get } from 'lib/Request'
+import { Get, Post, Put, Delete } from 'lib/Request'
 
-export const fetchCounter = ({ types, selectors }) => function* (addMore) {
+export const fetch{-- capitalizeName --}s = ({ types, selectors }) => function* (addMore) {
   try {
     const status = yield select(selectors.getStatus)
     if(status !== 'READY' || addMore) {
       yield put({ type: types.FETCH_PENDING })
-      const payload = yield call(Get, 'counters')
-
-      const count = yield select(selectors.getCount)
+      const payload = yield call(Get, '{-- name --}s')
 
       yield put({
-        type   : types.FETCH_FULFILLED,
-        payload: {
-          count: payload.count + count
-        }
+        type: types.ADD_{-- upperName --}S,
+        payload
       })
     } else {
       console.log('loaded from server')
@@ -29,6 +25,126 @@ export const fetchCounter = ({ types, selectors }) => function* (addMore) {
       default:
         yield put({
           type : types.FETCH_FAILURE,
+          error: messageResponse || message
+        })
+        break
+    }
+  }
+}
+
+export const fetch{-- capitalizeName --} = ({ types, selectors }) => function* (id) {
+  try {
+    const status = yield select(selectors.getStatus)
+    if(status !== 'READY') {
+      yield put({ type: types.FETCH_PENDING })
+      const payload = yield call(Get, '{-- name --}/' + id)
+
+      yield put({
+        type: types.FETCH_FULFILLED,
+        payload
+      })
+    } else {
+      console.log('loaded from server')
+    }
+  } catch (e) {
+    const { type, message, response: { data: { message: messageResponse } = {} } = {} } = e
+    switch (type) {
+      case 'cancel':
+        yield put({ type: types.FETCH_CANCEL })
+        break
+      default:
+        yield put({
+          type : types.FETCH_FAILURE,
+          error: messageResponse || message
+        })
+        break
+    }
+  }
+}
+
+export const post{-- capitalizeName --} = ({ types, selectors }) => function* ({-- name --}) {
+  try {
+    const status = yield select(selectors.getStatus)
+    if(status !== 'READY') {
+      yield put({ type: types.POST_PENDING })
+      const payload = yield call(Post, '{-- name --}', {-- name --})
+
+      yield put({
+        type: types.POST_FULFILLED,
+        payload
+      })
+    } else {
+      console.log('loaded from server')
+    }
+  } catch (e) {
+    const { type, message, response: { data: { message: messageResponse } = {} } = {} } = e
+    switch (type) {
+      case 'cancel':
+        yield put({ type: types.POST_CANCEL })
+        break
+      default:
+        yield put({
+          type : types.POST_FAILURE,
+          error: messageResponse || message
+        })
+        break
+    }
+  }
+}
+
+export const update{-- capitalizeName --} = ({ types, selectors }) => function* (id, {-- name --}) {
+  try {
+    const status = yield select(selectors.getStatus)
+    if(status !== 'READY') {
+      yield put({ type: types.PUT_PENDING })
+      const payload = yield call(Put, '{-- name --}/' + id, {-- name --})
+
+      yield put({
+        type: types.PUT_FULFILLED,
+        payload
+      })
+    } else {
+      console.log('loaded from server')
+    }
+  } catch (e) {
+    const { type, message, response: { data: { message: messageResponse } = {} } = {} } = e
+    switch (type) {
+      case 'cancel':
+        yield put({ type: types.PUT_CANCEL })
+        break
+      default:
+        yield put({
+          type : types.PUT_FAILURE,
+          error: messageResponse || message
+        })
+        break
+    }
+  }
+}
+
+export const delete{-- capitalizeName --} = ({ types, selectors }) => function* (id) {
+  try {
+    const status = yield select(selectors.getStatus)
+    if(status !== 'READY') {
+      yield put({ type: types.DELETE_PENDING })
+      yield call(Delete, '{-- name --}/' + id)
+
+      yield put({
+        type: types.DELETE_FULFILLED,
+        id
+      })
+    } else {
+      console.log('loaded from server')
+    }
+  } catch (e) {
+    const { type, message, response: { data: { message: messageResponse } = {} } = {} } = e
+    switch (type) {
+      case 'cancel':
+        yield put({ type: types.DELETE_CANCEL })
+        break
+      default:
+        yield put({
+          type : types.DELETE_FAILURE,
           error: messageResponse || message
         })
         break

@@ -26,14 +26,16 @@ This will fire up the backend and the frontend development server. Just edit fil
 ## RoadMap
 
 - [x] Analize and crate paramater in crassa to generate templates
-- [x] Create folder function with validation
-- [x] Create file function
-- [x] Create reduce index file template
-- [x] Concate new reducer to index.js reducers file from project
-- [x] Concate new takes to rootSaga
-- [ ] Create sagas file template
-- [ ] Create takes file template
-- [ ] Create server templates
+- [ ] sCreate server templates
+- [x]  Generate advance template
+  - [x] Create folder function with validation
+  - [x] Create file function
+  - [x] Create reduce index file template
+  - [x] Concate new reducer to index.js reducers file from project
+  - [x] Concate new takes to rootSaga
+  - [x] Create sagas file template
+  - [x] Create takes file template
+- [ ] Generate basic template
 
 
 ## Usage

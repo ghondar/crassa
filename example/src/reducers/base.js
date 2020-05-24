@@ -84,6 +84,8 @@ export default function createDuck({ namespace, store, initialState = {}, creato
             return
           case types.DELETE_FULFILLED:
             draft.status = statuses.DELETED
+            if(draft.docs.length > 0)
+              draft.docs.splice(draft.docs.findIndex(doc => doc.id === action.id), 1)
 
             return
           case types.FETCH_FOR_PATH_FAILURE:
