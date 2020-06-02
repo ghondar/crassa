@@ -1,0 +1,44 @@
+import { take, fork } from 'redux-saga/effects'
+
+const watchFetch{{capitalize name}}s = ({ types, sagas }) => fork(function* () {
+  while (true) {
+    const { addMore } = yield take(types.FETCH_{{upper name}}S)
+    yield fork(sagas.fetch{{capitalize name}}s, addMore)
+  }
+})
+
+const watchFetch{{capitalize name}} = ({ types, sagas }) => fork(function* () {
+  while (true) {
+    const { id } = yield take(types.FETCH_{{upper name}})
+    yield fork(sagas.fetch{{capitalize name}}, id)
+  }
+})
+
+const watchPost{{capitalize name}} = ({ types, sagas }) => fork(function* () {
+  while (true) {
+    const { {{name}} } = yield take(types.POST)
+    yield fork(sagas.post{{capitalize name}}, {{name}})
+  }
+})
+
+const watchUpdate{{capitalize name}} = ({ types, sagas }) => fork(function* () {
+  while (true) {
+    const { id, {{name}} } = yield take(types.UPDATE)
+    yield fork(sagas.update{{capitalize name}}, id, {{name}})
+  }
+})
+
+const watchDelete{{capitalize name}} = ({ types, sagas }) => fork(function* () {
+  while (true) {
+    const { id } = yield take(types.DELETE)
+    yield fork(sagas.delete{{capitalize name}}, id)
+  }
+})
+
+export default duck => [
+  watchFetch{{capitalize name}}s(duck),
+  watchFetch{{capitalize name}}(duck),
+  watchPost{{capitalize name}}(duck),
+  watchUpdate{{capitalize name}}(duck),
+  watchDelete{{capitalize name}}(duck)
+]
