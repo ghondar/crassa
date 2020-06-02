@@ -102,7 +102,7 @@ function execCmd(cmd, { async = false, cwd = packageRootPath } = {}) {
     return true
   }
 
-  childProcess.execSync(cmd)
+  childProcess.execSync(cmd, { cwd, stdio: 'inherit' })
 
   return true
 }
