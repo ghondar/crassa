@@ -5,12 +5,7 @@ import loadable from '@loadable/component'
 
 import Loading from 'components/Common/Loading'
 
-const Dashboard = loadable(async () => {
-  const { 'default': AsyncDashboard } = await import(/* webpackPrefetch: true */ 'containers/Dashboard')
-
-  return props => <AsyncDashboard {...props} />
-}, {
-  ssr     : true,
+const Dashboard = loadable(() => import(/* webpackPrefetch: true */ 'containers/Dashboard'), {
   fallback: <Loading />
 })
 

@@ -1,3 +1,4 @@
+import Duck from 'extensible-duck'
 import produce from 'immer'
 
 import base from 'reducers/base'

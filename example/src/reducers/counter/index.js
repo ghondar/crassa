@@ -1,4 +1,3 @@
-import { WAIT_FOR_ACTION } from 'redux-wait-for-action'
 import produce from 'immer'
 
 import base from 'reducers/base'
@@ -34,12 +33,12 @@ export default base({
   creators: ({ types }) => ({
     addCount          : () => ({ type: types.ADD_COUNT }),
     removeCount       : () => ({ type: types.REMOVE_COUNT }),
-    addCountFromServer: addMore => ({ type: types.FETCH, [WAIT_FOR_ACTION]: types.FETCH_FULFILLED, addMore })
+    addCountFromServer: addMore => ({ type: types.FETCH, addMore })
   }),
-  sagas: duck => ({
-    addCountFromServer: addCountFromServer(duck)
-  }),
-  takes: (duck) => ([
+  sagas: {
+    addCountFromServer
+  },
+  takes: (duck) => [
     watchCountServer(duck)
-  ])
+  ]
 })
