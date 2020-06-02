@@ -1,8 +1,8 @@
 const { join, resolve } = require('path')
 const { promises } = require('fs')
-const { /* execCmd, */ folderExists, log, colorize, replaceAll, capitalize } = require('../util')
+const { execCmd, folderExists, log, colorize, replaceAll, capitalize } = require('../util')
 
-const { /*  appRootPath, packageRootPath, */ appSrc } = require('../paths')
+const { appRootPath, /* packageRootPath, */ appSrc } = require('../paths')
 
 const regexImport = /(import*) ([^']*) from '.\/([^']*)'/g
 const regexReducer = /\[([^']*)\]:([^\n]*)/g
@@ -54,11 +54,26 @@ async function generateReducer() {
   log({ text: colorize(`generate ${name} reducer files`).FgGreen(), type: 'info' })
 }
 
+async function plopGenerate() {
+  const argv = process.argv
+  const params = argv.slice(3, argv.length)
+
+  const cmd = `npx cross-env
+                APP_ROOT=${appRootPath}
+                  npx plop ${params.join(' ')}`
+  execCmd(cmd, { async: true })
+}
+
 const templateCommands = [
   {
     name       : 'generate',
     fn         : generateReducer,
-    description: 'Generate a reducer witn a name.'
+    description: 'Generate a reducer with a name.'
+  },
+  {
+    name       : 'g',
+    fn         : plopGenerate,
+    description: 'Generate a template with a name.'
   }
 ]
 

@@ -27,6 +27,7 @@ This will fire up the backend and the frontend development server. Just edit fil
 
 - [x] Analize and crate paramater in crassa to generate templates
 - [ ] Create server templates
+- [x] Migrate to plop library
 - [x]  Generate advance template
   - [x] Create folder function with validation
   - [x] Create file function
