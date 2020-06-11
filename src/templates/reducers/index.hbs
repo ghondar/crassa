@@ -2,8 +2,10 @@ import Duck from 'extensible-duck'
 import produce from 'immer'
 
 import base from 'reducers/base'
+{{#if isSagas}}
 import * as sagas from './sagas'
 import takes from './takes'
+{{/if}}
 
 const {{name}}Ducks = base({
   namespace   : 'crassa',
@@ -29,12 +31,12 @@ const {{name}}Ducks = base({
       }
     }),
   selectors: ({ store }) => ({
-    get{{capitalize name}}s   : state => state[store].{{name}}s,
+    get{{capitalize name}}s   : state => state[store].docs,
     get{{capitalize name}}ById: new Duck.Selector(selectors => (state, id) =>
       selectors.get{{capitalize name}}s(state).find({{name}} => id === {{name}}.id)
     ),
     getStatus: state => state[store].status
-  }),
+  }){{#if isSagas}},
   creators: ({ types }) => ({
     fetch{{capitalize name}}s: addMore => ({ type: types.FETCH_{{upper name}}S, addMore }),
     fetch{{capitalize name}} : id => ({ type: types.FETCH_{{upper name}}, id }),
@@ -43,7 +45,7 @@ const {{name}}Ducks = base({
     delete{{capitalize name}}: id => ({ type: types.DELETE, id })
   }),
   sagas,
-  takes
+  takes{{/if}}
 })
 
 export const {
@@ -51,14 +53,14 @@ export const {
     get{{capitalize name}}s,
     get{{capitalize name}}ById,
     getStatus
-  },
+  }{{#if isSagas}},
   creators: {
     fetch{{capitalize name}}s,
     fetch{{capitalize name}},
     post{{capitalize name}},
     update{{capitalize name}},
     delete{{capitalize name}}
-  }
+  }{{/if}}
 } = {{name}}Ducks
 
 export default {{name}}Ducks

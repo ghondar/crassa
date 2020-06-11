@@ -40,44 +40,54 @@ module.exports = function(plop) {
         name   : 'name',
         type   : 'input',
         message: 'name of your Reducer?'
+      },
+      {
+        type     : 'confirm',
+        name     : 'isSagas',
+        message  : 'Do you want sagas?',
+        'default': true
       }
     ],
-    actions: ({ name }) => {
-      return [
-        {
-          type        : 'add',
-          path        : generatePathFile(name, 'reducers', 'index.js'),
-          templateFile: generatePathTemplate('reducers', 'index.hbs')
-        },
-        {
-          type        : 'add',
-          path        : generatePathFile(name, 'reducers', 'sagas.js'),
-          templateFile: generatePathTemplate('reducers', 'sagas.hbs')
-        },
-        {
-          type        : 'add',
-          path        : generatePathFile(name, 'reducers', 'takes.js'),
-          templateFile: generatePathTemplate('reducers', 'takes.hbs')
-        },
-        {
-          type    : 'modify',
-          path    : join(appSrc, 'reducers', 'index.js'),
-          pattern : regexImport,
-          template: `$1\nimport ${name} from './${name}'`
-        },
-        {
-          type    : 'modify',
-          path    : join(appSrc, 'reducers', 'index.js'),
-          pattern : regexReducer,
-          template: `$1,\n${generateSpaces(2)}[${name}.store]: ${name}.reducer\n`
-        },
-        {
-          type    : 'modify',
-          path    : join(appSrc, 'reducers', 'index.js'),
-          pattern : regexSagas,
-          template: `$1,\n${generateSpaces(4)}...${name}.takes\n`
-        }
-      ]
+    actions: ({ name, isSagas }) => {
+      let actions = [ {
+        type        : 'add',
+        path        : generatePathFile(name, 'reducers', 'index.js'),
+        templateFile: generatePathTemplate('reducers', 'index.hbs')
+      },
+      {
+        type    : 'modify',
+        path    : join(appSrc, 'reducers', 'index.js'),
+        pattern : regexImport,
+        template: `$1\nimport ${name} from './${name}'`
+      },
+      {
+        type    : 'modify',
+        path    : join(appSrc, 'reducers', 'index.js'),
+        pattern : regexReducer,
+        template: `$1,\n${generateSpaces(2)}[${name}.store]: ${name}.reducer\n`
+      } ]
+
+      if(isSagas)
+        actions.push(...[
+          {
+            type        : 'add',
+            path        : generatePathFile(name, 'reducers', 'sagas.js'),
+            templateFile: generatePathTemplate('reducers', 'sagas.hbs')
+          },
+          {
+            type        : 'add',
+            path        : generatePathFile(name, 'reducers', 'takes.js'),
+            templateFile: generatePathTemplate('reducers', 'takes.hbs')
+          },
+          {
+            type    : 'modify',
+            path    : join(appSrc, 'reducers', 'index.js'),
+            pattern : regexSagas,
+            template: `$1,\n${generateSpaces(4)}...${name}.takes\n`
+          }
+        ])
+
+      return actions
     }
   })
 }
