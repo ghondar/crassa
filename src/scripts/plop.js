@@ -3,9 +3,9 @@ const { join, resolve } = require('path')
 const pluralize = require('pluralize')
 const inquirerRecursive = require('inquirer-recursive')
 
-const { /*  execCmd, folderExists, log, colorize, replaceAll,  */capitalize } = require('../util')
+const { capitalize } = require('../util')
 
-const { /*  appRootPath, packageRootPath, */ appSrc } = require('../paths')
+const { appSrc } = require('../paths')
 
 const regexImport = /((import*) ([^']*) from '.\/([^']*)')/g
 const regexReducer = /(\[([^,]*)\]([^\n]*reducer))\n/g
