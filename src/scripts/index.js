@@ -1,4 +1,5 @@
 const path = require('path')
+const { templateCommands } = require('./template')
 const { execCmd, fileExists } = require('../util')
 
 const { appRootPath, packageRootPath } = require('../paths')
@@ -154,6 +155,6 @@ async function preHook() {
 }
 
 module.exports = {
-  commands,
+  commands: commands.concat(templateCommands),
   preHook
 }

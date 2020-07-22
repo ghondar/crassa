@@ -23,6 +23,23 @@ This will fire up the backend and the frontend development server. Just edit fil
 
 :warning: Crassa is in early stage of development and may not meet all your requirements. That's why contributions of any kind are highly appreciated, as the best tools are built by communities!
 
+## RoadMap
+
+- [x] Analize and crate paramater in crassa to generate templates
+- [ ] Create server templates
+- [x] Migrate to plop library
+- [x]  Generate advance template
+  - [x] Create folder function with validation
+  - [x] Create file function
+  - [x] Create reduce index file template
+  - [x] Concate new reducer to index.js reducers file from project
+  - [x] Concate new takes to rootSaga
+  - [x] Create sagas file template
+  - [x] Create takes file template
+- [ ] Generate basic template
+- [ ] Update documentation
+
+
 ## Usage
 :sos: Show all crassa's commands.
 ```bash

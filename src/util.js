@@ -29,6 +29,10 @@ function replaceAll(str, what, withThat) {
   return retStr
 }
 
+function capitalize(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1)
+}
+
 function colorize(str) {
   const colorsMods = {
     Reset     : '\x1b[0m',
@@ -128,11 +132,23 @@ async function fileExists(path) {
   }
 }
 
+async function folderExists(path) {
+  try {
+    const stats = await fileStats(path)
+
+    return stats.isDirectory()
+  } catch (e) {
+    return false
+  }
+}
+
 module.exports = {
   copyDir,
   replaceAll,
   colorize,
   execCmd,
   log,
-  fileExists
+  fileExists,
+  capitalize,
+  folderExists
 }

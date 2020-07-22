@@ -1,0 +1,66 @@
+import Duck from 'extensible-duck'
+import produce from 'immer'
+
+import base from 'reducers/base'
+{{#if isSagas}}
+import * as sagas from './sagas'
+import takes from './takes'
+{{/if}}
+
+const {{name}}Ducks = base({
+  namespace   : 'crassa',
+  store       : '{{name}}',
+  initialState: {
+    docs: []
+  }
+}).extend({
+  types  : [ 'FETCH_{{upper name}}S', 'FETCH_{{upper name}}', 'ADD_{{upper name}}S' ],
+  reducer: (state, action, { types }) =>
+    produce(state, draft => {
+      switch (action.type) {
+        case types.ADD_{{upper name}}S:
+          for (key in action.payload)
+            if(key === 'docs') draft[key] = draft[key].concat(action.payload[key])
+            else (draft[key]) = action.payload[key]
+
+          draft.status = statuses.READY
+
+          return
+        default:
+          return
+      }
+    }),
+  selectors: ({ store }) => ({
+    get{{capitalize name}}s   : state => state[store].docs,
+    get{{capitalize name}}ById: new Duck.Selector(selectors => (state, id) =>
+      selectors.get{{capitalize name}}s(state).find({{name}} => id === {{name}}.id)
+    ),
+    getStatus: state => state[store].status
+  }){{#if isSagas}},
+  creators: ({ types }) => ({
+    fetch{{capitalize name}}s: addMore => ({ type: types.FETCH_{{upper name}}S, addMore }),
+    fetch{{capitalize name}} : id => ({ type: types.FETCH_{{upper name}}, id }),
+    post{{capitalize name}}  : ({{name}}) => ({ type: types.POST, {{name}} }),
+    update{{capitalize name}}: (id, {{name}}) => ({ type: types.UPDATE, id, {{name}} }),
+    delete{{capitalize name}}: id => ({ type: types.DELETE, id })
+  }),
+  sagas,
+  takes{{/if}}
+})
+
+export const {
+  selectors: {
+    get{{capitalize name}}s,
+    get{{capitalize name}}ById,
+    getStatus
+  }{{#if isSagas}},
+  creators: {
+    fetch{{capitalize name}}s,
+    fetch{{capitalize name}},
+    post{{capitalize name}},
+    update{{capitalize name}},
+    delete{{capitalize name}}
+  }{{/if}}
+} = {{name}}Ducks
+
+export default {{name}}Ducks

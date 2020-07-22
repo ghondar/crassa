@@ -1,7 +1,6 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
-example/node_modules
 /node_modules
 
 # testing
@@ -9,7 +8,6 @@ example/node_modules
 
 # production
 /build
-/lib
 
 # misc
 .DS_Store
@@ -21,6 +19,3 @@ example/node_modules
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-yarn.lock
-
-*.tgz
