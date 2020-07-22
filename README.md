@@ -6,7 +6,7 @@
 :bulb: To get up and running with an application with a node.js backend and a React frontend, just execute:
 
 ```bash
-yarn global add @crassa/next
+yarn global add crassa
 crassa init <projectName> [projectFolder]
 ```
 
@@ -147,7 +147,7 @@ Where package.json basically it must have name and displayName tag with {-- proj
     },
     ...
     "dependencies": {
-        "@crassa/next":  "{-- project-version --}",
+        "crassa":  "{-- project-version --}",
         ...
     },
     ...
