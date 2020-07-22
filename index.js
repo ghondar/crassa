@@ -27,12 +27,14 @@ program
         type     : 'list',
         name     : 'template',
         message  : 'Choose Template:',
-        choices  : [ 'default', 'custom' ],
+        choices  : [ 'default', 'next', 'custom' ],
         'default': 'default'
       }
     ])
 
-    if(template === 'custom') {
+    if(template === 'next') {
+      urlTemplate = urlTemplate + '#next'
+    } else if(template === 'custom') {
       const { url } = await inquirer.prompt([
         {
           type   : 'input',
@@ -49,6 +51,7 @@ program
 commands.forEach(({ name, fn, description = '' }) => {
   program
     .command(name)
+    .allowUnknownOption()
     .description(description)
     .action(async () => {
       const { error } = await preHook()

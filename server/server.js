@@ -13,6 +13,7 @@ import { appServer, appBuild } from '../src/paths'
 // Create our express app (using the port optionally specified)
 const app = express()
 const PORT = process.env.REACT_APP_PORT_SERVER || process.env.PORT || 5000
+const HOST = process.env.REACT_APP_HOST_SERVER || '0.0.0.0'
 
 const configExpress = appServer + '/configExpress.js'
 const hasConfigExpress = existsSync(configExpress)
@@ -20,7 +21,7 @@ const hasConfigExpress = existsSync(configExpress)
 // Compress, parse, and log
 app.use(compression())
 app.use(cookieParser())
-app.use(bodyParser.json())
+app.use(bodyParser.json(process.env.BODY_PARSER_LIMIT ? { limit: process.env.BODY_PARSER_LIMIT } : {}))
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(morgan('dev'))
 app.disable('x-powered-by')
@@ -34,7 +35,7 @@ app.use(express.static(path.resolve(appBuild)))
 app.use('*', index)
 
 // Let's rock
-http.listen(PORT, () => {
+http.listen(PORT, HOST, () => {
   console.log(`App listening on port ${PORT}!`)
 })
 

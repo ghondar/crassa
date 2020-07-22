@@ -1,8 +1,10 @@
 {
-  "name": "crassa",
-  "version": "0.8.1",
+  "name": "@crassa/next",
+  "version": "0.9.30",
   "preferGlobal": true,
-  "bin": "./index.js",
+  "bin": {
+    "crassa": "./index.js"
+  },
   "main": "index.js",
   "author": "Ghondar <abgv9221@gmail.com>",
   "repository": {
@@ -22,39 +24,47 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@babel/core": "7.7.2",
-    "@babel/plugin-proposal-class-properties": "7.7.0",
-    "@babel/polyfill": "7.7.0",
-    "@babel/register": "7.7.0",
+    "@babel/core": "7.10.5",
+    "@babel/plugin-proposal-class-properties": "7.10.4",
+    "@babel/plugin-transform-flow-strip-types": "7.10.4",
+    "@babel/register": "7.10.5",
+    "@loadable/babel-plugin": "5.13.0",
+    "@loadable/component": "5.13.1",
+    "@loadable/server": "5.13.1",
+    "@loadable/webpack-plugin": "5.13.0",
     "babel-cli": "6.26.0",
-    "babel-plugin-dynamic-import-node": "2.3.0",
+    "babel-plugin-dynamic-import-node": "2.3.3",
     "babel-plugin-transform-imports": "2.0.0",
     "babel-plugin-transform-react-remove-prop-types": "0.4.24",
     "body-parser": "1.19.0",
-    "commander": "4.0.1",
+    "commander": "6.0.0",
     "compression": "1.7.4",
-    "cookie-parser": "1.4.4",
-    "cross-env": "6.0.3",
-    "customize-cra": "0.9.1",
+    "cookie-parser": "1.4.5",
+    "cross-env": "7.0.2",
+    "customize-cra": "1.0.0",
     "dotenv": "8.2.0",
     "download-git-repo": "3.0.2",
     "express": "4.17.1",
-    "http-proxy-middleware": "0.20.0",
+    "http-proxy-middleware": "1.0.5",
+    "husky": "4.2.5",
     "ignore-styles": "5.0.1",
-    "immer": "5.0.0",
-    "inquirer": "7.0.0",
+    "immer": "7.0.5",
+    "inquirer": "7.3.2",
+    "inquirer-recursive": "0.0.6",
     "jsan": "3.1.13",
-    "lint-staged": "9.4.3",
-    "loadable-components": "2.2.3",
+    "lint-staged": "10.2.11",
     "module-alias": "2.2.2",
-    "morgan": "1.9.1",
+    "morgan": "1.10.0",
     "ncp": "2.0.0",
-    "nodemon": "1.19.4",
-    "pre-commit": "1.2.2",
-    "react-app-rewired": "2.1.5",
-    "react-scripts": "3.2.0",
+    "nodemon": "2.0.4",
+    "plop": "2.7.2",
+    "pluralize": "8.0.0",
+    "react-app-rewired": "2.1.6",
+    "react-helmet-async": "1.0.6",
+    "react-scripts": "3.4.1",
     "redux-wait-for-action": "0.0.8",
-    "rimraf": "3.0.0"
+    "regenerator-runtime": "0.13.5",
+    "rimraf": "3.0.2"
   },
   "scripts": {
     "publish": "git add . && git commit && npm publish",
@@ -62,15 +72,22 @@
     "format": "eslint . --ext .js --fix",
     "lint-staged": "lint-staged"
   },
-  "pre-commit": "lint-staged",
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
   "lint-staged": {
     "{src,server}/**/*.js": [
-      "eslint . --ext .js --fix",
-      "git add"
+      "eslint --ext .js --fix"
     ]
   },
   "_moduleAliases": {
     "../config/paths": "./react-scripts-wrapper-paths",
     "./paths": "./react-scripts-wrapper-paths"
+  },
+  "description": "A CLI tool to create React + Server Side with one command",
+  "bugs": {
+    "url": "https://github.com/ghondar/crassa/issues"
   }
 }

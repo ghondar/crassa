@@ -1,4 +1,5 @@
 const path = require('path')
+const { templateCommands } = require('./template')
 const { execCmd, fileExists } = require('../util')
 
 const { appRootPath, packageRootPath } = require('../paths')
@@ -8,7 +9,7 @@ function countLines() {
 }
 
 function lint() {
-  execCmd(`npx eslint ${appRootPath}/{src,server}/**/*.js* --fix --config ${appRootPath}/.eslintrc`, {
+  execCmd(`npx eslint ${appRootPath}/{src,server}/**/*.js --fix --config ${appRootPath}/.eslintrc`, {
     async: true
   })
 }
@@ -22,6 +23,9 @@ function devClient() {
 }
 
 function devServer() {
+  const argv = process.argv
+  const args = argv.slice(3, argv.length)
+
   const cmd = `
           npx cross-env
             NODE_ENV=development
@@ -29,7 +33,7 @@ function devServer() {
                 APP_IT_ROOT=${packageRootPath}
                   npx cross-env
                     APP_ROOT=${appRootPath}
-                      npx nodemon --watch ${appRootPath}/server --config ${appRootPath}/nodemon.json ${packageRootPath}/server/index.js`
+                      npx nodemon ${args.join(' ')} --watch ${appRootPath}/server --config ${appRootPath}/nodemon.json ${packageRootPath}/server/index.js`
   execCmd(cmd, { async: true })
 }
 
@@ -65,6 +69,9 @@ function start() {
 }
 
 function startDev() {
+  const argv = process.argv
+  const args = argv.slice(3, argv.length)
+
   const cmd = `
           npx cross-env
             NODE_ENV=production
@@ -72,7 +79,22 @@ function startDev() {
                 APP_IT_ROOT=${packageRootPath}
                   npx cross-env
                     APP_ROOT=${appRootPath}
-                      npx nodemon --watch ${appRootPath}/server --config ${appRootPath}/nodemon.json ${packageRootPath}/server/index.js`
+                      npx nodemon ${args.join(' ')} --watch ${appRootPath}/server --config ${appRootPath}/nodemon.json ${packageRootPath}/server/index.js`
+  execCmd(cmd, { async: true })
+}
+
+function test() {
+  const argv = process.argv
+  const args = argv.slice(3, argv.length)
+
+  const cmd = `
+          npx cross-env
+            NODE_ENV=development
+              npx cross-env
+                APP_IT_ROOT=${packageRootPath}
+                  npx cross-env
+                    APP_ROOT=${appRootPath}
+                      npx node ${packageRootPath}/test.js ${args.join(' ')}`
   execCmd(cmd, { async: true })
 }
 
@@ -103,6 +125,11 @@ const commands = [
     description: 'Run the project with server side using nodemon.'
   },
   {
+    name       : 'test',
+    fn         : test,
+    description: 'Run the test files.'
+  },
+  {
     name       : 'count-lines',
     fn         : countLines,
     description: "See how many LOC you've already written."
@@ -128,6 +155,6 @@ async function preHook() {
 }
 
 module.exports = {
-  commands,
+  commands: commands.concat(templateCommands),
   preHook
 }

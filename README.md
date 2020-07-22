@@ -6,7 +6,7 @@
 :bulb: To get up and running with an application with a node.js backend and a React frontend, just execute:
 
 ```bash
-yarn global add crassa
+yarn global add @crassa/next
 crassa init <projectName> [projectFolder]
 ```
 
@@ -22,6 +22,23 @@ yarn dev
 This will fire up the backend and the frontend development server. Just edit files under __src__ and see what happens!
 
 :warning: Crassa is in early stage of development and may not meet all your requirements. That's why contributions of any kind are highly appreciated, as the best tools are built by communities!
+
+## RoadMap
+
+- [x] Analize and crate paramater in crassa to generate templates
+- [ ] Create server templates
+- [x] Migrate to plop library
+- [x]  Generate advance template
+  - [x] Create folder function with validation
+  - [x] Create file function
+  - [x] Create reduce index file template
+  - [x] Concate new reducer to index.js reducers file from project
+  - [x] Concate new takes to rootSaga
+  - [x] Create sagas file template
+  - [x] Create takes file template
+- [ ] Generate basic template
+- [ ] Update documentation
+
 
 ## Usage
 :sos: Show all crassa's commands.
@@ -127,33 +144,31 @@ Where package.json basically it must have name and displayName tag with {-- proj
     ...
     "crassa": {
         "displayName": "{-- project-name --}",
-        "aliases": {
-            ...
-        }
     },
     ...
     "dependencies": {
-        "crassa":  "{-- project-version --}",
+        "@crassa/next":  "{-- project-version --}",
         ...
     },
     ...
 }
 ```
 
-You can put your git when crassa cli ask you to choose betwee custom or default template, the url mus to have this structure:
+You can put your git when crassa cli ask you to choose between next or custom template, the url mus to have this structure:
 
-```bash
-ghondar/counter-with-redux-ducks-and-sagas-template
-```
+- ghondar/counter-with-redux-ducks-and-sagas-template
+- grovertb/crasa-template-antd
+- grovertb/crasa-template-material-ui
 
 ## Environments
 
 You can configure the project environment variables
 
 ```
-  > REACT_APP_PORT_SERVER
-  > REACT_APP_REST_API_LOCATION
-  > REACT_APP_API_VERSION
+  > REACT_APP_PORT_SERVER=5000 // Port of server this is optional 
+  > REACT_APP_REST_API_LOCATION=http://localhost:5000 // Domain the server application
+  > REACT_APP_API_VERSION=v1 // Api version for default is v1
+  > BODY_PARSER_LIMIT=10mb // Configure size limit body-parser
 ```
 
 ## Extensions
@@ -186,10 +201,11 @@ Example: (__/server/universal.js__)
 ```javascript
 import { renderToString } from 'react-dom/server'
 
-export const setRenderUniversal = (locals, app) => {
+export const setRenderUniversal = (locals, app, extractor) => {
     const { htmlData } = locals // htmlData, store, history
     
     // store => access to store ( redux )
+    // extractor.getStyleTags() => access to styles of the app
 
     const renderString = renderToString(app) // wrapping optional
 

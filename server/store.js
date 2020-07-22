@@ -1,13 +1,12 @@
 import { createStore, applyMiddleware, compose } from 'redux'
 import { routerMiddleware } from 'connected-react-router'
-import createSagaMiddleware from 'redux-saga'
+import createSagaMiddleware, { END } from 'redux-saga'
 import createReduxWaitForMiddleware from 'redux-wait-for-action'
 import { createMemoryHistory } from 'history'
 
 import { appSrc } from '../src/paths'
 
-const createRootReducer = require(appSrc + '/reducers').default
-const rootSaga = require(appSrc + '/sagas').default
+let { 'default': createRootReducer } = require(appSrc + '/reducers')
 
 // Create a store and history based on a path
 const createServerStore = (path = '/') => {
@@ -26,7 +25,9 @@ const createServerStore = (path = '/') => {
 
   // Store it all
   const store = createStore(createRootReducer(history), initialState, composedEnhancers)
-  sagaMiddleware.run(rootSaga)
+
+  store.runSaga = sagaMiddleware.run
+  store.close = () => store.dispatch(END)
 
   // Return all that I need
   return {
