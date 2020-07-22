@@ -7,6 +7,7 @@
     "start": "crassa start",
     "build": "crassa build",
     "dev": "crassa dev",
+    "g": "crassa g",
     "lint": "crassa lint",
     "count": "crassa count-lines",
     "start:dev": "crassa start-dev",
@@ -62,10 +63,10 @@
     "resolver": null
   },
   "dependencies": {
-    "crassa": "file:../",
     "@hot-loader/react-dom": "16.13.0",
     "axios": "0.19.2",
     "connected-react-router": "6.8.0",
+    "crassa": "file:../",
     "extensible-duck": "ghondar/extensible-duck",
     "history": "5.0.0",
     "react": "16.13.1",
