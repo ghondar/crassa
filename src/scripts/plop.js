@@ -7,7 +7,7 @@ const { capitalize } = require('../util')
 
 const { appSrc } = require('../paths')
 
-const regexImport = /((import*) ([^']*) from '.\/([^']*)')/g
+const regexImport = /import [\w\-\/\_]+ from ([\"\']){1}[\w\-\/\_\.]+\1\n(?=[^\/]*$)/gm
 const regexReducer = /(\[([^,]*)\]([^\n]*reducer))\n/g
 const regexSagas = /(\.\.\.([^,]*)\.([^\n]*takes))\n/g
 
@@ -58,7 +58,7 @@ module.exports = function(plop) {
         type    : 'modify',
         path    : join(appSrc, 'reducers', 'index.js'),
         pattern : regexImport,
-        template: `$1\nimport ${name} from './${name}'`
+        template: `$&import ${name} from './${name}'\n`
       },
       {
         type    : 'modify',
