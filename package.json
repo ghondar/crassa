@@ -1,6 +1,6 @@
 {
   "name": "crassa",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "preferGlobal": true,
   "bin": {
     "crassa": "./index.js"
@@ -34,6 +34,7 @@
     "@loadable/webpack-plugin": "5.13.0",
     "babel-cli": "6.26.0",
     "babel-plugin-dynamic-import-node": "2.3.3",
+    "babel-plugin-transform-assets": "1.0.2",
     "babel-plugin-transform-imports": "2.0.0",
     "babel-plugin-transform-react-remove-prop-types": "0.4.24",
     "body-parser": "1.19.0",
@@ -47,7 +48,6 @@
     "express": "4.17.1",
     "http-proxy-middleware": "1.0.5",
     "husky": "4.3.0",
-    "ignore-styles": "5.0.1",
     "immer": "7.0.9",
     "inquirer": "7.3.3",
     "inquirer-recursive": "0.0.6",
