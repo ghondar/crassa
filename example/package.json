@@ -12,8 +12,7 @@
     "count": "crassa count-lines",
     "start:dev": "crassa start-dev",
     "test": "crassa test --env=jsdom",
-    "lint-staged": "lint-staged",
-    "postinstall": "node ../example_postinstall.js"
+    "lint-staged": "lint-staged"
   },
   "keywords": [],
   "author": "",
