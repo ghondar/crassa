@@ -25,7 +25,8 @@ function devClient() {
 function buildServer() {
   const cmd = `
         npx cross-env
-          npx tsc -p ${packageRootPath}/tsconfig.json --noEmit false --module CommonJS`
+          BUILDING=true
+            npx tsc -p ${packageRootPath}/tsconfig.json --noEmit false --module CommonJS`
   execCmd(cmd, { async: true })
 }
 

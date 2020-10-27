@@ -8,19 +8,19 @@ import { ChunkExtractor } from '@loadable/server'
 
 import createServerStore from './store'
 
-import { appBuild, appLib, appServer } from '../src/paths'
+import { appBuild, appSrc, appServer } from '../src/paths'
+import { resolveModule } from '../src/util'
 
 const jsan = require('jsan')
 
-const Root = require(appLib + '/ssr/src/containers/Root').default
-const createRoutes = require(appLib + '/ssr/src/routes').default
-let { rootSaga } = require(appLib + '/ssr/src/reducers')
+const Root = require(appSrc + 'containers/Root').default
+const createRoutes = require(appSrc + 'routes').default
+let { rootSaga } = require(appSrc + 'reducers')
 
 if(!rootSaga)
-  rootSaga = require(appLib + '/ssr/src/sagas').default
+  rootSaga = require(appSrc + 'sagas').default
 
-const universalJS = appServer + '/universal.js'
-const hasUniversal = fs.existsSync(universalJS)
+const universalJS = resolveModule(appServer + '/universal')
 
 interface Payload {
   html: string;
@@ -117,7 +117,7 @@ export const universalLoader: RequestHandler = async (req, res, next) => {
         const state = store.getState()
         const preloadedState = jsan.stringify(state)
 
-        if(hasUniversal) {
+        if(universalJS) {
           const universalProject = require(universalJS)
           if(universalProject.setRenderUniversal) {
             const { prevHtml: prevHtmlAux, renderString, customState } = universalProject.setRenderUniversal(res.locals, app, extractor)

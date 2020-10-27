@@ -2,16 +2,15 @@
 
 import express from 'express'
 import { createStore, universalLoader } from '../universal'
-import { existsSync } from 'fs'
 import { appServer } from '../../src/paths'
+import { resolveModule } from '../../src/util'
 
 const router = express.Router()
 
-const preLoadState = appServer + '/preLoadState.js'
-const hasPreLoadState = existsSync(preLoadState)
+const preLoadState = resolveModule(appServer + '/preLoadState')
 const middleware =
   function(req: { baseUrl: string | string[] }, res: any, next: () => void) {
-    if(hasPreLoadState)
+    if(preLoadState)
       if(req.baseUrl.indexOf('.') !== -1 || req.baseUrl.indexOf('api') !== -1 || req.baseUrl.indexOf('static') !== -1) {
         next()
       } else {

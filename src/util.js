@@ -142,6 +142,36 @@ async function folderExists(path) {
   }
 }
 
+const tsExtensions = [
+  'web.ts',
+  'ts',
+  'web.tsx',
+  'tsx'
+]
+
+const jsExtensions = [
+  'web.mjs',
+  'mjs',
+  'web.js',
+  'js',
+  'json',
+  'web.jsx',
+  'jsx'
+]
+
+const moduleFileExtensions = tsExtensions.concat(jsExtensions)
+
+function resolveModule(filePath) {
+  const extension = moduleFileExtensions.find(extension =>
+    existsSync(`${filePath}.${extension}`)
+  )
+
+  if(extension)
+    return `${filePath}.${extension}`
+
+  return false
+}
+
 module.exports = {
   copyDir,
   replaceAll,
@@ -150,5 +180,6 @@ module.exports = {
   log,
   fileExists,
   capitalize,
-  folderExists
+  folderExists,
+  resolveModule
 }
