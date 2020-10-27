@@ -1,6 +1,7 @@
 const path = require('path')
 const { templateCommands } = require('./template')
-const { execCmd, fileExists } = require('../util')
+const { fileExists } = require('../util')
+const { execCmd } = require('../cmd')
 
 const { appRootPath, packageRootPath } = require('../paths')
 

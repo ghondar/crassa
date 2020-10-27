@@ -1,12 +1,9 @@
 const { ncp } = require('ncp')
 
-const childProcess = require('child_process')
 const fs = require('fs')
 const { promisify } = require('util')
 
 const fileStats = promisify(fs.stat)
-
-const { packageRootPath } = require('./paths')
 
 function copyDir({ source, destination }) {
   return new Promise((resolve, reject) => {
@@ -69,42 +66,6 @@ function colorize(str) {
   })
 
   return retObj
-}
-
-function sanitizedCmdInput(cmd) {
-  return replaceAll(cmd, '\n', '')
-    .split(' ')
-    .filter(s => s)
-    .join(' ')
-}
-
-function prepareCmd(sanitizedCmd) {
-  const splitted = sanitizedCmd.split(' ')
-
-  return {
-    cmd : splitted[0],
-    argv: splitted.slice(1, splitted.length)
-  }
-}
-
-function execCmd(cmd, { async = false, cwd = packageRootPath } = {}) {
-  if(async) {
-    const sanitizedCmd = sanitizedCmdInput(cmd)
-    // const allCmds = sanitizedCmd.split('&&').map(c => c.split('&')).flat();
-
-    const preparedCmd = prepareCmd(sanitizedCmd)
-    childProcess.spawn(preparedCmd.cmd, preparedCmd.argv, {
-      cwd,
-      stdio: 'inherit',
-      shell: true
-    })
-
-    return true
-  }
-
-  childProcess.execSync(cmd, { cwd, stdio: 'inherit' })
-
-  return true
 }
 
 function log({ text, type }) {
@@ -176,7 +137,6 @@ module.exports = {
   copyDir,
   replaceAll,
   colorize,
-  execCmd,
   log,
   fileExists,
   capitalize,
