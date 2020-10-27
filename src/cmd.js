@@ -1,6 +1,13 @@
 const childProcess = require('child_process')
 const { packageRootPath } = require('./paths')
 
+function replaceAll(str, what, withThat) {
+  let retStr = str
+  while (retStr.includes(what)) retStr = retStr.replace(what, withThat)
+
+  return retStr
+}
+
 function sanitizedCmdInput(cmd) {
   return replaceAll(cmd, '\n', '')
     .split(' ')
@@ -38,5 +45,6 @@ function execCmd(cmd, { async = false, cwd = packageRootPath } = {}) {
 }
 
 module.exports = {
+  replaceAll,
   execCmd
 }

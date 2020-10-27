@@ -19,13 +19,6 @@ function copyDir({ source, destination }) {
   })
 }
 
-function replaceAll(str, what, withThat) {
-  let retStr = str
-  while (retStr.includes(what)) retStr = retStr.replace(what, withThat)
-
-  return retStr
-}
-
 function capitalize(string) {
   return string.charAt(0).toUpperCase() + string.slice(1)
 }
@@ -135,7 +128,6 @@ function resolveModule(filePath) {
 
 module.exports = {
   copyDir,
-  replaceAll,
   colorize,
   log,
   fileExists,

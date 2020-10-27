@@ -2,7 +2,9 @@ const path = require('path')
 const fs = require('fs')
 const childProcess = require('child_process')
 
-const { copyDir, replaceAll, colorize } = require('./util')
+const { copyDir, colorize } = require('./util')
+
+const { replaceAll } = require('./cmd')
 
 const { version } = require('../package.json')
 
