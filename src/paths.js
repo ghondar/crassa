@@ -6,9 +6,10 @@ const crassaRoot = process.env.APP_IT_ROOT || path.dirname(require.main.filename
 module.exports = {
   packageRootPath   : crassaRoot,
   appRootPath,
-  appServer         : path.join(appRootPath, 'server'),
+  appServer         : path.join(appRootPath, '/lib/ssr/server'),
   appPackage        : path.join(appRootPath, 'package.json'),
   appBuild          : path.join(appRootPath, 'build'),
+  appLib            : path.join(appRootPath, 'lib'),
   appSrc            : path.join(appRootPath, 'src'),
   appPublic         : path.join(appRootPath, 'public'),
   appConfigOverrides: path.join(appRootPath, 'config-overrides.js'),

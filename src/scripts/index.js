@@ -22,18 +22,29 @@ function devClient() {
   execCmd(cmd, { async: true })
 }
 
+function buildServer() {
+  const cmd = `
+        npx cross-env
+          npx tsc -p ${packageRootPath}/tsconfig.json --noEmit false --module CommonJS`
+  execCmd(cmd, { async: true })
+}
+
 function devServer() {
   const argv = process.argv
   const args = argv.slice(3, argv.length)
 
   const cmd = `
-          npx cross-env
-            NODE_ENV=development
-              npx cross-env
-                APP_IT_ROOT=${packageRootPath}
-                  npx cross-env
-                    APP_ROOT=${appRootPath}
-                      npx nodemon ${args.join(' ')} --watch ${appRootPath}/server --config ${appRootPath}/nodemon.json ${packageRootPath}/server/index.js`
+npx cross-env
+  NODE_ENV=development
+    npx cross-env
+      APP_IT_ROOT=${packageRootPath}
+        npx cross-env
+          APP_ROOT=${appRootPath}
+            npx cross-env
+              TS_NODE_FILES=true
+                npx cross-env
+                  TS_NODE_PROJECT=${packageRootPath}/tsconfig.json
+                    npx nodemon ${args.join(' ')} --watch 'src/**/*.ts' --ignore 'src/**/*.spec.ts' --exec node -r ts-node/register ${packageRootPath}/server/index.ts`
   execCmd(cmd, { async: true })
 }
 
@@ -64,7 +75,7 @@ function start() {
                 APP_IT_ROOT=${packageRootPath}
                   npx cross-env
                     APP_ROOT=${appRootPath}
-                      npx node ${packageRootPath}/server/index.js`
+                      npx node ${packageRootPath}/lib/server/index.js`
   execCmd(cmd, { async: true })
 }
 
@@ -105,6 +116,11 @@ const commands = [
     description: 'Concurrently starts the frontend and the backend in development mode.'
   },
   {
+    name       : 'prueba',
+    fn         : devServer,
+    description: ''
+  },
+  {
     name       : 'lint',
     fn         : lint,
     description: 'Executes eslint in autofix mode.'
@@ -113,6 +129,11 @@ const commands = [
     name       : 'build',
     fn         : build,
     description: 'Creates a production build for the frontend application.'
+  },
+  {
+    name       : 'server-build',
+    fn         : buildServer,
+    description: 'build server project'
   },
   {
     name       : 'start',
