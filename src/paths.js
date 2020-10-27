@@ -1,9 +1,14 @@
 const path = require('path')
+const { resolveModule } = require('./util')
 
 const appRootPath = process.env.APP_ROOT || process.cwd()
 const crassaRoot = process.env.APP_IT_ROOT || path.dirname(require.main.filename)
 
-const packageJson = require(appRootPath + '/package.json')
+let packageJson = null
+const packagePath = resolveModule(appRootPath + '/package')
+
+if(packagePath)
+  packageJson = require(packagePath)
 
 function generatePath(name) {
   return (packageJson && packageJson.crassa && packageJson.crassa.platform == 'ts' ? 'lib/ssr/' : '') + name
