@@ -1,12 +1,12 @@
 const path = require('path')
-const { packageRootPath } = require('./paths')
-const { crassa: { platform } } = require(packageRootPath + '/package.json')
 
 const appRootPath = process.env.APP_ROOT || process.cwd()
 const crassaRoot = process.env.APP_IT_ROOT || path.dirname(require.main.filename)
 
+const packageJson = require(appRootPath + '/package.json')
+
 function generatePath(name) {
-  return platform == 'ts' ? 'lib/ssr/' : '' + name
+  return (packageJson && packageJson.crassa && packageJson.crassa.platform == 'ts' ? 'lib/ssr/' : '') + name
 }
 
 const appServer = path.join(appRootPath,  generatePath('server'))

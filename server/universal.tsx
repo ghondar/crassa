@@ -13,12 +13,12 @@ import { resolveModule } from '../src/util'
 
 const jsan = require('jsan')
 
-const Root = require(appSrc + 'containers/Root').default
-const createRoutes = require(appSrc + 'routes').default
-let { rootSaga } = require(appSrc + 'reducers')
+const Root = require(appSrc + '/containers/Root').default
+const createRoutes = require(appSrc + '/routes').default
+let { rootSaga } = require(appSrc + '/reducers')
 
 if(!rootSaga)
-  rootSaga = require(appSrc + 'sagas').default
+  rootSaga = require(appSrc + '/sagas').default
 
 const universalJS = resolveModule(appServer + '/universal')
 
