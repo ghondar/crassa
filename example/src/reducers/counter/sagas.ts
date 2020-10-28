@@ -1,8 +1,9 @@
 import { select, call, put, take, fork } from 'redux-saga/effects'
 
 import { Get } from 'lib/Request'
+import { DuckTypes } from 'reducers/base'
 
-export const addCountFromServer = ({ types, selectors }) => function* (addMore) {
+export const addCountFromServer = ({ types, selectors }: DuckTypes) => function* (addMore: boolean): Generator<any, any, any> {
   try {
     const status = yield select(selectors.getStatus)
     if(status !== 'READY' || addMore) {
@@ -21,7 +22,7 @@ export const addCountFromServer = ({ types, selectors }) => function* (addMore) 
       console.log('loaded from server')
     }
   } catch (e) {
-    const { type, message, response: { data: { message: messageResponse } = {} } = {} } = e
+    const { type, message, response: { data: { message: messageResponse } = { message: '' } } = {} } = e
     switch (type) {
       case 'cancel':
         yield put({ type: types.FETCH_CANCEL })
@@ -36,7 +37,7 @@ export const addCountFromServer = ({ types, selectors }) => function* (addMore) 
   }
 }
 
-export const watchCountServer = ({ types, sagas }) => fork(function* () {
+export const watchCountServer = ({ types, sagas }: DuckTypes) => fork(function* () {
   while (true) {
     const { addMore } = yield take(types.FETCH)
     yield fork(sagas.addCountFromServer, addMore)

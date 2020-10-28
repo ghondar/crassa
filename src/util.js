@@ -1,12 +1,9 @@
 const { ncp } = require('ncp')
 
-const childProcess = require('child_process')
 const fs = require('fs')
 const { promisify } = require('util')
 
 const fileStats = promisify(fs.stat)
-
-const { packageRootPath } = require('./paths')
 
 function copyDir({ source, destination }) {
   return new Promise((resolve, reject) => {
@@ -20,13 +17,6 @@ function copyDir({ source, destination }) {
       resolve()
     })
   })
-}
-
-function replaceAll(str, what, withThat) {
-  let retStr = str
-  while (retStr.includes(what)) retStr = retStr.replace(what, withThat)
-
-  return retStr
 }
 
 function capitalize(string) {
@@ -71,42 +61,6 @@ function colorize(str) {
   return retObj
 }
 
-function sanitizedCmdInput(cmd) {
-  return replaceAll(cmd, '\n', '')
-    .split(' ')
-    .filter(s => s)
-    .join(' ')
-}
-
-function prepareCmd(sanitizedCmd) {
-  const splitted = sanitizedCmd.split(' ')
-
-  return {
-    cmd : splitted[0],
-    argv: splitted.slice(1, splitted.length)
-  }
-}
-
-function execCmd(cmd, { async = false, cwd = packageRootPath } = {}) {
-  if(async) {
-    const sanitizedCmd = sanitizedCmdInput(cmd)
-    // const allCmds = sanitizedCmd.split('&&').map(c => c.split('&')).flat();
-
-    const preparedCmd = prepareCmd(sanitizedCmd)
-    childProcess.spawn(preparedCmd.cmd, preparedCmd.argv, {
-      cwd,
-      stdio: 'inherit',
-      shell: true
-    })
-
-    return true
-  }
-
-  childProcess.execSync(cmd, { cwd, stdio: 'inherit' })
-
-  return true
-}
-
 function log({ text, type }) {
   switch (type) {
     default:
@@ -142,13 +96,42 @@ async function folderExists(path) {
   }
 }
 
+const tsExtensions = [
+  'web.ts',
+  'ts',
+  'web.tsx',
+  'tsx'
+]
+
+const jsExtensions = [
+  'web.mjs',
+  'mjs',
+  'web.js',
+  'js',
+  'json',
+  'web.jsx',
+  'jsx'
+]
+
+const moduleFileExtensions = tsExtensions.concat(jsExtensions)
+
+function resolveModule(filePath) {
+  const extension = moduleFileExtensions.find(extension =>
+    fs.existsSync(`${filePath}.${extension}`)
+  )
+
+  if(extension)
+    return `${filePath}.${extension}`
+
+  return false
+}
+
 module.exports = {
   copyDir,
-  replaceAll,
   colorize,
-  execCmd,
   log,
   fileExists,
   capitalize,
-  folderExists
+  folderExists,
+  resolveModule
 }

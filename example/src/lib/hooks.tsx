@@ -1,11 +1,11 @@
 
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, EffectCallback } from 'react'
 
 const { NODE_ENV } = process.env
 
-export const useComponentDidMount = func => useEffect(func, [])
+export const useComponentDidMount = (func: EffectCallback) => useEffect(func, [])
 
-export const useComponentWillMount = func => {
+export const useComponentWillMount = (func: EffectCallback) => {
   const willMount = useRef(true)
 
   if(willMount.current && NODE_ENV === 'production')

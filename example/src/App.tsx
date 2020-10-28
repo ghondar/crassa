@@ -6,4 +6,6 @@ import Root from './containers/Root'
 
 const routes = createRoutes(history)
 
-export default () => <Root store={store}>{routes}</Root>
+const App:  React.FC<{}> = () => <Root store={store}>{routes}</Root>
+
+export default App
