@@ -40,11 +40,7 @@ npx cross-env
       APP_IT_ROOT=${packageRootPath}
         npx cross-env
           APP_ROOT=${appRootPath}
-            npx cross-env
-              TS_NODE_FILES=true
-                npx cross-env
-                  TS_NODE_PROJECT=${packageRootPath}/tsconfig.json
-                    npx nodemon ${args.join(' ')} --watch 'src/**/*.ts' --ignore 'src/**/*.spec.ts' --exec node -r ts-node/register ${packageRootPath}/server/index.ts`
+            npx nodemon ${args.join(' ')} --watch '${appRootPath}/server/**/*.ts' --ignore 'src/**/*.spec.ts' --exec node -r ts-node/register ${packageRootPath}/server/index.ts`
   execCmd(cmd, { async: true })
 }
 

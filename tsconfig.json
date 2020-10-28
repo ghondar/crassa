@@ -2,15 +2,18 @@
   "ts-node": {
     "compilerOptions": {
       "module": "CommonJS"
-    }
+    },
+    "files": true,
+    "transpileOnly": true,
+    "typeCheck": false
   },
   "compilerOptions": {
     "outDir": "lib",
     "module": "esnext",
     "target": "es6",
     "moduleResolution": "node",
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
+    "emitDecoratorMetadata": false,
+    "experimentalDecorators": false,
     "noImplicitAny": true,
     "esModuleInterop": true,
     "jsx": "react",
