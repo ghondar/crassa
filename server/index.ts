@@ -1,7 +1,6 @@
 // Set up babel to do its thing... env for the latest toys, react-app for CRA
-import base from '@babel/register'
 
-base({
+require('@babel/register')({
   ignore : [ /\/(build|node_modules)\/(?!@crassa\b)/ ],
   presets: [ '@babel/env', '@babel/preset-react' ],
   plugins: [
@@ -46,4 +45,4 @@ require('dotenv').config({
 // Now that the nonsense is over... load up the server entry point
 require('./server')
 
-// export {}
+export {}
