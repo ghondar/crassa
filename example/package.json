@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "crassa start",
-    "build": "PLATFORM=ts crassa build && npm run ttsc",
+    "build": "crassa build && npm run ttsc && crassa server-build",
     "dev": "crassa dev",
     "server:build": "crassa server-build",
     "g": "crassa g",
