@@ -27,13 +27,13 @@ program
         type     : 'list',
         name     : 'template',
         message  : 'Choose Template:',
-        choices  : [ 'default', 'next', 'custom' ],
+        choices  : [ 'default', 'typescript', 'custom' ],
         'default': 'default'
       }
     ])
 
-    if(template === 'next') {
-      urlTemplate = urlTemplate + '#next'
+    if(template === 'typescript') {
+      urlTemplate = urlTemplate + '#typescript'
     } else if(template === 'custom') {
       const { url } = await inquirer.prompt([
         {
