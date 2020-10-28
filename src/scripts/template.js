@@ -1,4 +1,4 @@
-const { execCmd } = require('../util')
+const { execCmd } = require('../cmd')
 
 const { appRootPath } = require('../paths')
 

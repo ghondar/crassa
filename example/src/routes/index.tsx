@@ -9,9 +9,8 @@ const Dashboard = loadable(() => import(/* webpackPrefetch: true */ 'containers/
   fallback: <Loading />
 })
 
-export default history => {
-  return (
-    <ConnectedRouter history={history}>
-      <Route component={Dashboard} exact path='/' />
-    </ConnectedRouter>
-  )}
+export default (history: any) => (
+  <ConnectedRouter history={history}>
+    <Route component={Dashboard} exact path='/' />
+  </ConnectedRouter>
+)

@@ -7,9 +7,15 @@ import counterDucks from 'reducers/counter'
 
 const { addCount, removeCount, addCountFromServer } = counterDucks.creators
 
+interface Selector {
+  counter: {
+    count: number
+  }
+}
+
 export default () => {
   const dispatch = useDispatch()
-  const count = useSelector(({ counter: { count } }) => count)
+  const count = useSelector(({ counter: { count } }: Selector) => count)
 
   useComponentWillMount(() => {
     dispatch(addCountFromServer())

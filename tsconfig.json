@@ -1,0 +1,61 @@
+{
+  "ts-node": {
+    "compilerOptions": {
+      "module": "CommonJS"
+    },
+    "files": true,
+    "transpileOnly": true,
+    "typeCheck": false
+  },
+  "compilerOptions": {
+    "outDir": "lib",
+    "module": "esnext",
+    "target": "es6",
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": false,
+    "experimentalDecorators": false,
+    "noImplicitAny": true,
+    "esModuleInterop": true,
+    "jsx": "react",
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "strictNullChecks": true,
+    "suppressImplicitAnyIndexErrors": true,
+    "noUnusedLocals": true,
+    "removeComments": true,
+    "rootDirs": [
+      "server"
+    ],
+    "importHelpers": true,
+    "allowJs": true,
+    "allowSyntheticDefaultImports": true,
+    "isolatedModules": true,
+    "lib": [
+      "es5",
+      "es6",
+      "es7",
+      "es2017",
+      "dom"
+    ],
+    "resolveJsonModule": true,
+    "baseUrl": ".",
+    "forceConsistentCasingInFileNames": true,
+    "types": [
+      "node"
+    ],
+    "typeRoots": [
+      "node_modules/@types"
+    ],
+    "skipLibCheck": true,
+    "strict": true,
+    "noEmit": true
+  },
+  "include": [
+    "server",
+    "src"
+  ],
+  "exclude": [
+    "node_modules",
+    "package.json"
+  ]
+}

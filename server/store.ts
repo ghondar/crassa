@@ -1,12 +1,11 @@
-import { createStore, applyMiddleware, compose } from 'redux'
+import { createStore, applyMiddleware, compose, Action, Store, AnyAction } from 'redux'
 import { routerMiddleware } from 'connected-react-router'
-import createSagaMiddleware, { END } from 'redux-saga'
-import createReduxWaitForMiddleware from 'redux-wait-for-action'
+import createSagaMiddleware, { END, Task, Saga } from 'redux-saga'
 import { createMemoryHistory } from 'history'
 
 import { appSrc } from '../src/paths'
 
-let { 'default': createRootReducer } = require(appSrc + '/reducers')
+const { 'default': createRootReducer } = require(appSrc + '/reducers')
 
 // Create a store and history based on a path
 const createServerStore = (path = '/') => {
@@ -19,12 +18,17 @@ const createServerStore = (path = '/') => {
   // All the middlewares
   const middleware = [ sagaMiddleware, routerMiddleware(history) ]
   const composedEnhancers = compose(
-    applyMiddleware(...middleware),
-    applyMiddleware(createReduxWaitForMiddleware())
+    applyMiddleware(...middleware)
   )
 
   // Store it all
-  const store = createStore(createRootReducer(history), initialState, composedEnhancers)
+  type StoreType = Store<unknown, Action<any>> & {
+    dispatch: unknown;
+    runSaga?: <S extends Saga<any[]>>(saga: S, ...args: Parameters<S>) => Task;
+    close?: <T extends AnyAction>(action: T) => any;
+  }
+
+  const store: StoreType = createStore(createRootReducer(history), initialState, composedEnhancers)
 
   store.runSaga = sagaMiddleware.run
   store.close = () => store.dispatch(END)
