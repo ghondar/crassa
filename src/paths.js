@@ -11,7 +11,12 @@ if(packagePath)
   packageJson = require(packagePath)
 
 function generatePath(name) {
-  return (packageJson && packageJson.crassa && packageJson.crassa.platform == 'ts' ? 'lib/ssr/' : '') + name
+  return (
+    packageJson &&
+      packageJson.crassa &&
+      packageJson.crassa.platform == 'ts' &&
+      process.env.NODE_ENV === 'production' ? 'lib/ssr/' : ''
+  ) + name
 }
 
 const appServer = path.join(appRootPath,  generatePath('server'))
