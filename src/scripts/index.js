@@ -40,7 +40,7 @@ npx cross-env
       APP_IT_ROOT=${packageRootPath}
         npx cross-env
           APP_ROOT=${appRootPath}
-            npx nodemon ${args.join(' ')} --watch '${appRootPath}/server/**/*.{js,ts,tsx}' --ignore 'src/**/*.spec.{js,ts,tsx}' --exec node -r ts-node/register ${packageRootPath}/server/index.ts`
+            npx nodemon ${args.join(' ')} -e js,ts,tsx --watch '${appRootPath}/server/**/*.{js,ts,tsx}' --ignore 'src/**/*.spec.{js,ts,tsx}' --exec node -r ts-node/register ${packageRootPath}/server/index.ts`
   execCmd(cmd, { async: true })
 }
 
@@ -86,7 +86,7 @@ function startDev() {
                 APP_IT_ROOT=${packageRootPath}
                   npx cross-env
                     APP_ROOT=${appRootPath}
-                      npx nodemon ${args.join(' ')} --watch ${appRootPath}/server --config ${appRootPath}/nodemon.json ${packageRootPath}/server/index.js`
+                      npx nodemon ${args.join(' ')} -e js,ts,tsx --watch '${appRootPath}/server/**/*.{js,ts,tsx}' --ignore 'src/**/*.spec.{js,ts,tsx}' --exec node -r ts-node/register ${packageRootPath}/server/index.ts`
   execCmd(cmd, { async: true })
 }
 
@@ -112,7 +112,7 @@ const commands = [
     description: 'Concurrently starts the frontend and the backend in development mode.'
   },
   {
-    name       : 'prueba',
+    name       : 'dev-server',
     fn         : devServer,
     description: ''
   },
