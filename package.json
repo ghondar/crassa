@@ -1,6 +1,6 @@
 {
   "name": "crassa",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "preferGlobal": true,
   "bin": {
     "crassa": "./index.js"
@@ -99,7 +99,8 @@
     "publish": "git add . && git commit && npm publish",
     "local-pack": "npm pack && rm -rf ../crassa-no-git && mkdir ../crassa-no-git && mv *.tgz ../crassa-no-git && cd ../crassa-no-git && tar -xvf *.tgz && cp -rf package/. . && rm -rf package/ && rm -rf *.tgz && npm i && sudo npm link",
     "format": "eslint . --ext .js --fix",
-    "lint-staged": "lint-staged"
+    "lint-staged": "lint-staged",
+    "postinstall": "tsc --noEmit false --module CommonJS"
   },
   "husky": {
     "hooks": {
