@@ -16,6 +16,7 @@
     "experimentalDecorators": false,
     "noImplicitAny": true,
     "esModuleInterop": true,
+    "noFallthroughCasesInSwitch": true,
     "jsx": "react",
     "noImplicitReturns": true,
     "noImplicitThis": true,
