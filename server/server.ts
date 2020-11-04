@@ -1,7 +1,6 @@
 import bodyParser from 'body-parser'
 import compression from 'compression'
 import cookieParser from 'cookie-parser'
-import { existsSync } from 'fs'
 import express from 'express'
 import morgan from 'morgan'
 import path from 'path'
