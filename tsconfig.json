@@ -5,7 +5,9 @@
     },
     "files": true,
     "transpileOnly": true,
-    "typeCheck": false
+    "typeCheck": false,
+    "emit": false,
+    "preferTsExts": true
   },
   "compilerOptions": {
     "outDir": "lib",

@@ -112,9 +112,9 @@ const commands = [
     description: 'Concurrently starts the frontend and the backend in development mode.'
   },
   {
-    name       : 'prueba',
+    name       : 'dev-server',
     fn         : devServer,
-    description: ''
+    description: 'Run the project with server side using development environment mode and nodemon.'
   },
   {
     name       : 'lint',
@@ -139,7 +139,7 @@ const commands = [
   {
     name       : 'start-dev',
     fn         : startDev,
-    description: 'Run the project with server side using nodemon.'
+    description: 'Run the project with server side using production environment mode and nodemon.'
   },
   {
     name       : 'test',

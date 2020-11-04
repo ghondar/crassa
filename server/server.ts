@@ -6,8 +6,6 @@ import express from 'express'
 import morgan from 'morgan'
 import path from 'path'
 
-import index from './routes/index'
-
 import { appServer, appBuild } from '../src/paths'
 
 // Create our express app (using the port optionally specified)
@@ -18,6 +16,10 @@ const HOST = process.env.REACT_APP_HOST_SERVER || '0.0.0.0'
 const configExpress = appServer + '/configExpress.js'
 const hasConfigExpress = existsSync(configExpress)
 
+let index
+if(process.env.NODE_ENV === 'production')
+  index = require('./routes/index').default
+
 // Compress, parse, and log
 app.use(compression())
 app.use(cookieParser())
@@ -27,12 +29,15 @@ app.use(morgan('dev'))
 app.disable('x-powered-by')
 const http = hasConfigExpress ? require(configExpress).default(app) : app
 
-app.use('^/$', index)
+if(index)
+  app.use('^/$', index)
+
 app.use('/api', require(path.resolve(appServer)).default)
 // Set up route handling, include static assets and an optional API
 app.use(express.static(path.resolve(appBuild)))
 // any other route should be handled by react-router, so serve the index page
-app.use('*', index)
+if(index)
+  app.use('*', index)
 
 // Let's rock
 http.listen(PORT, HOST, () => {

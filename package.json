@@ -1,6 +1,6 @@
 {
   "name": "crassa",
-  "version": "1.1.4",
+  "version": "1.1.5",
   "preferGlobal": true,
   "bin": {
     "crassa": "./index.js"
@@ -28,9 +28,9 @@
     "@babel/plugin-proposal-class-properties": "7.12.1",
     "@babel/plugin-transform-flow-strip-types": "7.12.1",
     "@babel/preset-env": "7.12.1",
-    "@babel/preset-react": "7.12.1",
+    "@babel/preset-react": "7.12.5",
     "@babel/register": "7.12.1",
-    "@babel/types": "7.12.1",
+    "@babel/types": "7.12.5",
     "@loadable/babel-plugin": "5.13.2",
     "@loadable/component": "5.14.1",
     "@loadable/server": "5.14.0",
@@ -47,7 +47,7 @@
     "@types/react": "16.9.55",
     "@types/react-dom": "16.9.9",
     "@types/react-helmet": "6.1.0",
-    "@types/react-redux": "7.1.9",
+    "@types/react-redux": "7.1.11",
     "@types/react-router": "5.1.8",
     "@zerollup/ts-transform-paths": "1.7.18",
     "babel-cli": "6.26.0",
