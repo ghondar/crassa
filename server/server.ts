@@ -7,14 +7,14 @@ import morgan from 'morgan'
 import path from 'path'
 
 import { appServer, appBuild } from '../src/paths'
+import { resolveModule } from '../src/util'
 
 // Create our express app (using the port optionally specified)
 const app: express.Application = express()
 const PORT = process.env.REACT_APP_PORT_SERVER || process.env.PORT || 5000
 const HOST = process.env.REACT_APP_HOST_SERVER || '0.0.0.0'
 
-const configExpress = appServer + '/configExpress.js'
-const hasConfigExpress = existsSync(configExpress)
+const configExpress = resolveModule(appServer + '/configExpress')
 
 let index
 if(process.env.NODE_ENV === 'production')
@@ -27,7 +27,7 @@ app.use(bodyParser.json(process.env.BODY_PARSER_LIMIT ? { limit: process.env.BOD
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(morgan('dev'))
 app.disable('x-powered-by')
-const http = hasConfigExpress ? require(configExpress).default(app) : app
+const http = configExpress ? require(configExpress).default(app) : app
 
 if(index)
   app.use('^/$', index)
