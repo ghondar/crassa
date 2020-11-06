@@ -75,6 +75,21 @@ function start() {
   execCmd(cmd, { async: true })
 }
 
+function prodServer() {
+  const argv = process.argv
+  const args = argv.slice(3, argv.length)
+
+  const cmd = `
+          npx cross-env
+            NODE_ENV=production
+              npx cross-env
+                APP_IT_ROOT=${packageRootPath}
+                  npx cross-env
+                    APP_ROOT=${appRootPath}
+                      npx npx nodemon ${args.join(' ')} --ext js,ts,tsx --watch '${appRootPath}/server/**/*.{js,ts,tsx}' --config ${appRootPath}/nodemon.json --ignore 'src/**/*.spec.{js,ts,tsx}' --exec node ${packageRootPath}/lib/server/index.js`
+  execCmd(cmd, { async: true })
+}
+
 function startDev() {
   const argv = process.argv
   const args = argv.slice(3, argv.length)
@@ -115,6 +130,11 @@ const commands = [
     name       : 'dev-server',
     fn         : devServer,
     description: 'Run the project with server side using development environment mode and nodemon.'
+  },
+  {
+    name       : 'prod-server',
+    fn         : prodServer,
+    description: 'Run the project with compiled server side using production environment mode and nodemon.'
   },
   {
     name       : 'lint',
