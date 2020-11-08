@@ -133,6 +133,7 @@ if(packagePath)
   packageJson = require(packagePath)
 
 const isTs = packageJson && packageJson.crassa && packageJson.crassa.platform == 'ts' && process.env.NODE_ENV === 'production'
+console.log(isTs)
 
 module.exports = {
   copyDir,
