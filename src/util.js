@@ -116,9 +116,13 @@ const jsExtensions = [
 const moduleFileExtensions = tsExtensions.concat(jsExtensions)
 
 function resolveModule(filePath) {
-  const extension = moduleFileExtensions.find(extension =>
-    fs.existsSync(`${filePath}.${extension}`)
-  )
+  const extension = moduleFileExtensions.find(extension =>{
+    console.log(`${filePath}.${extension}`)
+
+    return fs.existsSync(`${filePath}.${extension}`)
+  })
+
+  console.log('inside', filePath, extension)
 
   if(extension)
     return `${filePath}.${extension}`
@@ -132,8 +136,7 @@ const packagePath = resolveModule(process.env.APP_ROOT || process.cwd() + '/pack
 if(packagePath)
   packageJson = require(packagePath)
 
-const isTs = packageJson && packageJson.crassa && packageJson.crassa.platform == 'ts' && process.env.NODE_ENV === 'production'
-console.log(isTs, process.env.APP_ROOT || process.cwd(), packagePath, packageJson)
+const isTs = packageJson && packageJson.crassa && packageJson.crassa.platform == 'ts'
 
 module.exports = {
   copyDir,
