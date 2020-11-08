@@ -1,21 +1,30 @@
 import Duck from 'extensible-duck'
 import produce from 'immer'
 
-import base from 'reducers/base'
+import base, { DuckTypes, DuckInitialState } from 'reducers/base'
 {{#if isSagas}}
 import * as sagas from './sagas'
 import takes from './takes'
 {{/if}}
 
+const initialState = {
+  docs: []
+}
+
+export type {{capitalize name}} = DuckInitialState & typeof initialState
+
+type Action = {
+  payload: {{capitalize name}};
+  type: string;
+}
+
 const {{name}}Ducks = base({
   namespace   : 'crassa',
   store       : '{{name}}',
-  initialState: {
-    docs: []
-  }
+  initialState
 }).extend({
   types  : [ 'FETCH_{{upper name}}S', 'FETCH_{{upper name}}', 'ADD_{{upper name}}S' ],
-  reducer: (state, action, { types, statuses }) =>
+  reducer: (state: {{capitalize name}}, action: Action, { types, statuses }: DuckTypes) =>
     produce(state, draft => {
       switch (action.type) {
         case types.ADD_{{upper name}}S:
@@ -30,19 +39,19 @@ const {{name}}Ducks = base({
           return
       }
     }),
-  selectors: ({ store }) => ({
-    get{{capitalize name}}s   : state => state[store].docs,
-    get{{capitalize name}}ById: new Duck.Selector(selectors => (state, id) =>
+  selectors: ({ store }: DuckTypes) => ({
+    get{{capitalize name}}s   : (state: {{capitalize name}}) => state[store].docs,
+    get{{capitalize name}}ById: new Duck.Selector((selectors: any) => (state: {{capitalize name}}, id: string) =>
       selectors.get{{capitalize name}}s(state).find({{name}} => id === {{name}}.id)
     ),
-    getStatus: state => state[store].status
+    getStatus: (state: {{capitalize name}}) => state[store].status
   }){{#if isSagas}},
-  creators: ({ types }) => ({
-    fetch{{capitalize name}}s: addMore => ({ type: types.FETCH_{{upper name}}S, addMore }),
-    fetch{{capitalize name}} : id => ({ type: types.FETCH_{{upper name}}, id }),
-    post{{capitalize name}}  : ({{name}}) => ({ type: types.POST, {{name}} }),
-    update{{capitalize name}}: (id, {{name}}) => ({ type: types.UPDATE, id, {{name}} }),
-    delete{{capitalize name}}: id => ({ type: types.DELETE, id })
+  creators: ({ types }: DuckTypes) => ({
+    fetch{{capitalize name}}s: (addMore: boolean) => ({ type: types.FETCH_{{upper name}}S, addMore }),
+    fetch{{capitalize name}} : (id: string) => ({ type: types.FETCH_{{upper name}}, id }),
+    post{{capitalize name}}  : ({{name}}: {{capitalize name}}) => ({ type: types.POST, {{name}} }),
+    update{{capitalize name}}: (id: string, {{name}}: {{capitalize name}}) => ({ type: types.UPDATE, id, {{name}} }),
+    delete{{capitalize name}}: (id: string) => ({ type: types.DELETE, id })
   }),
   sagas,
   takes{{/if}}

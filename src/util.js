@@ -126,6 +126,16 @@ function resolveModule(filePath) {
   return false
 }
 
+let packageJson = null
+const packagePath = resolveModule(appRootPath + '/package')
+
+if(packagePath)
+  packageJson = require(packagePath)
+
+function isTs() {
+  return packageJson && packageJson.crassa && packageJson.crassa.platform == 'ts'
+}
+
 module.exports = {
   copyDir,
   colorize,
@@ -133,5 +143,6 @@ module.exports = {
   fileExists,
   capitalize,
   folderExists,
-  resolveModule
+  resolveModule,
+  isTs
 }
