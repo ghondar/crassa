@@ -86,8 +86,25 @@ function prodServer() {
                 APP_IT_ROOT=${packageRootPath}
                   npx cross-env
                     APP_ROOT=${appRootPath}
-                      npx npx nodemon ${args.join(' ')} --ext js,ts,tsx --watch '${appRootPath}/server/**/*.{js,ts,tsx}' --config ${appRootPath}/nodemon.json --ignore 'src/**/*.spec.{js,ts,tsx}' --exec node ${packageRootPath}/lib/server/index.js`
+                      npx nodemon ${args.join(' ')} --ext js,ts,tsx --watch '${appRootPath}/server/**/*.{js,ts,tsx}' --config ${appRootPath}/nodemon.json --ignore 'src/**/*.spec.{js,ts,tsx}' --exec node ${packageRootPath}/lib/server/index.js`
   execCmd(cmd, { async: true })
+}
+
+function fastServer() {
+  const cmd = `
+          npx cross-env
+            NODE_ENV=production
+              npx cross-env
+                APP_IT_ROOT=${packageRootPath}
+                  npx cross-env
+                    APP_ROOT=${appRootPath}
+                      npx tsc-watch  --onSuccess \`crassa prod-server\` --compiler ttypescript/bin/tsc`
+  execCmd(cmd, { async: true })
+}
+
+function fastDev() {
+  devClient()
+  fastServer()
 }
 
 function startDev() {
@@ -125,6 +142,11 @@ const commands = [
     name       : 'dev',
     fn         : dev,
     description: 'Concurrently starts the frontend and the backend in development mode.'
+  },
+  {
+    name       : 'fast-dev',
+    fn         : fastDev,
+    description: 'Runt stats the frontend and fastest backend dev'
   },
   {
     name       : 'dev-server',
