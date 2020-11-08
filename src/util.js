@@ -127,7 +127,7 @@ function resolveModule(filePath) {
 }
 
 let packageJson = null
-const packagePath = resolveModule(appRootPath + '/package')
+const packagePath = resolveModule(process.env.APP_ROOT || process.cwd() + '/package')
 
 if(packagePath)
   packageJson = require(packagePath)
