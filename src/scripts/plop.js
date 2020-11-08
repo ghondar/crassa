@@ -21,10 +21,7 @@ const generateSpaces = (size) => {
   return new Array(size + 1).fill('').join(' ')
 }
 
-console.log('out', isTs)
-
 module.exports = function(plop) {
-  console.log('in', isTs)
   plop.setPrompt('recursive', inquirerRecursive)
 
   plop.setHelper('pluralizeSnakeCase', function(text) {
