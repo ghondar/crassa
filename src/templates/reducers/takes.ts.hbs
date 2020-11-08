@@ -37,7 +37,7 @@ const watchDelete{{capitalize name}} = ({ types, sagas }: DuckTypes) => fork(fun
   }
 })
 
-export default duck => [
+export default (duck: DuckTypes) => [
   watchFetch{{capitalize name}}s(duck),
   watchFetch{{capitalize name}}(duck),
   watchPost{{capitalize name}}(duck),

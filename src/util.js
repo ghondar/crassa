@@ -116,8 +116,6 @@ const jsExtensions = [
 const moduleFileExtensions = tsExtensions.concat(jsExtensions)
 
 function resolveModule(filePath) {
-  console.log(filePath)
-
   const extension = moduleFileExtensions.find(extension =>
     fs.existsSync(`${filePath}.${extension}`)
   )

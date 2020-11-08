@@ -11,6 +11,10 @@ const initialState = {
   docs: []
 }
 
+export type {{capitalize name}}Doc = {
+  id: string;
+  [rest: string]: string;
+}
 export type {{capitalize name}} = DuckInitialState & typeof initialState
 
 type Action = {
@@ -19,8 +23,8 @@ type Action = {
 }
 
 const {{name}}Ducks = base({
-  namespace   : 'crassa',
-  store       : '{{name}}',
+  namespace: 'crassa',
+  store    : '{{name}}',
   initialState
 }).extend({
   types  : [ 'FETCH_{{upper name}}S', 'FETCH_{{upper name}}', 'ADD_{{upper name}}S' ],
@@ -42,15 +46,15 @@ const {{name}}Ducks = base({
   selectors: ({ store }: DuckTypes) => ({
     get{{capitalize name}}s   : (state: {{capitalize name}}) => state[store].docs,
     get{{capitalize name}}ById: new Duck.Selector((selectors: any) => (state: {{capitalize name}}, id: string) =>
-      selectors.get{{capitalize name}}s(state).find({{name}} => id === {{name}}.id)
+      selectors.get{{capitalize name}}s(state).find(({{name}}: {{capitalize name}}Doc) => id === {{name}}.id)
     ),
     getStatus: (state: {{capitalize name}}) => state[store].status
   }){{#if isSagas}},
   creators: ({ types }: DuckTypes) => ({
     fetch{{capitalize name}}s: (addMore: boolean) => ({ type: types.FETCH_{{upper name}}S, addMore }),
     fetch{{capitalize name}} : (id: string) => ({ type: types.FETCH_{{upper name}}, id }),
-    post{{capitalize name}}  : ({{name}}: {{capitalize name}}) => ({ type: types.POST, {{name}} }),
-    update{{capitalize name}}: (id: string, {{name}}: {{capitalize name}}) => ({ type: types.UPDATE, id, {{name}} }),
+    post{{capitalize name}}  : ({{name}}: {{capitalize name}}Doc) => ({ type: types.POST, {{name}} }),
+    update{{capitalize name}}: (id: string, {{name}}: {{capitalize name}}Doc) => ({ type: types.UPDATE, id, {{name}} }),
     delete{{capitalize name}}: (id: string) => ({ type: types.DELETE, id })
   }),
   sagas,

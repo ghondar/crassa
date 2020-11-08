@@ -2,8 +2,7 @@ import { select, call, put } from 'redux-saga/effects'
 
 import { Get, Post, Put, Delete } from 'lib/Request'
 import { DuckTypes } from 'reducers/base'
-import { {{capitalize name}} } from 'reducers/{{name}}'
-
+import { {{capitalize name}}Doc } from 'reducers/{{name}}'
 
 export const fetch{{capitalize name}}s = ({ types, selectors }: DuckTypes) => function* (addMore: boolean): Generator<any, any, any> {
   try {
@@ -65,7 +64,7 @@ export const fetch{{capitalize name}} = ({ types, selectors }: DuckTypes) => fun
   }
 }
 
-export const post{{capitalize name}} = ({ types, selectors }: DuckTypes) => function* ({{name}}: {{capitalize name}}): Generator<any, any, any> {
+export const post{{capitalize name}} = ({ types, selectors }: DuckTypes) => function* ({{name}}: {{capitalize name}}Doc): Generator<any, any, any> {
   try {
     const status = yield select(selectors.getStatus)
     if(status !== 'READY') {
@@ -95,7 +94,7 @@ export const post{{capitalize name}} = ({ types, selectors }: DuckTypes) => func
   }
 }
 
-export const update{{capitalize name}} = ({ types, selectors }: DuckTypes) => function* (id: string, {{name}}: {{capitalize name}}): Generator<any, any, any> {
+export const update{{capitalize name}} = ({ types, selectors }: DuckTypes) => function* (id: string, {{name}}: {{capitalize name}}Doc): Generator<any, any, any> {
   try {
     const status = yield select(selectors.getStatus)
     if(status !== 'READY') {
