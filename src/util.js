@@ -116,13 +116,11 @@ const jsExtensions = [
 const moduleFileExtensions = tsExtensions.concat(jsExtensions)
 
 function resolveModule(filePath) {
-  const extension = moduleFileExtensions.find(extension =>{
-    console.log(`${filePath}.${extension}`)
+  console.log(filePath)
 
-    return fs.existsSync(`${filePath}.${extension}`)
-  })
-
-  console.log('inside', filePath, extension)
+  const extension = moduleFileExtensions.find(extension =>
+    fs.existsSync(`${filePath}.${extension}`)
+  )
 
   if(extension)
     return `${filePath}.${extension}`
@@ -131,7 +129,8 @@ function resolveModule(filePath) {
 }
 
 let packageJson = null
-const packagePath = resolveModule(process.env.APP_ROOT || process.cwd() + '/package')
+const packageRoute = (process.env.APP_ROOT || process.cwd()) + '/package'
+const packagePath = resolveModule(packageRoute)
 
 if(packagePath)
   packageJson = require(packagePath)
