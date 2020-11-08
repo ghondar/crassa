@@ -98,7 +98,7 @@ function fastServer() {
                 APP_IT_ROOT=${packageRootPath}
                   npx cross-env
                     APP_ROOT=${appRootPath}
-                      npx tsc-watch  --onSuccess \`crassa prod-server\` --compiler ttypescript/bin/tsc`
+                      npx tsc-watch --onSuccess \`crassa prod-server\` --compiler ../../ttypescript/bin/tsc`
   execCmd(cmd, { async: true })
 }
 
