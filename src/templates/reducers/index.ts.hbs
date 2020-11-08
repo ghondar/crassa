@@ -1,4 +1,3 @@
-import Duck from 'extensible-duck'
 import produce from 'immer'
 
 import base, { DuckTypes, DuckInitialState } from 'reducers/base'
@@ -6,6 +5,8 @@ import base, { DuckTypes, DuckInitialState } from 'reducers/base'
 import * as sagas from './sagas'
 import takes from './takes'
 {{/if}}
+
+const Duck = require('extensible-duck').default
 
 const initialState = {
   docs: []
