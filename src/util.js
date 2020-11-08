@@ -133,6 +133,8 @@ if(packagePath)
   packageJson = require(packagePath)
 
 function isTs() {
+  console.log(packageJson.crassa)
+
   return packageJson && packageJson.crassa && packageJson.crassa.platform == 'ts'
 }
 
