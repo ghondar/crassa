@@ -90,23 +90,6 @@ function prodServer() {
   execCmd(cmd, { async: true })
 }
 
-function fastServer() {
-  const cmd = `
-          npx cross-env
-            NODE_ENV=production
-              npx cross-env
-                APP_IT_ROOT=${packageRootPath}
-                  npx cross-env
-                    APP_ROOT=${appRootPath}
-                      npx tsc-watch --onSuccess \`crassa prod-server\` --compiler ../../ttypescript/bin/tsc`
-  execCmd(cmd, { async: true })
-}
-
-function fastDev() {
-  devClient()
-  fastServer()
-}
-
 function startDev() {
   const argv = process.argv
   const args = argv.slice(3, argv.length)
@@ -144,9 +127,9 @@ const commands = [
     description: 'Concurrently starts the frontend and the backend in development mode.'
   },
   {
-    name       : 'fast-dev',
-    fn         : fastDev,
-    description: 'Runt stats the frontend and fastest backend dev'
+    name       : 'dev-client',
+    fn         : devClient,
+    description: 'Run client side'
   },
   {
     name       : 'dev-server',
