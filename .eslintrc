@@ -24,6 +24,7 @@
   },
   "plugins": ["react", "eslint-plugin-react"],
   "rules": {
+    "template-curly-spacing" : "off",
     "react/jsx-no-bind": [
       2,
       {
@@ -156,13 +157,7 @@
       }
     ],
     "array-bracket-spacing": [2, "always"],
-    "indent": [
-      2,
-      2,
-      {
-        "SwitchCase": 1
-      }
-    ],
+    "indent": "off",
     "quotes": [
       2,
       "single",

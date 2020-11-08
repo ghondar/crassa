@@ -132,11 +132,7 @@ const packagePath = resolveModule(process.env.APP_ROOT || process.cwd() + '/pack
 if(packagePath)
   packageJson = require(packagePath)
 
-function isTs() {
-  console.log(packageJson.crassa)
-
-  return packageJson && packageJson.crassa && packageJson.crassa.platform == 'ts'
-}
+const isTs = packageJson && packageJson.crassa && packageJson.crassa.platform == 'ts' && process.env.NODE_ENV === 'production'
 
 module.exports = {
   copyDir,

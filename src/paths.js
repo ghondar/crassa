@@ -5,7 +5,7 @@ const appRootPath = process.env.APP_ROOT || process.cwd()
 const crassaRoot = process.env.APP_IT_ROOT || path.dirname(require.main.filename)
 
 function generatePath(name) {
-  return (isTs() && process.env.NODE_ENV === 'production' ? 'lib/ssr/' : '') + name
+  return (isTs ? 'lib/ssr/' : '') + name
 }
 
 const appServer = path.join(appRootPath,  generatePath('server'))

@@ -51,18 +51,18 @@ module.exports = function(plop) {
     actions: ({ name, isSagas }) => {
       let actions = [ {
         type        : 'add',
-        path        : generatePathFile(name, 'reducers', `index${isTs() ? '.ts' : '.js'}`),
-        templateFile: generatePathTemplate('reducers', `index${isTs() ? '.ts' : ''}.hbs`)
+        path        : generatePathFile(name, 'reducers', `index${isTs ? '.ts' : '.js'}`),
+        templateFile: generatePathTemplate('reducers', `index${isTs ? '.ts' : ''}.hbs`)
       },
       {
         type    : 'modify',
-        path    : join(appSrc, 'reducers', `index${isTs() ? '.ts' : '.js'}`),
+        path    : join(appSrc, 'reducers', `index${isTs ? '.ts' : '.js'}`),
         pattern : regexImport,
         template: `$&import ${name} from './${name}'\n`
       },
       {
         type    : 'modify',
-        path    : join(appSrc, 'reducers', `index${isTs() ? '.ts' : '.js'}`),
+        path    : join(appSrc, 'reducers', `index${isTs ? '.ts' : '.js'}`),
         pattern : regexReducer,
         template: `$1,\n${generateSpaces(2)}[${name}.store]: ${name}.reducer\n`
       } ]
@@ -71,17 +71,17 @@ module.exports = function(plop) {
         actions.push(...[
           {
             type        : 'add',
-            path        : generatePathFile(name, 'reducers', `sagas${isTs() ? '.ts' : '.js'}`),
-            templateFile: generatePathTemplate('reducers', `sagas${isTs() ? '.ts' : ''}.hbs`)
+            path        : generatePathFile(name, 'reducers', `sagas${isTs ? '.ts' : '.js'}`),
+            templateFile: generatePathTemplate('reducers', `sagas${isTs ? '.ts' : ''}.hbs`)
           },
           {
             type        : 'add',
-            path        : generatePathFile(name, 'reducers', `takes${isTs() ? '.ts' : '.js'}`),
-            templateFile: generatePathTemplate('reducers', `takes${isTs() ? '.ts' : ''}.hbs`)
+            path        : generatePathFile(name, 'reducers', `takes${isTs ? '.ts' : '.js'}`),
+            templateFile: generatePathTemplate('reducers', `takes${isTs ? '.ts' : ''}.hbs`)
           },
           {
             type    : 'modify',
-            path    : join(appSrc, 'reducers', `index${isTs() ? '.ts' : '.js'}`),
+            path    : join(appSrc, 'reducers', `index${isTs ? '.ts' : '.js'}`),
             pattern : regexSagas,
             template: `$1,\n${generateSpaces(4)}...${name}.takes\n`
           }
