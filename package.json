@@ -1,6 +1,6 @@
 {
   "name": "crassa",
-  "version": "1.2.7",
+  "version": "1.2.8",
   "preferGlobal": true,
   "bin": {
     "crassa": "./index.js"
@@ -103,7 +103,7 @@
     "format": "eslint . --ext .js --fix",
     "lint-staged": "lint-staged",
     "tsc": "tsc",
-    "postinstall": "npm run tsc --noEmit false --module CommonJS"
+    "postinstall": "tsc --noEmit false --module CommonJS"
   },
   "husky": {
     "hooks": {
