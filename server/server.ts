@@ -2,11 +2,12 @@ import bodyParser from 'body-parser'
 import compression from 'compression'
 import cookieParser from 'cookie-parser'
 import express from 'express'
-import morgan from 'morgan'
 import path from 'path'
 
 import { appServer, appBuild } from '../src/paths'
 import { resolveModule } from '../src/util'
+
+const morgan = require('morgan')
 
 // Create our express app (using the port optionally specified)
 const app: express.Application = express()
