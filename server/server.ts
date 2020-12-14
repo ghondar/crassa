@@ -16,6 +16,8 @@ const HOST = process.env.REACT_APP_HOST_SERVER || '0.0.0.0'
 
 const configExpress = resolveModule(appServer + '/configExpress')
 
+const server = resolveModule(appServer)
+
 let index
 if(process.env.NODE_ENV === 'production')
   index = require('./routes/index').default
@@ -32,7 +34,8 @@ const http = configExpress ? require(configExpress).default(app) : app
 if(index)
   app.use('^/$', index)
 
-app.use('/api', require(path.resolve(appServer)).default)
+if(server)
+  app.use('/api', require(server).default)
 // Set up route handling, include static assets and an optional API
 app.use(express.static(path.resolve(appBuild)))
 // any other route should be handled by react-router, so serve the index page
@@ -54,11 +57,9 @@ http.on('error', (error: any) => {
     case 'EACCES':
       console.error(bind + ' requires elevated privileges')
       process.exit(1)
-      break
     case 'EADDRINUSE':
       console.error(bind + ' is already in use')
       process.exit(1)
-      break
     default:
       throw error
   }
