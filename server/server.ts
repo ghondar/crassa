@@ -16,7 +16,7 @@ const HOST = process.env.REACT_APP_HOST_SERVER || '0.0.0.0'
 
 const configExpress = resolveModule(appServer + '/configExpress')
 
-const server = resolveModule(appServer)
+const server = resolveModule(path.resolve(path.join(appServer, 'index')))
 
 let index
 if(process.env.NODE_ENV === 'production')

@@ -11,11 +11,10 @@ const preLoadState = resolveModule(appServer + '/preLoadState')
 const middleware =
   function(req: { baseUrl: string | string[] }, res: any, next: () => void) {
     if(preLoadState)
-      if(req.baseUrl.indexOf('.') !== -1 || req.baseUrl.indexOf('api') !== -1 || req.baseUrl.indexOf('static') !== -1) {
+      if(req.baseUrl.indexOf('.') !== -1 || req.baseUrl.indexOf('api') !== -1 || req.baseUrl.indexOf('static') !== -1)
         next()
-      } else {
+       else
         require(preLoadState).default(req, res, next)
-      }
     else
       next()
   }
