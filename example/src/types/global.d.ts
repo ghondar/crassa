@@ -3,3 +3,6 @@ declare interface NodeModule {
     accept(path?: string, fn?: () => void, callback?: () => void): void;
   };
 }
+interface Window {
+  __PRELOADED_STATE__: any;
+}

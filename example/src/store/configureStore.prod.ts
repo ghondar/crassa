@@ -5,12 +5,6 @@ import createSagaMiddleware from 'redux-saga'
 
 import createRootReducer, { rootSaga } from 'reducers'
 
-declare global {
-  interface Window {
-    __PRELOADED_STATE__: any;
-  }
-}
-
 const preloadedState = window.__PRELOADED_STATE__
 
 delete window.__PRELOADED_STATE__
