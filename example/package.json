@@ -21,6 +21,7 @@
   "license": "ISC",
   "crassa": {
     "displayName": "example",
+    "platform": "ts",
     "aliases": {
       "utils": "./src/utils",
       "lib": "./src/lib",

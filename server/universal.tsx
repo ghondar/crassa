@@ -10,6 +10,7 @@ import createServerStore from './store'
 
 import { appBuild, appSrc, appServer } from '../src/paths'
 import { resolveModule } from '../src/util'
+import { isReservedPath } from './helpers/is-reserved-path.helper'
 
 const jsan = require('jsan')
 
@@ -47,7 +48,7 @@ const prepHTML = (data: string, { html, head, body, loadableState = '', preloade
 }
 
 export const createStore: RequestHandler = (req, res, next) => {
-  if(req.baseUrl.indexOf('.') !== -1 || req.baseUrl.indexOf('api') !== -1 || req.baseUrl.indexOf('static') !== -1) {
+  if(isReservedPath(req.baseUrl)) {
     next()
   } else {
     const filePath = appBuild + '/index.html'
@@ -76,7 +77,7 @@ export const createStore: RequestHandler = (req, res, next) => {
 }
 
 export const universalLoader: RequestHandler = async (req, res, next) => {
-  if(req.baseUrl.indexOf('.') !== -1 || req.baseUrl.indexOf('api') !== -1 || req.baseUrl.indexOf('static') !== -1) {
+  if(isReservedPath(req.baseUrl)) {
     next()
   } else {
     try {

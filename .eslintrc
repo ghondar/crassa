@@ -22,7 +22,7 @@
       "classes": true
     }
   },
-  "plugins": ["react", "eslint-plugin-react"],
+  "plugins": ["react", "eslint-plugin-react", "jest"],
   "rules": {
     "template-curly-spacing" : "off",
     "react/jsx-no-bind": [
@@ -174,5 +174,8 @@
         "ignorePattern": "^\\s*var\\s.+=\\s*require\\s*\\("
       }
     ]
+  },
+  "env": {
+    "jest/globals": true
   }
 }
