@@ -2,7 +2,7 @@
   "name": "example",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "index.tsx",
   "scripts": {
     "start": "crassa start",
     "build": "crassa build && npm run ttsc && crassa server-build",
@@ -11,16 +11,19 @@
     "g": "crassa g",
     "lint": "crassa lint",
     "count": "crassa count-lines",
+    "dev:start": "crassa dev-start",
     "start:dev": "crassa start-dev",
     "test": "crassa test --env=jsdom",
     "lint-staged": "lint-staged",
-    "ttsc": "ttsc"
+    "ttsc": "ttsc",
+    "postinstall": "ttsc"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "crassa": {
     "displayName": "example",
+    "platform": "ts",
     "aliases": {
       "utils": "./src/utils",
       "lib": "./src/lib",
@@ -64,32 +67,31 @@
     "resolver": null
   },
   "dependencies": {
-    "@hot-loader/react-dom": "16.13.0",
-    "@types/loadable__component": "5.13.1",
-    "@types/react-redux": "7.1.9",
-    "@types/react-router-dom": "5.1.6",
-    "@types/redux-devtools": "3.0.47",
-    "@types/redux-devtools-dock-monitor": "1.1.33",
-    "@types/redux-devtools-log-monitor": "1.0.35",
-    "@types/redux-logger": "3.0.8",
-    "@types/webpack-env": "1.15.3",
-    "@zerollup/ts-transform-paths": "1.7.18",
-    "axios": "0.20.0",
+    "@hot-loader/react-dom": "17.0.1",
+    "axios": "0.21.0",
     "connected-react-router": "6.8.0",
     "crassa": "file:../",
     "extensible-duck": "ghondar/extensible-duck",
-    "history": "5.0.0",
+    "history": "4.10.1",
+    "husky": "4.3.6",
     "react-hot-loader": "4.13.0",
     "react-router-dom": "5.2.0",
     "redux-logger": "3.0.6"
   },
   "devDependencies": {
-    "@testing-library/react": "11.1.0",
+    "@testing-library/react": "11.2.2",
+    "@types/loadable__component": "5.13.1",
+    "@types/react-router-dom": "5.1.6",
+    "@types/redux-devtools": "3.0.47",
+    "@types/redux-devtools-dock-monitor": "1.1.33",
+    "@types/redux-devtools-log-monitor": "1.0.35",
+    "@types/redux-logger": "3.0.8",
+    "@types/webpack-env": "1.16.0",
+    "@zerollup/ts-transform-paths": "1.7.18",
     "redux-devtools": "3.7.0",
     "redux-devtools-dock-monitor": "1.2.0",
     "redux-devtools-log-monitor": "2.1.0",
-    "ttypescript": "1.5.12",
-    "typescript": "4.0.3"
+    "ttypescript": "1.5.12"
   },
   "husky": {
     "hooks": {
@@ -97,9 +99,7 @@
     }
   },
   "lint-staged": {
-    "{src,server}/**/*.js": [
-      "eslint --ext .js --fix"
-    ]
+    "{src,server}/**/*.ts?(x)": "eslint --ext .ts,tsx --fix"
   },
   "browserslist": [
     ">0.2%",

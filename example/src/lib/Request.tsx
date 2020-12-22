@@ -4,11 +4,11 @@ const { REACT_APP_REST_API_LOCATION = 'http://localhost:5000', REACT_APP_API_VER
 
 export const baseURL = REACT_APP_REST_API_LOCATION + '/api/' + REACT_APP_API_VERSION + '/'
 
-type Payload = Record<string, any>
+type Payload = Record<string, unknown>
 
 function serialize(obj: Payload) {
-  var str = []
-  for (var p in obj) if(obj.hasOwnProperty(p)) str.push(encodeURIComponent(p) + '=' + obj[p])
+  const str = []
+  for (const p in obj) if(obj.hasOwnProperty(p)) str.push(encodeURIComponent(p) + '=' + obj[p])
 
   return str.join('&')
 }
@@ -94,6 +94,6 @@ export function Get(route: string): Promise<void> {
   })
 }
 
-export function GetList(product: string, query: Payload) {
+export function GetList(product: string, query: Payload): Promise<unknown> {
   return Get(product + '/?' + serialize(query))
 }

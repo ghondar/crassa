@@ -1,7 +1,12 @@
-import React from 'react'
+import React, { FC } from 'react'
+import { Store } from 'redux'
 import { Provider } from 'react-redux'
 
-const Root = ({ store, children }: { store: any, children: any}) => {
+interface RootProps {
+  store: Store
+}
+
+const Root: FC<RootProps> = ({ store, children }) => {
   return (
     <Provider store={store}>{children}</Provider>
   )

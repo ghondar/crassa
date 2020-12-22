@@ -6,6 +6,6 @@ import Root from './containers/Root'
 
 const routes = createRoutes(history)
 
-const App:  React.FC<{}> = () => <Root store={store}>{routes}</Root>
+const App:  React.FC<Record<string, unknown>> = () => <Root store={store}>{routes}</Root>
 
 export default App

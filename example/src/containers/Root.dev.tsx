@@ -1,24 +1,22 @@
-import React, { Component } from 'react'
+import React, { FC } from 'react'
 import { Provider } from 'react-redux'
-import { Store, AnyAction } from 'redux'
+import { Store } from 'redux'
 
 import DevTools from './DevTools'
 
 interface RootProps {
-  store: Store<any, AnyAction>
+  store: Store
 }
 
-export default class Root extends Component<RootProps> {
-  render() {
-    const { store, children } = this.props
-
-    return (
-      <Provider store={store}>
-        <div>
-          {children}
-          <DevTools />
-        </div>
-      </Provider>
-    )
-  }
+const Root: FC<RootProps> = ({ store, children }) => {
+  return (
+    <Provider store={store}>
+      <div>
+        {children}
+        <DevTools />
+      </div>
+    </Provider>
+  )
 }
+
+export default Root

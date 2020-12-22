@@ -29,7 +29,7 @@
     "experimentalDecorators": true,
     "removeComments": true,
     "strict": true,
-    "target": "esnext", 
+    "target": "esnext",
     "moduleResolution": "node",
     "jsx": "react",
     "resolveJsonModule": true, // Required for JSON files
@@ -104,9 +104,6 @@
   ],
   "exclude": [
     "node_modules",
-    "babel.config.js", 
-    "metro.config.js", 
-    "jest.config.js",
-    ".eslintplugin.js"
+    "package.json"
   ]
 }

@@ -1,7 +1,7 @@
 {
-  "parser": "babel-eslint",
+  "parser": "@typescript-eslint/parser",
   "parserOptions": {
-    "ecmaVersion": 6,
+    "ecmaVersion": 2018,
     "sourceType": "module",
     "ecmaFeatures": {
       "jsx": true,
@@ -22,8 +22,18 @@
       "classes": true
     }
   },
-  "plugins": ["react", "eslint-plugin-react"],
+  "extends": ["plugin:@typescript-eslint/recommended"],
+  "plugins": ["react", "eslint-plugin-react", "@typescript-eslint"],
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
+  },
   "rules": {
+    "@typescript-eslint/camelcase": 0,
+    "@typescript-eslint/no-var-requires": 0,
+    "@typescript-eslint/explicit-function-return-type": 0,
+    "@typescript-eslint/ban-ts-ignore": 0,
     "react/jsx-no-bind": [
       2,
       {
@@ -50,7 +60,7 @@
       }
     ],
     "react/require-render-return": ["error", "never"],
-    "react/jsx-filename-extension": [1, { "extensions": [".js"] }],
+    "react/jsx-filename-extension": [2, { "extensions": [".js", ".jsx", ".ts", ".tsx"] }],
     "react/jsx-first-prop-new-line": ["error", "multiline-multiprop"],
     "react/jsx-handler-names": [
       "error",
@@ -70,7 +80,7 @@
     "react/jsx-uses-react": ["error"],
     "react/jsx-uses-vars": ["error"],
     "react/react-in-jsx-scope": ["error"],
-    "no-unused-vars": [
+    "@typescript-eslint/no-unused-vars": [
       "error",
       { "vars": "local", "args": "after-used", "ignoreRestSiblings": false }
     ],
@@ -181,3 +191,4 @@
     ]
   }
 }
+

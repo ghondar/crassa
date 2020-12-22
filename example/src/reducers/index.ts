@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { combineReducers, Reducer } from 'redux'
 import { all } from 'redux-saga/effects'
 import { connectRouter, RouterState, LocationChangeAction } from 'connected-react-router'

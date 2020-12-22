@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { FC } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 
 import { useComponentWillMount } from 'lib/hooks'
@@ -13,7 +13,9 @@ interface Selector {
   }
 }
 
-export default () => {
+type DashboardProps = Record<string, never>
+
+const Dashboard: FC<DashboardProps> = () => {
   const dispatch = useDispatch()
   const count = useSelector(({ counter: { count } }: Selector) => count)
 
@@ -31,3 +33,5 @@ export default () => {
     </div>
   )
 }
+
+export default Dashboard

@@ -7,7 +7,7 @@ import App from './App'
 
 if(module.hot) module.hot.accept()
 
-const render = (Component: React.FC<{}>, type: 'render' | 'hydrate' = 'render') => {
+const render = (Component: React.FC<Record<string, unknown>>, type: 'render' | 'hydrate' = 'render') => {
   ReactDOM[type](
     <AppContainer key={Math.random()}>
       <Component />

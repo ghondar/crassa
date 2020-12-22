@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import produce from 'immer'
 import { TakeableChannel } from 'redux-saga'
 
@@ -26,7 +27,7 @@ export interface Args {
   selectors?: () => void;
 }
 
-export default function createDuck({ namespace, store, initialState = {}, creators, selectors }: Args) {
+export default function createDuck({ namespace, store, initialState = {}, creators, selectors }: Args): any {
   return new Duck({
     namespace,
     store,

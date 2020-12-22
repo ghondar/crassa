@@ -3,6 +3,7 @@ import { select, call, put, take, fork } from 'redux-saga/effects'
 import { Get } from 'lib/Request'
 import { DuckTypes } from 'reducers/base'
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const addCountFromServer = ({ types, selectors }: DuckTypes) => function* (addMore: boolean): Generator<any, any, any> {
   try {
     const status = yield select(selectors.getStatus)
@@ -19,6 +20,7 @@ export const addCountFromServer = ({ types, selectors }: DuckTypes) => function*
         }
       })
     } else {
+      // eslint-disable-next-line no-restricted-syntax
       console.log('loaded from server')
     }
   } catch (e) {
@@ -37,7 +39,7 @@ export const addCountFromServer = ({ types, selectors }: DuckTypes) => function*
   }
 }
 
-export const watchCountServer = ({ types, sagas }: DuckTypes) => fork(function* () {
+export const watchCountServer = ({ types, sagas }: DuckTypes): unknown => fork(function* () {
   while (true) {
     const { addMore } = yield take(types.FETCH)
     yield fork(sagas.addCountFromServer, addMore)
