@@ -1,6 +1,5 @@
 import fs from 'fs'
 
-import React from 'react'
 import { RequestHandler } from 'express'
 import { HelmetProvider } from 'react-helmet-async'
 import { renderToString } from 'react-dom/server'
@@ -76,9 +75,9 @@ export const createStore: RequestHandler = (req, res, next) => {
 }
 
 export const universalLoader: RequestHandler = async (req, res, next) => {
-  if(req.baseUrl.indexOf('.') !== -1 || req.baseUrl.indexOf('api') !== -1 || req.baseUrl.indexOf('static') !== -1) {
+  if(req.baseUrl.indexOf('.') !== -1 || req.baseUrl.indexOf('api') !== -1 || req.baseUrl.indexOf('static') !== -1)
     next()
-  } else {
+   else
     try {
       // Get store, history and html string from middleware
       const { store, history, htmlData } = res.locals
@@ -149,9 +148,8 @@ export const universalLoader: RequestHandler = async (req, res, next) => {
         res.status(500).send(e.message)
       })
       app && renderToString(app)
-      store.close() 
+      store.close()
     } catch (error) {
       console.log(error)
     }
-  }
 }
