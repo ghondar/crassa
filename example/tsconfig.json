@@ -31,7 +31,7 @@
     "strict": true,
     "target": "esnext",
     "moduleResolution": "node",
-    "jsx": "react",
+    "jsx": "react-jsx",
     "resolveJsonModule": true, // Required for JSON files
     "skipLibCheck": true,
     "types": [

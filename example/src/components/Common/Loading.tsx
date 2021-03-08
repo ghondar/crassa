@@ -1,23 +1,21 @@
-import React, { FC } from 'react'
+import { FC } from 'react'
 
 type LoadingProps = Record<string, never>
 
-const Loading: FC<LoadingProps> = () => {
-  return (
-    <div
-      style={{
-        display       : 'flex',
-        justifyContent: 'center',
-        alignItems    : 'center',
-        position      : 'absolute',
-        right         : 0,
-        left          : 0,
-        top           : 0,
-        bottom        : 0
-      }}>
+const Loading: FC<LoadingProps> = () => (
+  <div
+    style={{
+      alignItems    : 'center',
+      bottom        : 0,
+      display       : 'flex',
+      justifyContent: 'center',
+      left          : 0,
+      position      : 'absolute',
+      right         : 0,
+      top           : 0
+    }}>
       Cargando...
-    </div>
-  )
-}
+  </div>
+)
 
 export default Loading

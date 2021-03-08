@@ -1,6 +1,5 @@
 import fs from 'fs'
-
-import React from 'react'
+// import React from 'react'
 import { RequestHandler } from 'express'
 import { HelmetProvider } from 'react-helmet-async'
 import { renderToString } from 'react-dom/server'

@@ -19,7 +19,7 @@
     "noImplicitAny": true,
     "esModuleInterop": true,
     "noFallthroughCasesInSwitch": true,
-    "jsx": "react",
+    "jsx": "react-jsx",
     "noImplicitReturns": true,
     "noImplicitThis": true,
     "strictNullChecks": true,

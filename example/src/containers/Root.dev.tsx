@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import { FC } from 'react'
 import { Provider } from 'react-redux'
 import { Store } from 'redux'
 
@@ -8,15 +8,13 @@ interface RootProps {
   store: Store
 }
 
-const Root: FC<RootProps> = ({ store, children }) => {
-  return (
-    <Provider store={store}>
-      <div>
-        {children}
-        <DevTools />
-      </div>
-    </Provider>
-  )
-}
+const Root: FC<RootProps> = ({ store, children }) => (
+  <Provider store={store}>
+    <div>
+      {children}
+      <DevTools />
+    </div>
+  </Provider>
+)
 
 export default Root

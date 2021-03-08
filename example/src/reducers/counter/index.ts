@@ -15,11 +15,15 @@ export type Action = {
 }
 
 export default base({
+  initialState,
   namespace: 'crassa',
-  store    : 'counter',
-  initialState
+  store    : 'counter'
 }).extend({
-  types  : [ 'ADD_COUNT', 'REMOVE_COUNT' ],
+  creators: ({ types }: DuckTypes) => ({
+    addCount          : () => ({ type: types.ADD_COUNT }),
+    addCountFromServer: (addMore: boolean) => ({ addMore, type: types.FETCH }),
+    removeCount       : () => ({ type: types.REMOVE_COUNT })
+  }),
   reducer: (state: Counter, action: Action, { types }: DuckTypes) =>
     produce<Counter>(state, (draft: Counter) => {
       switch (action.type) {
@@ -35,19 +39,15 @@ export default base({
           return
       }
     }),
+  sagas: {
+    addCountFromServer
+  },
   selectors: ({ store }: DuckTypes) => ({
     getCount : (state: Counter) => state[store].count,
     getStatus: (state: Counter) => state[store].status
   }),
-  creators: ({ types }: DuckTypes) => ({
-    addCount          : () => ({ type: types.ADD_COUNT }),
-    removeCount       : () => ({ type: types.REMOVE_COUNT }),
-    addCountFromServer: (addMore: boolean) => ({ type: types.FETCH, addMore })
-  }),
-  sagas: {
-    addCountFromServer
-  },
   takes: (duck: DuckTypes) => [
     watchCountServer(duck)
-  ]
+  ],
+  types: [ 'ADD_COUNT', 'REMOVE_COUNT' ]
 })

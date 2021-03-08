@@ -14,10 +14,10 @@ export const addCountFromServer = ({ types, selectors }: DuckTypes) => function*
       const count = yield select(selectors.getCount)
 
       yield put({
-        type   : types.FETCH_FULFILLED,
         payload: {
           count: payload.count + count
-        }
+        },
+        type: types.FETCH_FULFILLED
       })
     } else {
       // eslint-disable-next-line no-restricted-syntax
@@ -31,8 +31,8 @@ export const addCountFromServer = ({ types, selectors }: DuckTypes) => function*
         break
       default:
         yield put({
-          type : types.FETCH_FAILURE,
-          error: messageResponse || message
+          error: messageResponse || message,
+          type : types.FETCH_FAILURE
         })
         break
     }

@@ -1,7 +1,7 @@
 {
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
-    "ecmaVersion": 2018,
+    "ecmaVersion": 6,
     "sourceType": "module",
     "ecmaFeatures": {
       "jsx": true,
@@ -22,18 +22,17 @@
       "classes": true
     }
   },
-  "extends": ["plugin:@typescript-eslint/recommended"],
-  "plugins": ["react", "eslint-plugin-react", "@typescript-eslint"],
-  "settings": {
-    "react": {
-      "version": "detect"
-    }
-  },
+  "plugins": [ "react", "sort-keys-fix" ],
+  "extends": [ "react-app" ],
   "rules": {
     "@typescript-eslint/camelcase": 0,
     "@typescript-eslint/no-var-requires": 0,
     "@typescript-eslint/explicit-function-return-type": 0,
     "@typescript-eslint/ban-ts-ignore": 0,
+    "no-undef": "error",
+    "comma-spacing": ["error", {"before": false, "after": true}],
+    "arrow-body-style": ["error", "as-needed"],
+    "sort-keys-fix/sort-keys-fix": "error",
     "react/jsx-no-bind": [
       2,
       {
@@ -79,7 +78,8 @@
     "react/jsx-wrap-multilines": ["error"],
     "react/jsx-uses-react": ["error"],
     "react/jsx-uses-vars": ["error"],
-    "react/react-in-jsx-scope": ["error"],
+    "import/no-anonymous-default-export": [2, {"allowArrowFunction": true}],
+    "react/react-in-jsx-scope": 0,
     "@typescript-eslint/no-unused-vars": [
       "error",
       { "vars": "local", "args": "after-used", "ignoreRestSiblings": false }
@@ -191,4 +191,3 @@
     ]
   }
 }
-
