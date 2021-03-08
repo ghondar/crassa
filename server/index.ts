@@ -2,7 +2,12 @@
 
 require('@babel/register')({
   ignore : [ /\/(build|node_modules)\/(?!@crassa\b)/ ],
-  presets: [ '@babel/env', '@babel/preset-react' ],
+  presets: [ '@babel/env', [
+    '@babel/preset-react',
+    {
+      runtime: 'automatic'
+    }
+  ] ],
   plugins: [
     [ '@babel/plugin-proposal-class-properties', { loose: true } ],
     '@babel/plugin-transform-flow-strip-types',
