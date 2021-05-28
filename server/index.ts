@@ -9,6 +9,7 @@ require('@babel/register')({
     }
   ] ],
   plugins: [
+    [ '@babel/plugin-proposal-private-methods', { loose: true } ],
     [ '@babel/plugin-proposal-class-properties', { loose: true } ],
     '@babel/plugin-transform-flow-strip-types',
     'babel-plugin-dynamic-import-node', '@loadable/babel-plugin',

@@ -9,7 +9,6 @@ const { 'default': createRootReducer } = require(appSrc + '/reducers')
 
 // Create a store and history based on a path
 const createServerStore = (path = '/') => {
-  const initialState = {}
   const sagaMiddleware = createSagaMiddleware()
 
   // We don't have a DOM, so let's create some fake history and push the current path
@@ -28,7 +27,7 @@ const createServerStore = (path = '/') => {
     close?: <T extends AnyAction>(action: T) => any;
   }
 
-  const store: StoreType = createStore(createRootReducer(history), initialState, composedEnhancers)
+  const store: StoreType = createStore(createRootReducer(history), undefined, composedEnhancers)
 
   store.runSaga = sagaMiddleware.run
   store.close = () => store.dispatch(END)

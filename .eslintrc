@@ -50,7 +50,7 @@
         "when": "never"
       }
     ],
-    "react/require-render-return": ["error", "never"],
+    "react/require-render-return": ["error"],
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".tsx"] }],
     "react/jsx-first-prop-new-line": ["error", "multiline-multiprop"],
     "react/jsx-handler-names": [
