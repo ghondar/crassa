@@ -52,21 +52,22 @@ async function create({ projectName, projectFolderName, manager, urlTemplate }) 
       fs.writeFileSync(path.join(pathToUse, '.npmrc'), npmrc)
 
       const packageManager = {
-        params: '',
+        install: 'yarn',
         output: 'yarn dev'
       }
 
       if(manager === 'npm') {
-        packageManager.params = 'install'
+        packageManager.install = 'npm install'
         packageManager.output = 'npm run dev'
       }
       // Install all dependencies
       setTimeout(() => {
-        childProcess.spawnSync(manager, [ packageManager.params ], {
+        childProcess.execSync('git init .', { cwd: pathToUse })
+        childProcess.execSync(packageManager.install, {
           cwd  : pathToUse,
           stdio: 'inherit'
         })
-        childProcess.execSync('git init . && git add . && git commit -m "Initialized app with crassa!"', { cwd: pathToUse })
+        childProcess.execSync('git add . && git commit -m "Initialized app with crassa!"', { cwd: pathToUse })
         console.log(colorize('Project was successfully created.').FgGreen())
         console.log(colorize('To get started, execute:').FgCyan())
         console.log(colorize(`cd ${folderNameToUse}`).Underscore())
