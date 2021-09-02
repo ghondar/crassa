@@ -70,7 +70,7 @@
     "http-proxy-middleware": "2.0.0",
     "husky": "6.0.0",
     "ignore-styles": "5.0.1",
-    "immer": "9.0.2",
+    "immer": "9.0.6",
     "inquirer": "8.1.0",
     "inquirer-recursive": "0.0.7",
     "jsan": "3.1.13",
