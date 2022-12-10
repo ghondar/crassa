@@ -66,7 +66,7 @@
     "customize-cra": "1.0.0",
     "dotenv": "10.0.0",
     "download-git-repo": "3.0.2",
-    "express": "4.17.1",
+    "express": "4.17.3",
     "http-proxy-middleware": "2.0.0",
     "husky": "6.0.0",
     "ignore-styles": "5.0.1",
